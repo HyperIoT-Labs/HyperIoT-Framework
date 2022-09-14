@@ -1,0 +1,37 @@
+
+
+dependencies {
+	//OSGi Basic Imports
+	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    //SLF4J
+    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api",version:project.jaxWsRsApiVersion
+	compileOnly group: 'org.apache.cxf.dosgi', name: 'cxf-dosgi-common', version: project.cxfDosgiVersion
+	compileOnly group: "org.apache.cxf" ,name:"cxf-rt-rs-security-jose",version: project.cxfVersion
+	compileOnly group: "org.apache.cxf" ,name: "cxf-rt-rs-security-jose-jaxrs",version: project.cxfVersion
+	compileOnly group:"com.fasterxml.jackson.jaxrs",name:"jackson-jaxrs-json-provider",version:project.jacksonVersion
+	//Aries and Jpa
+	compileOnly group: "javax.transaction", name: "javax.transaction-api",version: project.javaxTransactionVersion
+	compileOnly group: "org.apache.aries.jpa", name: "org.apache.aries.jpa.api", version: project.apacheAriesJpaVersion
+    //Hibernate
+    compileOnly group: "org.hibernate.javax.persistence", name: "hibernate-jpa-2.1-api",version: project.hibernateJpaApiVersion
+	// WebSocket service
+	compileOnly group: 'org.eclipse.jetty.websocket', name: 'websocket-servlet', version: project.jettyWSVersion
+
+}
+
+task buildHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install' ]
+}
+
+task publishHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install','publish' ]
+}
+
+publishing {
+    	publications {
+        	hyperiot(MavenPublication) {
+            	from components.java
+        	}
+    }
+ }

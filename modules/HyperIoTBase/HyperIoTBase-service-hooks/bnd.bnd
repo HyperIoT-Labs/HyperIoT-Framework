@@ -1,0 +1,5 @@
+Bundle-Activator: it.acsoftware.hyperiot.base.service.hooks.proxy.activator.HyperIoTBundleServiceActivator
+Import-Package: \
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.util
+DynamicImport-Package: *

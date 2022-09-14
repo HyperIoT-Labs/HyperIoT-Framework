@@ -1,0 +1,43 @@
+package it.acsoftware.hyperiot.websocket.policy;
+
+import org.eclipse.jetty.websocket.api.Session;
+
+import java.util.Map;
+
+public class InputBufferSizePolicy extends HyperIoTWebSocketAbstractPolicy {
+    private int inputBufferSize;
+
+    public InputBufferSizePolicy(Session s, int inputBufferSize) {
+        super(s);
+        this.inputBufferSize = inputBufferSize;
+    }
+
+    @Override
+    public boolean isSatisfied(Map<String, Object> params, byte[] payload) {
+        return true;
+    }
+
+    @Override
+    public boolean closeWebSocketOnFail() {
+        return false;
+    }
+
+    @Override
+    public boolean printWarningOnFail() {
+        return false;
+    }
+
+    @Override
+    public boolean sendWarningBackToClientOnFail() {
+        return false;
+    }
+
+    @Override
+    public boolean ignoreMessageOnFail() {
+        return false;
+    }
+
+    public int getInputBufferSize() {
+        return inputBufferSize;
+    }
+}

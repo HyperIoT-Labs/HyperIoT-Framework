@@ -1,0 +1,11 @@
+Import-Package: \
+    org.osgi.framework*,\
+    org.osgi.service*,\
+    org.bouncycastle*,\
+    javax.crypto*,\
+    javax.security*,\
+    it.acsoftware.hyperiot*,\
+    org.slf4j.*
+Export-Package: \
+    it.acsoftware.hyperiot.base.command
+

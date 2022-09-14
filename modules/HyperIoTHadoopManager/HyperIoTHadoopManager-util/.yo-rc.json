@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "custom",
+        "projectName": "HyperIoTHadoopManager",
+        "projectGroupId": "it.acsoftware.hyperiot.hadoopmanager",
+        "projectVersion": "1.0.0",
+        "projectFolder": "HyperIoTHadoopManager-util"
+    }
+}

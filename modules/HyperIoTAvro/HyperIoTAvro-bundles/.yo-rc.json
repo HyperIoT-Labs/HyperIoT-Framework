@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "custom",
+        "projectName": "HyperIoTAvro",
+        "projectGroupId": "it.acsoftware.hyperiot.avro",
+        "projectVersion": "1.1.0",
+        "projectFolder": "HyperIoTAvro-bundles"
+    }
+}

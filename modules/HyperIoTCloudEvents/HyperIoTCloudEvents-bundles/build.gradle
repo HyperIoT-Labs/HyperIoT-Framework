@@ -1,0 +1,41 @@
+
+dependencies {
+	//OSGi Basic Imports
+	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+	compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+	// Jackson
+	compileOnly group:"com.fasterxml.jackson.core", name: "jackson-core", version:project.jacksonVersion
+	compileOnly group:"com.fasterxml.jackson.core", name: "jackson-databind", version:project.jacksonVersion
+	// Cloud events
+	compile group: 'io.cloudevents', name: 'cloudevents-api', version: project.cloudEventsVersion
+	compile group: 'io.cloudevents', name: 'cloudevents-core', version: project.cloudEventsVersion
+	compile (group: 'io.cloudevents', name: 'cloudevents-json-jackson', version: project.cloudEventsVersion) {
+		exclude group: 'com.fasterxml.jackson.core', module: 'jackson-core'
+		exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'
+		exclude group: 'com.fasterxml.jackson.core', module: 'jackson-annotations'
+	}
+}
+
+jar {
+	manifest {
+		attributes('dsannotations': '*')
+	}
+	zip64 true
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+task buildHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install' ]
+}
+
+task publishHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install','publish' ]
+}
+
+publishing {
+    	publications {
+        	hyperiot(MavenPublication) {
+            	from components.java
+        	}
+    }
+ }

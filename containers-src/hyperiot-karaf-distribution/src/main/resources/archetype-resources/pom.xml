@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>${groupId}</groupId>
+    <artifactId>${artifactId}</artifactId>
+	<version>${version}</version>
+    <packaging>karaf-assembly</packaging>
+    <name>${name}</name>
+    <description>HyperIoT karaf-microservices runtime with hyperiot framework</description>
+    <properties>
+        <pax.exam.version>4.13.4</pax.exam.version>
+    </properties>
+
+	<parent>
+	  <groupId>it.acsoftware.hyperiot.container</groupId>
+	  <artifactId>hyperiot-karaf-distribution-parent</artifactId>
+	  <version>${hyperiot-version}_karaf_${karaf-version}</version>
+	</parent>
+
+    <repositories>
+        <repository>
+            <id>it.acsoftware.hyperiot</id>
+            <name>hyperiot nexus</name>
+            <url>https://nexus.acsoftware.it/nexus/repository/maven-hyperiot/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- INHERITED FROM PARENT -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.karaf.tooling</groupId>
+                <artifactId>karaf-maven-plugin</artifactId>
+                <version>${karaf.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <bootFeatures>
+                        <feature>standard</feature>
+#if (${hyperiotClusteredMode} == "true")
+                        <feature>hyperiot-core-clustered</feature>
+#else
+                        <feature>hyperiot-core</feature>
+#end
+
+                    </bootFeatures>
+                </configuration>
+            </plugin>
+            <!-- karaf-maven-plugin will call both assembly and archive goals -->
+           <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>fix-distro</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <!--excluding acsoftware jars from system repo, in order to be downloaded for test purpose -->
+                                <delete dir="${project.build.directory}/assembly/system/it/acsoftware" includeemptydirs="true"/>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

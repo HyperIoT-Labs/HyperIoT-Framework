@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "model",
+        "projectName": "HyperIoTAssetCategory",
+        "projectGroupId": "it.acsoftware.hyperiot.asset.category",
+        "projectVersion": "1.0.0"
+    }
+}

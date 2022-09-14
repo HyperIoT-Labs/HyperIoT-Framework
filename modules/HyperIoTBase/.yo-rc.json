@@ -1,0 +1,28 @@
+{
+    "generator-hyperiot": {
+			"projectSuffix": "base",
+			"projectSuffixUC": "Base",
+			"projectSuffixLC": "base",
+			"projectName": "HyperIoTBase",
+			"projectGroupId": "it.acsoftware.hyperiot.base",
+			"projectVersion": "1.0.0",
+			"hasRestServices": true,
+			"projectApiPath": "modules/HyperIoTBase/HyperIoTBase-api",
+			"projectFeaturesPath": "modules/HyperIoTBase/HyperIoTBase-features",
+			"projectModelPath": "modules/HyperIoTBase/HyperIoTBase-model",
+			"projectRepositoryPath": "modules/HyperIoTBase/HyperIoTBase-repository",
+			"projectServicePath": "modules/HyperIoTBase/HyperIoTBase-service",
+			"projectServiceRestPath": "modules/HyperIoTBase/HyperIoTBase-service-rest",
+			"apiPackage": "it.acsoftware.hyperiot.base.api",
+			"apiPackagePath": "/src/main/java/it/acsoftware/hyperiot/base//api",
+			"modelPackage": "it.acsoftware.hyperiot.base.model",
+			"modelPackagePath": "/src/main/java/it/acsoftware/hyperiot/base//model",
+			"repositoryPackage": "it.acsoftware.hyperiot.base.repository",
+			"repositoryPackagePath": "/src/main/java/it/acsoftware/hyperiot/base//repository",
+			"servicePackage": "it.acsoftware.hyperiot.base.service",
+			"servicePackagePath": "/src/main/java/it/acsoftware/hyperiot/base//service",
+			"serviceRestPackage": "it.acsoftware.hyperiot.base.service.rest",
+			"serviceRestPackagePath": "/src/main/java/it/acsoftware/hyperiot/base//service/rest",
+			"parent-project": true
+}
+}

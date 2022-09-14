@@ -1,0 +1,13 @@
+Import-Package: \
+    org.slf4j.*,\
+    it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.sparkmanager.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.sparkmanager.model;version='${range;[===,+)}',\
+    org.osgi.service.cm,\
+    org.osgi.service.components*,\
+    org.osgi.service*,\
+    org.osgi.framework,\
+    org.slf4j.*
+Export-Package: it.acsoftware.hyperiot.sparkmanager.util
+
+

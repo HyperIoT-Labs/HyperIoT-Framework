@@ -1,0 +1,20 @@
+Import-Package:\
+    org.slf4j.*,\
+    javax.persistence;version='${range;[===,+)}',\
+    org.hibernate.proxy;version='${range;[=,+)}',\
+    javassist.util.proxy;version='${range;[====,+)}',\
+    org.osgi.framework,\
+    org.postgresql,\
+    org.apache.aries.jpa.*,\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.repository;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.asset.tag.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.asset.tag.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.huser.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.permission.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.role.model;version='${range;[===,+)}'
+Meta-Persistence: META-INF/persistence.xml
+
+

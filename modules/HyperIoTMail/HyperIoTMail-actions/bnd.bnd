@@ -1,0 +1,9 @@
+Bundle-Activator: it.acsoftware.hyperiot.mail.actions.MailActionsBundleActivator
+Import-Package: \
+    it.acsoftware.hyperiot.base.action;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.action.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.mail.model;version='${range;[===,+)}',\
+    org.slf4j
+Export-Package: it.acsoftware.hyperiot.mail.actions
+
+

@@ -1,0 +1,22 @@
+<archetype-descriptor
+    xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.1.0 https://maven.apache.org/xsd/archetype-descriptor-1.1.0.xsd"
+    name="quickstart">
+    <requiredProperties>
+        <requiredProperty key="hyperiotClusteredMode">
+            <defaultValue>false</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="name">
+            <defaultValue>Project</defaultValue>
+        </requiredProperty>
+        <requiredProperty key="hyperiot-version">
+        </requiredProperty>
+        <requiredProperty key="karaf-version">
+        </requiredProperty>
+    </requiredProperties>
+    <fileSets>
+        <fileSet filtered="false" packaged="false">
+            <directory>src/main</directory>
+        </fileSet>
+    </fileSets>
+</archetype-descriptor>

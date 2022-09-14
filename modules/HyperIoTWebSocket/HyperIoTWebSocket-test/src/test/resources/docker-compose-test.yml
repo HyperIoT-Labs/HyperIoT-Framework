@@ -1,0 +1,36 @@
+version: '2.1'
+
+networks:
+  hyperiot:
+    name: hyperiot
+    driver: bridge
+
+services:
+  zookeeper:
+    container_name: zookeeper_hyperiot
+    image: zookeeper:3.6
+    ports:
+      - "2181:2181"
+    networks:
+      hyperiot:
+        aliases:
+          - zookeeper-1.hyperiot.com
+
+  kafka:
+    container_name: kafka_hyperiot
+    image: wurstmeister/kafka:2.13-2.8.1
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper_hyperiot
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=kafka-1.hyperiot.com
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper-1.hyperiot.com:2181
+      - KAFKA_DELETE_TOPIC_ENABLE=true
+      - KAFKA_NUM_PARTITIONS=1
+      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=false
+    networks:
+      hyperiot:
+        aliases:
+          - kafka-1.hyperiot.com

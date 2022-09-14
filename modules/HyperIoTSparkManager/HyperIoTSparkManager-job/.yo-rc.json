@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "custom",
+        "projectName": "HyperIoTSparkManager",
+        "projectGroupId": "it.acsoftware.hyperiot.sparkmanager",
+        "projectVersion": "1.0.0",
+        "projectFolder": "HyperIoTSparkManager-job"
+    }
+}

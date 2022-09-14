@@ -1,0 +1,62 @@
+
+def Properties props = new Properties()
+def propFile = file('../hyperiot.properties')
+props.load(new FileInputStream(propFile));
+
+group "it.acsoftware.hyperiot.gradle.plugins.workspace"
+version props.get("hyperIoTVersion")
+
+apply plugin:'java-gradle-plugin'
+apply plugin:'maven-publish'
+
+//overriding version.properties  whith hyperiot.properties at build phase
+//in order to centralize hyperiot and karaf version management
+compileJava.doFirst {
+    def Properties propsToOverride = new Properties(){
+        //order props alphabetically
+        @Override
+        public synchronized Enumeration<Object> keys() {
+            return Collections.enumeration(new TreeSet<Object>(super.keySet()));
+        }
+    }
+    def versionsFile = file('src/main/resources/versions.properties')
+    propsToOverride.load(new FileInputStream(versionsFile));
+    def iterator = props.keySet().iterator();
+    while(iterator.hasNext()){
+        String key = iterator.next();
+        propsToOverride.setProperty(key,props.get(key))
+    }
+    propsToOverride.store(new FileOutputStream("src/main/resources/versions.properties"),null)
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        name = 'ACSoftwareRepository'
+        url = "https://nexus.acsoftware.it/nexus/repository/maven-hyperiot/"
+    }
+}
+
+gradlePlugin {
+    plugins {
+        HyperIoTWorkspaceGradlePlugin {
+            id = 'it.acsoftware.hyperiot.workspace'
+            implementationClass = 'it.acsoftware.hyperiot.gradle.plugins.workspace.HyperIoTWorkspaceGradlePlugin'
+        }
+    }
+}
+
+publishing {
+    repositories {
+       mavenLocal()
+       maven {
+            credentials {
+                username project.publishRepoUsername
+                password project.publishRepoPassword
+            }
+            name = 'ACSoftwareRepository'
+            url = "https://nexus.acsoftware.it/nexus/repository/maven-hyperiot/"
+        }
+    }
+}

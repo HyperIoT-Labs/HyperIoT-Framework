@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "custom",
+        "projectName": "HyperIoTContentRepository",
+        "projectGroupId": "it.acsoftware.hyperiot.contentrepository",
+        "projectVersion": "1.0.0",
+        "projectFolder": "HyperIoTContentRepository-util"
+    }
+}

@@ -1,0 +1,12 @@
+Export-Package: \
+    it.acsoftware.hyperiot.websocket.api,\
+    it.acsoftware.hyperiot.websocket.api.channel
+Import-Package: \
+    org.slf4j.*,\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.service;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.websocket.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.websocket.model.message;version='${range;[===,+)}',\
+    org.eclipse.jetty.websocket.api

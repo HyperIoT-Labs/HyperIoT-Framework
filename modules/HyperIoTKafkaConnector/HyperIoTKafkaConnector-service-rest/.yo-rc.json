@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "service-rest",
+        "projectName": "HyperIoTKafkaConnector",
+        "projectGroupId": "it.acsoftware.hyperiot.kafka.connector",
+        "projectVersion": "1.0.0",
+        "projectFolder": "HyperIoTKafkaConnector-service-rest"
+    }
+}

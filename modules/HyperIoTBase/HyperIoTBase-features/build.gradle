@@ -1,0 +1,191 @@
+apply plugin: 'com.github.lburgazzoli.karaf'
+
+configurations {
+
+    base {
+        transitive = false
+    }
+
+    baseRest {
+        transitive = false
+    }
+
+    baseTest {
+        transitive = false
+    }
+
+    baseHooks {
+        transitive = false
+    }
+}
+
+dependencies {
+    baseHooks 'it.acsoftware.hyperiot.base:HyperIoTBase-service-hooks:' + project.version
+    base 'org.passay:passay:'+project.passayVersion
+    base 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:' + project.jacksonVersion
+    base 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:' + project.jacksonVersion
+    base 'com.fasterxml.jackson.core:jackson-annotations:' + project.jacksonVersion
+    base 'com.fasterxml.jackson.core:jackson-core:' + project.jacksonVersion
+    base 'com.fasterxml.jackson.core:jackson-databind:' + project.jacksonVersion
+    base 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:'+ project.jacksonVersion
+    base 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:'+ project.jacksonVersion
+    base 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:'+ project.jacksonVersion
+    base 'com.fasterxml.jackson.module:jackson-module-jaxb-annotations:' + project.jacksonVersion
+    base 'org.webjars:swagger-ui:' + project.swaggerUIVersion
+    base 'javax.validation:validation-api:' + project.javaxValidationVersion
+    base 'org.bouncycastle:bcprov-jdk15on:' + project.bouncyCastleVersion
+    base 'org.bouncycastle:bcpkix-jdk15on:' + project.bouncyCastleVersion
+    base 'org.bouncycastle:bcmail-jdk15on:' + project.bouncyCastleVersion
+    base 'org.postgresql:postgresql:' + project.postgresDriverVersion
+    base 'it.acsoftware.hyperiot.base:HyperIoTBase-api:' + project.version
+    base 'it.acsoftware.hyperiot.base:HyperIoTBase-model:' + project.version
+    base 'it.acsoftware.hyperiot.base:HyperIoTBase-security:' + project.version
+    base 'it.acsoftware.hyperiot.base:HyperIoTBase-actions:' + project.version
+    base 'it.acsoftware.hyperiot.base:HyperIoTBase-command:' + project.version
+    base 'it.acsoftware.hyperiot.base:HyperIoTBase-util:' + project.version
+    base 'it.acsoftware.hyperiot.base:HyperIoTBase-validation:' + project.version
+    base 'it.acsoftware.hyperiot.base:HyperIoTBase-repository:' + project.version
+    base 'it.acsoftware.hyperiot.base:HyperIoTBase-service:' + project.version
+    baseRest 'it.acsoftware.hyperiot.base:HyperIoTBase-service-rest-provider:' + project.version
+    baseRest 'it.acsoftware.hyperiot.base:HyperIoTBase-service-rest:' + project.version
+    baseTest 'it.acsoftware.hyperiot.base:HyperIoTBase-test-containers:' + project.version
+    baseTest 'it.acsoftware.hyperiot.base:HyperIoTBase-test-utils:' + project.version
+}
+
+
+karaf {
+    features {
+        // See section below for karaf 4 support if using 1.3.0
+        xsdVersion = '1.2.0'
+        version = '4.0.0' // Your project version
+        description = 'Karaf features'
+
+        // Include the current project, false by default
+        includeProject = false
+
+        // Add in extra repositories to the features xml file
+        repository "mvn:org.apache.cxf.dosgi/cxf-dosgi/"+project.cxfDosgiVersion+"/xml/features"
+        repository "mvn:org.apache.cxf.karaf/apache-cxf/"+project.cxfVersion+"/xml/features"
+        //Karaf 4.2.11 introduced hibernate validator 7 which uses not javax.validation but jakarta
+        repository "mvn:org.hibernate.validator/hibernate-validator-osgi-karaf-features/"+project.hibernateValidatorVersion+"/xml/features"
+
+        feature {
+            name = 'hyperiot-base-karaf-features'
+            description = 'All Hyperiot HyperIoTBase Modules'
+
+            // Add feature dependency (newest)
+            feature 'jdbc'
+            feature 'jndi'
+            feature 'aries-blueprint'
+            feature 'transaction'
+            feature('jpa')
+            feature('hibernate') {
+                version = '[5,6)'
+            }
+
+            feature('hibernate-validator') {
+                version = '[6.2,7)'
+            }
+            //feature that export bundle relative to jetty websocket.
+            feature 'pax-web-jetty-websockets'
+            //Pax whiteboard service specification implementation. (Useful to register websocket servlet).
+            feature 'pax-web-whiteboard'
+            //feature that export karaf command (web:context-list web:servlet-list) useful to query about the state of the register servlet in the container.
+            feature 'pax-web-karaf'
+            feature 'pax-jdbc'
+            feature 'pax-jdbc-config'
+            feature 'pax-jdbc-pool-dbcp2'
+            feature 'scr'
+
+            feature ('cxf-rs-security-jose'){
+                version = '[3.4,4)'
+            }
+
+            feature 'cxf-dosgi-provider-rs'
+
+            feature ('cxf-rs-description-swagger2'){
+                version = '[3.4,4)'
+            }
+
+            configurations 'baseHooks'
+
+            bundle('it.acsoftware.hyperiot.base:HyperIoTBase-service-hooks'){
+                attribute 'start-level','79'
+            }
+
+        }
+
+        feature {
+            name = 'hyperiot-base'
+            description = 'All Hyperiot HyperIoTBase Modules'
+
+            // Add feature dependency (newest)
+            feature 'hyperiot-base-basic'
+            configurations 'baseRest'
+        }
+
+        feature {
+            name = 'hyperiot-base-test'
+            description = 'All Hyperiot HyperIoTBase Modules'
+
+            // Add feature dependency (newest)
+            feature 'hyperiot-base-basic'
+            configurations 'baseRest','baseTest'
+        }
+
+        feature {
+            name = 'hyperiot-base-basic'
+            description = 'Hyperiot HyperIoTBase Modules with NO rest services'
+
+            // Add feature dependency (newest)
+            feature 'hyperiot-base-karaf-features'
+            configurations 'base'
+
+            bundle('it.acsoftware.hyperiot.base:HyperIoTBase-api'){
+                attribute 'start-level','79'
+            }
+
+            bundle('it.acsoftware.hyperiot.base:HyperIoTBase-util'){
+                attribute 'start-level','79'
+            }
+        }
+    }
+
+    // Enable generation of Karaf Archive KAR based on features defined above.
+    // To generate kar either use generateKar, assemble or install
+    kar {
+        // Optionally set the kar name, default is:
+        //
+        //     ${features.name}-${features.version}.kar
+        //
+        // Extension is automatically set to .kar
+        archiveName = 'HyperIoTBase'
+    }
+}
+
+
+task buildHIT(type: GradleBuild) {
+
+}
+
+task buildFeatures(type: GradleBuild) {
+    tasks = ['clean', 'generateFeatures', 'build', 'install']
+}
+
+task publishHIT(type: GradleBuild) {
+
+}
+
+task publishFeatures(type: GradleBuild) {
+    tasks = ['clean', 'generateFeatures', 'build', 'install', 'publish']
+}
+
+def featureFile = 'build/karaf/features/' + project.name + '-' + project.version + '.xml'
+publishing {
+    publications {
+        hyperiot(MavenPublication) {
+            artifactId project.name
+            artifact source: featureFile, classifier: 'features'
+        }
+    }
+}

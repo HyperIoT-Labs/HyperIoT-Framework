@@ -1,0 +1,35 @@
+Import-Package: \
+    org.slf4j.*,\
+    org.osgi.framework,\
+    org.osgi.service.cm,\
+    org.osgi.service.components*,\
+    javax.persistence;version='${range;[===,+)}',\
+    javax.validation;version='${range;[====,+)}',\
+    org.hibernate.validator;version='${range;[=,+)}',\
+    org.apache.http.*,\
+    com.fasterxml.jackson.core.*;version='${range;[===,+)}',\
+    com.fasterxml.jackson.databind;version='${range;[===,+)}',\
+    com.fasterxml.jackson.annotation.*;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.action;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.action.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.service;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.security.*;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.osgi.util.filter;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.kafka.connector.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.kafka.connector.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.kafka.connector.model.messages.types;version='${range;[===,+)}',\
+    it.acosftware.hyperiot.kafka.connector.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.kafka.connector.actions;version='${range;[===,+)}',\
+    reactor.core.publisher,\
+    reactor.core.scheduler,\
+    reactor.kafka.receiver,\
+    org.apache.kafka*
+Export-Package: \
+    it.acsoftware.hyperiot.kafka.connector.service,\
+    it.acsoftware.hyperiot.kafka.connector.producer
+    it.acsoftware.hyperiot.kafka.connector.consumer
+
+

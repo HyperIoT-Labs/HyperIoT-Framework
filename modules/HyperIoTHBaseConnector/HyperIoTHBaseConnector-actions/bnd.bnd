@@ -1,0 +1,8 @@
+Bundle-Activator: it.acsoftware.hyperiot.hbase.connector.actions.HBaseConnectorActionsBundleActivator
+Import-Package: \
+    it.acsoftware.hyperiot.base.action;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.action.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.hbase.connector.model;version='${range;[===,+)}',\
+    org.slf4j.*
+Export-Package: it.acsoftware.hyperiot.hbase.connector.actions
+

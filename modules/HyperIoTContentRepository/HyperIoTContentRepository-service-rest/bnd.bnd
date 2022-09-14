@@ -1,0 +1,16 @@
+Export-Package: it.acsoftware.hyperiot.contentrepository.service.rest
+Import-Package: \
+    it.acsoftware.hyperiot.contentrepository.api;version=1.3.5,\
+        it.acsoftware.hyperiot.contentrepository.model;version='${range;[===,+)}',\
+        it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}',\
+        it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.service.rest;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.security.rest;version='${range;[===,+)}',\
+    com.fasterxml.jackson.jaxrs.json;version='${range;[===,+)}',\
+    io.swagger.jaxrs,\
+    io.swagger.annotations,\
+    *
+

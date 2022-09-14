@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "service",
+        "projectName": "HyperIoTStorm",
+        "projectGroupId": "it.acsoftware.hyperiot.storm",
+        "projectVersion": "2.0.0"
+    }
+}

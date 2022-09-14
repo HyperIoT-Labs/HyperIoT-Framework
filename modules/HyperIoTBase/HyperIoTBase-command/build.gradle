@@ -1,0 +1,42 @@
+
+
+dependencies {
+	//OSGi Basic Imports
+	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //SLF4J
+    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+
+    compileOnly group: "org.apache.cxf" ,name: "cxf-rt-rs-security-jose",version: project.cxfVersion
+    compileOnly group: "org.apache.cxf" ,name: "cxf-rt-rs-security-jose-jaxrs",version: project.cxfVersion
+
+    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-api")
+    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-actions")
+    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-model")
+    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-repository")
+    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-util")
+    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-security")
+
+}
+
+jar {
+	manifest {
+		attributes('dsannotations': '*')
+	}
+}
+
+task buildHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install' ]
+}
+
+task publishHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install','publish' ]
+}
+
+publishing {
+    	publications {
+        	hyperiot(MavenPublication) {
+            	from components.java
+        	}
+    }
+ }

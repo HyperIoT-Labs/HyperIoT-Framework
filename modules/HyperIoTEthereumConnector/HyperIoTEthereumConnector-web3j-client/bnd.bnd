@@ -1,0 +1,10 @@
+Import-Package: \
+    !android.net.http,\
+    org.apache.commons.lang3,\
+    it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.blockchain.ethereum.connector.*
+DynamicImport-Package: *
+Export-Package: \
+    org.web3j.*,\
+    it.acsoftware.hyperiot.blockchain.ethereum.connector.client
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=warning

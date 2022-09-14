@@ -1,0 +1,7 @@
+Export-Package: \
+    org.apache.zookeeper*;version=3.5.5,\
+    org.apache.jute*;version=3.5.5,\
+    org.apache.curator*;version=5.2.1
+Include-Resource: ./src/main/resources/zookeeper-3.5.5.jar,./src/main/resources/zookeeper-jute-3.5.5.jar,./src/main/resources/curator-client-5.2.1.jar,./src/main/resources/curator-framework-5.2.1.jar,./src/main/resources/curator-recipes-5.2.1.jar
+Bundle-ClassPath: ./src/main/resources/zookeeper-3.5.5.jar,./src/main/resources/zookeeper-jute-3.5.5.jar,./src/main/resources/curator-client-5.2.1.jar,./src/main/resources/curator-framework-5.2.1.jar,./src/main/resources/curator-recipes-5.2.1.jar
+DynamicImport-Package: *

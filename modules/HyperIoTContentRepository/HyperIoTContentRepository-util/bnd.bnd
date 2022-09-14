@@ -1,0 +1,12 @@
+Import-Package: \
+    it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.contentrepository.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.contentrepository.model;version='${range;[===,+)}',\
+    org.osgi.service.cm,\
+    org.osgi.service.components*,\
+    org.osgi.service*,\
+    org.osgi.framework,\
+    org.slf4j.*
+Export-Package: it.acsoftware.hyperiot.contentrepository.util
+
+

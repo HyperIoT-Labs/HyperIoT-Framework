@@ -1,0 +1,8 @@
+Import-Package: \
+    javax.validation.*,\
+    org.slf4j.*
+Export-Package: \
+    it.acsoftware.hyperiot.base.validation,\
+    it.acsoftware.hyperiot.base.validators
+DynamicImport-Package: *
+

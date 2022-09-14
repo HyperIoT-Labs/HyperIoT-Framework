@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "api",
+        "projectName": "HyperIoTHUser",
+        "projectGroupId": "it.acsoftware.hyperiot.huser",
+        "projectVersion": "1.0.0"
+    }
+}

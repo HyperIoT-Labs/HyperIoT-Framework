@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "features",
+        "projectName": "HyperIoTJackRabbit",
+        "projectGroupId": "it.acsoftware.hyperiot.jackrabbit",
+        "projectVersion": "1.3.8"
+    }
+}

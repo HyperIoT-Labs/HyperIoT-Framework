@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "repository",
+        "projectName": "HyperIoTBase",
+        "projectGroupId": "it.acsoftware.hyperiot.base",
+        "projectVersion": "1.0.0"
+    }
+}

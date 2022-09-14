@@ -1,0 +1,7 @@
+Import-Package: \
+    !android.util
+Export-Package: \
+    org.testcontainers.*,\
+    com.sun.jna.*,\
+    it.acsoftware.hyperiot.base.test.containers
+DynamicImport-Package: *

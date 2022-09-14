@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>it.acsoftware.hyperiot.container</groupId>
+    <artifactId>hyperiot-karaf-distribution-parent</artifactId>
+    <version>${hyperiot.version}_karaf_${karaf.version}</version>
+    <packaging>pom</packaging>
+    <name>HyperIoT Karaf distribution Parent</name>
+    <description>HyperIoT Karaf Distribution parent project</description>
+    <properties>
+        <karaf.version>${karaf.version}</karaf.version>
+        <hyperiot.version>${hyperiot.version}</hyperiot.version>
+        <org.apache.felix.metatype.version>1.2.4</org.apache.felix.metatype.version>
+    </properties>
+    <repositories>
+        <repository>
+            <id>it.acsoftware.hyperiot</id>
+            <name>hyperiot nexus</name>
+            <url>https://nexus.acsoftware.it/nexus/repository/maven/</url>
+        </repository>
+    </repositories>
+
+	<distributionManagement>
+	    <repository>
+           <id>it.acsoftware.hyperiot</id>
+           <name>hyperiot nexus</name>
+           <url>https://nexus.acsoftware.it/nexus/repository/maven-hyperiot/</url>
+	    </repository>
+	</distributionManagement>
+
+	<profiles>
+		<profile>
+	  	  <id>test</id>
+	  		<properties>
+	    		<resource.path>src/main/test/resources</resource.path>
+				<resource.filtered.path>src/main/test/filtered-resources</resource.filtered.path>
+	  		</properties>
+		</profile>
+		<profile>
+	  	  <id>production</id>
+	  		<properties>
+	    		<resource.path>src/main/prod/resources/</resource.path>
+			<resource.filtered.path>src/main/prod/filtered-resources</resource.filtered.path>
+	  		</properties>
+		</profile>
+		<profile>
+	  	  <id>development</id>
+	  		<properties>
+	    		<resource.path>src/main/development/resources/</resource.path>
+			<resource.filtered.path>src/main/development/filtered-resources</resource.filtered.path>
+	  		</properties>
+			<activation>
+			           <activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+	</profiles>
+
+	<dependencies>
+        <dependency>
+            <!-- scope is compile so all features (there is only one) are installed into startup.properties and the feature repo itself is not added in etc/org.apache.karaf.features.cfg file -->
+            <groupId>org.apache.karaf.features</groupId>
+            <artifactId>framework</artifactId>
+            <version>${karaf.version}</version>
+            <type>kar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.karaf.features</groupId>
+            <artifactId>standard</artifactId>
+            <classifier>features</classifier>
+            <version>${karaf.version}</version>
+            <type>xml</type>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.karaf.features</groupId>
+            <artifactId>enterprise</artifactId>
+            <classifier>features</classifier>
+            <version>${karaf.version}</version>
+            <type>xml</type>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>it.acsoftware.hyperiot.core</groupId>
+            <artifactId>HyperIoTCore-features</artifactId>
+            <classifier>features</classifier>
+            <version>${hyperiot.version}</version>
+            <type>xml</type>
+            <scope>runtime</scope>
+        </dependency>
+		<!-- JMX Monitoring TOOL -->
+		<dependency>
+			<groupId>io.hawt</groupId>
+			<artifactId>hawtio-karaf</artifactId>
+			<version>2.14.5</version>
+			<type>xml</type>
+			<classifier>features</classifier>
+			<scope>runtime</scope>
+		</dependency>
+
+        <!-- STARTUP FEATURES -->
+
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.metatype</artifactId>
+            <version>${org.apache.felix.metatype.version}</version>
+        </dependency>
+
+    </dependencies>
+    <build>
+        <!-- if you want to include resources in the distribution -->
+        <resources>
+            <resource>
+                <directory>${resource.path}</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>${resource.filtered.path}</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- karaf-maven-plugin will call both assembly and archive goals -->
+            <plugin>
+                <groupId>org.apache.karaf.tooling</groupId>
+                <artifactId>karaf-maven-plugin</artifactId>
+                <version>${karaf.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <bootFeatures>
+                        <feature>standard</feature>
+                        <feature>hyperiot-core-clustered</feature>
+						<feature>hawtio</feature>
+                    </bootFeatures>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "custom",
+        "projectName": "HyperIoTHBaseConnector",
+        "projectGroupId": "it.acsoftware.hyperiot.hbase.connector",
+        "projectVersion": "1.0.0",
+        "projectFolder": "HyperIoTHBaseConnector-hbaseBundles"
+    }
+}

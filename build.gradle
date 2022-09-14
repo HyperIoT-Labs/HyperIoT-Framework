@@ -1,0 +1,52 @@
+import groovy.xml.XmlUtil
+
+// Available to customize the build
+wrapper {
+  jarFile = rootProject.file('.gradle-wrapper/gradle-wrapper.jar')
+}
+
+allprojects {
+  apply plugin: 'java'
+  sourceCompatibility = 11
+  targetCompatibility = 11
+}
+
+
+task newRelease(){
+  ext.updateHyperIoTProperties = { karafVersion,hyperIoTVersion ->
+    def props = new Properties();
+    def versionsFile = new File(project.projectDir.toString()+"/hyperiot.properties")
+    def versionsContent = versionsFile.getText("UTF-8");
+    def fos = new FileOutputStream(versionsFile);
+    props.load(new StringReader(versionsContent));
+    props.setProperty("hyperIoTVersion",(String)hyperIoTVersion)
+    props.setProperty("karafVersion",(String)karafVersion)
+    props.store(fos,"Upgrade to karaf "+karafVersion+" and hyperiot version "+hyperIoTVersion)
+  }
+
+  ext.updateTestDistributionVersion = { karafVersion, hyperIoTVersion ->
+    def parser = new XmlParser()
+    def pomXmlFile = new File('./containers-src/hyperiot-karaf-distribution-test/pom.xml');
+    def pomXmlStr = pomXmlFile.getText('UTF-8')
+    def pomXml = parser.parseText(pomXmlStr)
+    pomXml.parent.version[0].value = hyperIoTVersion + "_karaf_" + karafVersion;
+    pomXmlStr = XmlUtil.serialize(pomXml);
+    def writer = pomXmlFile.newWriter();
+    writer.write(pomXmlStr)
+    writer.close()
+  }
+
+  doLast{
+    def karafVersion = System.getProperty("karaf.version");
+    def hyperiotVersion = System.getProperty("hyperiot.version");
+    if(karafVersion == null || karafVersion.isEmpty() || hyperIoTVersion == null || hyperiotVersion.isEmpty())
+      throw new RuntimeException("Invalid HyperIoT or Karaf version")
+    updateHyperIoTProperties(karafVersion,hyperiotVersion)
+    updateTestDistributionVersion(karafVersion,hyperiotVersion)
+  }
+}
+
+project.ext.publishRepoName = "ACSoftwareRepository"
+project.ext.publishRepoUrl =  "https://nexus.acsoftware.it/nexus/repository/maven-hyperiot/"
+project.ext.publishRepoUsername = System.getProperty("publishRepoUsername","");
+project.ext.publishRepoPassword = System.getProperty("publishRepoPassword","");

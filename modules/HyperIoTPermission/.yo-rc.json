@@ -1,0 +1,30 @@
+{
+  "generator-hyperiot": {
+        "projectSuffix": "permission",
+        "projectSuffixUC": "Permission",
+        "projectSuffixLC": "permission",
+        "projectName": "HyperIoTPermission",
+        "projectGroupId": "it.acsoftware.hyperiot.permission",
+        "projectVersion": "1.0.0",
+		"applicationTypeEntity":true,
+        "hasRestServices": true,
+        "projectApiPath": "modules/HyperIoTPermission/HyperIoTPermission-api",
+        "projectFeaturesPath": "modules/HyperIoTPermission/HyperIoTPermission-features",
+        "projectModelPath": "modules/HyperIoTPermission/HyperIoTPermission-model",
+        "projectRepositoryPath": "modules/HyperIoTPermission/HyperIoTPermission-repository",
+        "projectServicePath": "modules/HyperIoTPermission/HyperIoTPermission-service",
+        "projectServiceRestPath": "modules/HyperIoTPermission/HyperIoTPermission-service-rest",
+        "apiPackage": "it.acsoftware.hyperiot.permission.api",
+        "apiPackagePath": "/src/main/java/it/acsoftware/hyperiot/permission//api",
+        "modelPackage": "it.acsoftware.hyperiot.permission.model",
+        "modelPackagePath": "/src/main/java/it/acsoftware/hyperiot/permission//model",
+        "repositoryPackage": "it.acsoftware.hyperiot.permission.repository",
+        "repositoryPackagePath": "/src/main/java/it/acsoftware/hyperiot/permission//repository",
+        "servicePackage": "it.acsoftware.hyperiot.permission.service",
+        "servicePackagePath": "/src/main/java/it/acsoftware/hyperiot/permission//service",
+        "serviceRestPackage": "it.acsoftware.hyperiot.permission.service.rest",
+        "serviceRestPackagePath": "/src/main/java/it/acsoftware/hyperiot/permission//service/rest",
+		"parent-project":true
+     
+  }
+}

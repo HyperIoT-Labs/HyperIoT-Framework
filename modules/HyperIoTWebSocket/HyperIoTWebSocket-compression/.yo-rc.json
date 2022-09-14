@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "custom",
+        "projectName": "HyperIoTWebSocket",
+        "projectGroupId": "it.acsoftware.hyperiot.websocket",
+        "projectVersion": "1.3.8",
+        "projectFolder": "HyperIoTWebSocket-compression"
+    }
+}

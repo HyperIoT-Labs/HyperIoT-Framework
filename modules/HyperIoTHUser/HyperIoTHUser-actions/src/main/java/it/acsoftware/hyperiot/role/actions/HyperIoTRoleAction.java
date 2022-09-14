@@ -1,0 +1,42 @@
+package it.acsoftware.hyperiot.role.actions;
+
+import it.acsoftware.hyperiot.base.action.HyperIoTActionName;
+
+/**
+ * @author Aristide Cittadino Model class that enumerate Role Actions
+ */
+public enum HyperIoTRoleAction implements HyperIoTActionName {
+
+    // TO DO: add enumerations here
+    ASSIGN_MEMBERS(Names.ASSIGN_MEMBERS), REMOVE_MEMBERS(Names.REMOVE_MEMBERS), API_ACCESS(Names.API_ACCESS), PERMISSION(Names.PERMISSION);
+
+    /**
+     * String name for Role Action
+     */
+    private String name;
+
+    /**
+     * Role Action with the specified name.
+     *
+     * @param name parameter that represent the role action
+     */
+    private HyperIoTRoleAction(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Gets the name of role action
+     */
+    public String getName() {
+        return name;
+    }
+
+    public class Names {
+        public static final String ASSIGN_MEMBERS = "assign_members";
+        public static final String REMOVE_MEMBERS = "unassign";
+        public static final String API_ACCESS = "api_access";
+        public static final String PERMISSION = "permission";
+
+    }
+
+}

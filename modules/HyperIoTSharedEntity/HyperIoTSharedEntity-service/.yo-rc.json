@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "service",
+        "projectName": "HyperIoTSharedEntity",
+        "projectGroupId": "it.acsoftware.hyperiot.shared.entity",
+        "projectVersion": "1.0.0"
+    }
+}

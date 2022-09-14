@@ -1,0 +1,15 @@
+Import-Package: \
+    javax.validation*;version='${range;[====,+)}',\
+    javax.persistence.*;version='${range;[===,+)}',\
+    org.hibernate.*;version='${range;[=,+)}',\
+    org.hibernate.proxy;version='${range;[=,+)}',\
+    javassist.util.proxy;version='${range;[====,+)}',\
+    org.osgi.framework,\
+    org.apache.commons.lang3,\
+    org.sl4j.*,\
+    com.fasterxml.jackson*;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.validation;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.model;version='${range;[===,+)}'
+Export-Package: it.acsoftware.hyperiot.blockchain.ethereum.connector.model

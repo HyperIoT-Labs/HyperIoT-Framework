@@ -1,0 +1,118 @@
+package it.acsoftware.hyperiot.base.api;
+
+import it.acsoftware.hyperiot.base.api.entity.HyperIoTProtectedEntity;
+import org.slf4j.LoggerFactory;
+
+/**
+ * @author Aristide Cittadino Generic Interface Component for
+ * HyperIoTPermissionManager. This interface define all methods able to
+ * check if a user has permissions for each actions of the HyperIoT
+ * platform.
+ */
+public interface HyperIoTPermissionManager {
+    static final org.slf4j.Logger log = LoggerFactory.getLogger(HyperIoTPermissionManager.class.getName());
+
+    /**
+     * Checks if the user corresponding to the username has the specified roles
+     *
+     * @param rolesNames
+     * @return
+     */
+    boolean userHasRoles(String username, String[] rolesNames);
+
+    /**
+     * Checks if an existing user has permissions for action of HyperIoTAction.
+     * Moreover every user, if protected, is set as a base entity of the HyperIoT
+     * platform.
+     *
+     * @param username parameter that indicates the username of entity
+     * @param entity   parameter that indicates the resource on which the action should be performed
+     * @param action   interaction of the entity with HyperIoT platform
+     */
+    boolean checkPermission(String username, HyperIoTResource entity, HyperIoTAction action);
+
+    /**
+     * Checks if an existing user has permissions for action of HyperIoTAction.
+     *
+     * @param username parameter that indicates the username of entity
+     * @param resource parameter that indicates the resource on which the action should be performed
+     * @param action   interaction of the user with HyperIoT platform
+     */
+    boolean checkPermission(String username, Class<? extends HyperIoTResource> resource,
+                            HyperIoTAction action);
+
+    /**
+     * Checks if an existing user has permissions for action of HyperIoTAction.
+     *
+     * @param username     parameter that indicates the username of entity
+     * @param resourceName parameter that indicates the resource name of action
+     * @param action       interaction of the user with HyperIoT platform
+     */
+    boolean checkPermission(String username, String resourceName, HyperIoTAction action);
+
+    /**
+     * @param username     parameter that indicates the username of entity
+     * @param resourceName parameter that indicates the resource name of action
+     * @param action       interaction of the user with HyperIoT platform
+     * @param entities     List of entities User must own in order to perform the action
+     * @return
+     */
+    boolean checkPermissionAndOwnership(String username, String resourceName, HyperIoTAction action, HyperIoTResource... entities);
+
+    /**
+     * @param username parameter that indicates the username of entity
+     * @param resource parameter that indicates the resource on which the action should be performed
+     * @param action   interaction of the user with HyperIoT platform
+     * @param entities List of other entities User must own in order to perform the action
+     * @return
+     */
+    boolean checkPermissionAndOwnership(String username, HyperIoTResource resource, HyperIoTAction action, HyperIoTResource... entities);
+
+    /**
+     * Checks wether resource is owned by the user
+     *
+     * @param user     User that should own the resource
+     * @param resource Object that should be owned by the user
+     * @return true if the user owns the resource
+     */
+    boolean checkUserOwnsResource(HyperIoTUser user, Object resource);
+
+    /**
+     * Return the protected entity of HyperIoT platform
+     *
+     * @param entity parameter that indicates the protected entity of HyperIoT
+     *               platform
+     * @return protected entity
+     */
+    static boolean isProtectedEntity(Object entity) {
+        log.debug("invoking Permission Manager getProtectedEntity "
+            + entity.getClass().getSimpleName());
+        if (entity instanceof HyperIoTProtectedEntity)
+            return true;
+
+        if (entity instanceof HyperIoTProtectedResource)
+            return true;
+
+        return false;
+    }
+
+    /**
+     * Return the protected resource name of entity of HyperIoT platform
+     *
+     * @param resourceName parameter that indicates the protected resource name of
+     *                     entity of HyperIoT platform
+     * @return protected resource name of entity
+     */
+    static boolean isProtectedEntity(String resourceName) {
+        log.debug("invoking Permission getProtectedEntity " + resourceName);
+        try {
+            boolean isAssignable = HyperIoTProtectedEntity.class.isAssignableFrom(Class.forName(resourceName));
+            isAssignable = isAssignable || HyperIoTProtectedResource.class.isAssignableFrom(Class.forName(resourceName));
+            return isAssignable;
+        } catch (ClassNotFoundException e) {
+            log.warn(e.getMessage());
+        }
+        // return the most restrictive condition
+        return true;
+    }
+}

@@ -1,0 +1,15 @@
+Import-Package:\
+    org.slf4j.*,\
+    javax.persistence;version='${range;[===,+)}',\
+    org.apache.aries*,\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.service;version='${range;[===,+)}',\
+    javax.validation;version='${range;[====,+)}',\
+    org.hibernate.validator;version='${range;[=,+)}',\
+    org.osgi.framework,\
+    org.osgi.util.tracker,\
+    it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.security.*;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.bundle.listener.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.bundle.listener.model;version='${range;[===,+)}'
+

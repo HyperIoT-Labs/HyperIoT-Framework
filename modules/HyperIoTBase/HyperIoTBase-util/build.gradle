@@ -1,0 +1,61 @@
+
+
+dependencies {
+	//OSGi Basic Imports
+	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //SLF4J
+    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+	//Hibernate
+    compileOnly group: 'org.hibernate', name: 'hibernate-core', version: project.hibernateVersion
+	compileOnly group: "org.hibernate.javax.persistence", name: "hibernate-jpa-2.1-api",version: project.hibernateJpaApiVersion
+
+	compileOnly project(":modules:HyperIoTBase:HyperIoTBase-api")
+	//Spring Security
+	compile group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.7.1'
+	//Apache
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+}
+
+jar {
+	manifest {
+		attributes('dsannotations': '*')
+	}
+	zip64 true
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+task buildHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install' ]
+}
+
+task publishHIT(type: GradleBuild) {
+	tasks = ['publish']
+}
+
+// Generate java class to import gradle variables on java files
+task generateBuildPropertiesJavaFile {
+	ext.outputDir = "$buildDir/generated/java"
+	inputs.property('hyperIoTVersion', project.hyperIoTVersion)
+	inputs.property('karafVersion', project.karafVersion)
+	outputs.dir outputDir
+	doLast {
+		mkdir "$outputDir/it/acsoftware/hyperiot/base/util"
+		file("$outputDir/it/acsoftware/hyperiot/base/util/BuildProperties.java").text =
+				"""|package it.acsoftware.hyperiot.base.util;
+               |public class BuildProperties {
+               |    public static String getHyperIoTVersion() { return "${project.hyperIoTVersion}"; }
+               |    public static String getHyperIoTKarafVersion() { return "${project.karafVersion}"; }
+               |}""".stripMargin()
+	}
+}
+compileJava.dependsOn generateBuildPropertiesJavaFile
+sourceSets.main.java.srcDir generateBuildPropertiesJavaFile.outputDir
+
+publishing {
+    	publications {
+        	hyperiot(MavenPublication) {
+            	from components.java
+        	}
+    }
+ }

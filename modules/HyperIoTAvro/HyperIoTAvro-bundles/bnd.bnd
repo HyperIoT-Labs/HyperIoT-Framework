@@ -1,0 +1,6 @@
+Import-Package: \
+   org.joda.time;resolution:=optional
+Export-Package:\
+    org.apache.avro.*, \
+    org.tukaani.xz.*
+DynamicImport-Package: *

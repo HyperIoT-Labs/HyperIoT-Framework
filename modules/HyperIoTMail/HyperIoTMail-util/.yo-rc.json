@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "custom",
+        "projectName": "HyperIoTMail",
+        "projectGroupId": "it.acsoftware.hyperiot.mail",
+        "projectVersion": "1.0.0",
+        "projectFolder": "HyperIoTMail-util"
+    }
+}

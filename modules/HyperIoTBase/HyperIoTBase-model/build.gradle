@@ -1,0 +1,51 @@
+
+
+dependencies {
+	//OSGi Basic Imports
+	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //SLF4J
+    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+	//Hibernate
+	compileOnly group: "org.hibernate.javax.persistence", name: "hibernate-jpa-2.1-api",version: project.hibernateJpaApiVersion
+	compileOnly group: 'org.hibernate', name: 'hibernate-core', version: project.hibernateVersion
+	compileOnly group: 'org.javassist', name: 'javassist', version: project.hibernateJavassistVersion
+	//Apache CXF Jose
+	compileOnly group: "org.apache.cxf" ,name:"cxf-rt-rs-security-jose-jaxrs",version: project.cxfVersion
+	//Swagger
+	compileOnly group: "org.apache.cxf" ,name: "cxf-rt-rs-service-description-swagger",version: project.cxfVersion
+	//Jackson
+    compileOnly group:"com.fasterxml.jackson.core", name: "jackson-core", version:project.jacksonVersion
+    compileOnly group:"com.fasterxml.jackson.core", name: "jackson-databind", version:project.jacksonVersion
+    compileOnly group:"com.fasterxml.jackson.core", name: "jackson-annotations", version: project.jacksonVersion
+	compileOnly group:"com.fasterxml.jackson.module",name:"jackson-module-jaxb-annotations",version:project.jacksonVersion
+	//Validation
+	compileOnly group: "javax.validation", name: "validation-api",version:project.javaxValidationVersion
+	compileOnly group: "org.hibernate",name: "hibernate-validator",version:project.hibernateValidatorVersion
+	//WebSocket
+    compileOnly group: 'org.eclipse.jetty.websocket', name: 'websocket-servlet', version: project.jettyWSVersion
+
+    // Jaas
+    compileOnly group: 'org.apache.karaf.jaas', name: 'org.apache.karaf.jaas.config', version: project.karafVersion
+    compileOnly group: 'org.apache.karaf.jaas', name: 'org.apache.karaf.jaas.boot', version: project.karafVersion
+
+    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-api")
+	compileOnly project(":modules:HyperIoTBase:HyperIoTBase-util")
+	compileOnly project(":modules:HyperIoTBase:HyperIoTBase-validation")
+}
+
+task buildHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install' ]
+}
+
+task publishHIT(type: GradleBuild) {
+	tasks = ['publish']
+}
+
+publishing {
+        publications {
+            hyperiot(MavenPublication) {
+            	from components.java
+        	}
+    }
+ }

@@ -1,0 +1,21 @@
+buildscript{
+    //Load global shared properties
+    def Properties props = new Properties()
+    def propFile = file('hyperiot.properties')
+    props.load(new FileInputStream(propFile));
+
+    repositories {
+        mavenLocal()
+        maven {
+            name = 'ACSoftwareRepository'
+            url = "https://nexus.acsoftware.it/nexus/repository/maven-hyperiot/"
+        }
+    }
+
+    dependencies {
+        classpath 'it.acsoftware.hyperiot.gradle.plugins.workspace:HyperIoTWorkspaceGradlePlugin:'+props.get("hyperIoTVersion")
+    }
+}
+
+apply plugin: 'it.acsoftware.hyperiot.workspace'
+

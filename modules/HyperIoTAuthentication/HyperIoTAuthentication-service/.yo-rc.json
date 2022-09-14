@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "service",
+        "projectName": "HyperIoTAuthentication",
+        "projectGroupId": "it.acsoftware.hyperiot.authentication",
+        "projectVersion": "1.0.0"
+    }
+}

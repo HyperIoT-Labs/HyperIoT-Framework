@@ -1,0 +1,16 @@
+Import-Package: \
+    org.osgi.framework*,\
+    org.osgi.service*,\
+    org.bouncycastle*,\
+    javax.crypto*,\
+    javax.ws.rs*,\
+    javax.security*,\
+    org.apache.cxf*,\
+    org.slf4j.*,\
+    it.acsoftware.hyperiot*
+Export-Package: \
+    it.acsoftware.hyperiot.base.security.rest,\
+    it.acsoftware.hyperiot.base.security.util,\
+    it.acsoftware.hyperiot.base.security.annotations
+DynamicImport-Package: *
+

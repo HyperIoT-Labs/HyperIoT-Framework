@@ -1,0 +1,11 @@
+Bundle-Activator: it.acsoftware.hyperiot.huser.actions.HUserActionsBundleActivator
+Import-Package: \
+    it.acsoftware.hyperiot.base.action;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.action.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.huser.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.role.model;version='${range;[===,+)}',\
+    org.slf4j.*
+Export-Package: it.acsoftware.hyperiot.huser.actions,\
+                it.acsoftware.hyperiot.role.actions
+
+

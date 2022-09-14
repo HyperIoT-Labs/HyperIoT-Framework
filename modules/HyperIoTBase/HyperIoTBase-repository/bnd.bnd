@@ -1,0 +1,19 @@
+Import-Package: \
+    javax.persistence*;version='${range;[===,+)}',\
+    org.hibernate.proxy;version='${range;[=,+)}',\
+    javassist.util.proxy;version='${range;[====,+)}',\
+    org.osgi.framework,\
+    org.postgresql,\
+    org.apache.aries.jpa.*,\
+    org.apache.commons.lang3;version='${range;[=,+)}',\
+    it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.osgi.util.filter;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.query.util.filter;version='${range;[===,+)}',\
+    org.slf4j.*
+Export-Package: it.acsoftware.hyperiot.base.repository
+
+

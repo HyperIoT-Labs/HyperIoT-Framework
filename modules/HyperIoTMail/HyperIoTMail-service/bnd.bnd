@@ -1,0 +1,21 @@
+Import-Package: \
+    org.slf4j.*,\
+    javax.persistence;version='${range;[===,+)}',\
+    org.osgi.framework,\
+    it.acsoftware.hyperiot.mail.model;version='${range;[===,+)}',\
+    javax.validation;version='${range;[====,+)}',\
+    org.hibernate.validator;version='${range;[=,+)}',\
+    org.hibernate.proxy;version='${range;[=,+)}',\
+    javassist.util.proxy;version='${range;[====,+)}',\
+    it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.security.*;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.mail.api;version='${range;[===,+)}' ,\
+    it.acsoftware.hyperiot.mail.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.service.entity;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.service;version='${range;[===,+)}',\
+    javax.mail.*,\
+    freemarker.*
+DynamicImport-Package: *
+
+

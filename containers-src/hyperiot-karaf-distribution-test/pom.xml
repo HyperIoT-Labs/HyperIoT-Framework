@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+  <modelVersion>4.0.0</modelVersion>
+    
+  <groupId>it.acsoftware.hyperiot.container</groupId>
+    
+  <artifactId>hyperiot-karaf-distribution-test</artifactId>
+    
+  <version>${hyperiot.version}</version>
+    
+  <packaging>karaf-assembly</packaging>
+    
+  <name>HyperIoT</name>
+    
+  <description>HyperIoT karaf-microservices with hyperiot framework used for testing purpose</description>
+    
+  <properties>
+        
+    <hyperiot.version>${hyperiot.version}</hyperiot.version>
+        
+    <karaf.version>${karaf.version}</karaf.version>
+        
+    <pax.exam.version>4.13.4</pax.exam.version>
+      
+  </properties>
+    
+  <parent>
+        
+    <groupId>it.acsoftware.hyperiot.container</groupId>
+        
+    <artifactId>hyperiot-karaf-distribution-parent</artifactId>
+        
+    <version>2.2.0_karaf_4.4.0</version>
+      
+  </parent>
+    
+  <repositories>
+        
+    <repository>
+            
+      <id>it.acsoftware.hyperiot</id>
+            
+      <name>hyperiot nexus</name>
+            
+      <url>https://nexus.acsoftware.it/nexus/repository/maven/</url>
+          
+    </repository>
+      
+  </repositories>
+    
+  <distributionManagement>
+        
+    <repository>
+            
+      <id>it.acsoftware.hyperiot</id>
+            
+      <name>hyperiot nexus</name>
+            
+      <url>https://nexus.acsoftware.it/nexus/repository/maven-hyperiot/</url>
+          
+    </repository>
+      
+  </distributionManagement>
+    
+  <dependencies/>
+    
+  <build>
+        
+    <plugins>
+            
+      <plugin>
+                
+        <groupId>org.apache.karaf.tooling</groupId>
+                
+        <artifactId>karaf-maven-plugin</artifactId>
+                
+        <version>${karaf.version}</version>
+                
+        <extensions>true</extensions>
+                
+        <configuration>
+                    
+          <bootFeatures>
+                        
+            <feature>standard</feature>
+                        
+            <feature>pax-jdbc-h2</feature>
+                        
+            <feature>hyperiot-core-test</feature>
+                      
+          </bootFeatures>
+                  
+        </configuration>
+              
+      </plugin>
+            
+      <plugin>
+                
+        <artifactId>maven-antrun-plugin</artifactId>
+                
+        <executions>
+                    
+          <execution>
+                        
+            <id>fix-distro</id>
+                        
+            <phase>prepare-package</phase>
+                        
+            <goals>
+                            
+              <goal>run</goal>
+                          
+            </goals>
+                        
+            <configuration>
+                            
+              <tasks>
+                                
+                <delete dir="${project.build.directory}/assembly/system/it/acsoftware" includeemptydirs="true"/>
+                              
+              </tasks>
+                          
+            </configuration>
+                      
+          </execution>
+                  
+        </executions>
+              
+      </plugin>
+          
+    </plugins>
+      
+  </build>
+  
+</project>

@@ -1,0 +1,10 @@
+Export-Package: \
+    it.acsoftware.hyperiot.base.api,\
+    it.acsoftware.hyperiot.base.api.entity,\
+    it.acsoftware.hyperiot.base.api.proxy,\
+    it.acsoftware.hyperiot.base.api.authentication
+Import-Package: \
+    javax.activation;version='${range;[=,+)}'
+DynamicImport-Package: *
+
+

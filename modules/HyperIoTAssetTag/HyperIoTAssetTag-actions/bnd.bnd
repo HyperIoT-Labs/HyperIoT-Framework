@@ -1,0 +1,8 @@
+Bundle-Activator: it.acsoftware.hyperiot.asset.tag.actions.AssetTagActionsBundleActivator
+Import-Package: \
+    it.acsoftware.hyperiot.base.action;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.action.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.asset.tag.model;version='${range;[===,+)}',\
+    org.slf4j.*
+Export-Package: it.acsoftware.hyperiot.asset.tag.actions
+

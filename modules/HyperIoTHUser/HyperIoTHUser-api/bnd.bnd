@@ -1,0 +1,10 @@
+Export-Package: \
+    it.acsoftware.hyperiot.huser.api,\
+    it.acsoftware.hyperiot.role.api
+Import-Package: \
+    org.slf4j.*,\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.huser.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.role.model;version='${range;[===,+)}'
+

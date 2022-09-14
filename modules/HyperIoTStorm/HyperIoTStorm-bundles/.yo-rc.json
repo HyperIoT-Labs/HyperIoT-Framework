@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "custom",
+        "projectName": "HyperIoTStorm",
+        "projectGroupId": "it.acsoftware.hyperiot.storm",
+        "projectVersion": "1.1.0",
+        "projectFolder": "HyperIoTStorm-bundles"
+    }
+}

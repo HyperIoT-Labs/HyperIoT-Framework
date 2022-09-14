@@ -1,0 +1,7 @@
+Export-Package: \
+    it.acsoftware.hyperiot.base.action.util,\
+    it.acsoftware.hyperiot.base.action
+Import-Package: \
+    org.slf4j.*,\
+    org.osgi.framework.*,\
+    it.acsoftware.hyperiot.*

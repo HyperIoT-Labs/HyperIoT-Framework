@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>it.acsoftware.hyperiot.container</groupId>
+    <artifactId>hyperiot-karaf-distribution</artifactId>
+    <version>${hyperiot.version}</version>
+    <packaging>maven-archetype</packaging>
+
+    <properties>
+        <hyperiot.version>${hyperiot.version}</hyperiot.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>it.acsoftware.hyperiot</id>
+            <name>hyperiot nexus</name>
+            <url>https://nexus.acsoftware.it/nexus/repository/maven/</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>it.acsoftware.hyperiot</id>
+            <name>hyperiot nexus</name>
+            <url>https://nexus.acsoftware.it/nexus/repository/maven-hyperiot/</url>
+        </repository>
+    </distributionManagement>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.archetype</groupId>
+                <artifactId>archetype-packaging</artifactId>
+                <version>3.1.1</version>
+            </extension>
+        </extensions>
+    </build>
+</project>

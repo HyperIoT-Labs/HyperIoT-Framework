@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "test",
+        "projectName": "HyperIoTJobScheduler",
+        "projectGroupId": "it.acsoftware.hyperiot.jobscheduler",
+        "projectVersion": "1.0.0"
+    }
+}

@@ -1,0 +1,22 @@
+Export-Package: \
+    it.acsoftware.hyperiot.base.service.rest
+Import-Package: \
+    javax.persistence.*,\
+    org.osgi.framework,\
+    it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.model.authentication;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.model.authentication.context;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.model.authentication.principal;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api.authentication;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.security.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.security.rest;version='${range;[===,+)}',\
+    com.fasterxml.jackson*;version='${range;[===,+)}',\
+    javax.ws*,\
+    org.apache.cxf*,\
+    org.slf4j.*
+
+

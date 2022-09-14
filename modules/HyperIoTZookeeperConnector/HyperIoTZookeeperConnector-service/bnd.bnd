@@ -1,0 +1,35 @@
+Export-Package: \
+    it.acsoftware.hyperiot.zookeeper.connector.service
+Import-Package: \
+    org.slf4j.*,\
+    org.osgi.framework,\
+    org.osgi.service.cm,\
+    org.osgi.util.tracker,\
+    org.hibernate.validator;version='${range;[=,+)}',\
+    org.apache.curator.framework,\
+    org.apache.curator.framework.api,\
+    org.apache.curator.framework.recipes.leader,\
+    org.apache.curator,\
+    org.apache.curator.retry,\
+    org.osgi.service.components*,\
+    org.apache.zookeeper*,\
+    javax.persistence;version='${range;[===,+)}',\
+    javax.net.ssl,\
+    javax.security.sasl,\
+    javax.security.auth.login,\
+    javax.validation;version='${range;[====,+)}',\
+    com.google.common*,\
+    it.acsoftware.hyperiot.base.action;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.action.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.security.*;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.service;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.zookeeper.connector.actions;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.zookeeper.connector.api;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.zookeeper.connector.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.zookeeper.connector.util;version='${range;[===,+)}'
+
+
+

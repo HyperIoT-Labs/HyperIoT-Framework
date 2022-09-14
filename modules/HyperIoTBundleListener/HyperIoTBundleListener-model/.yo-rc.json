@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "model",
+        "projectName": "HyperIoTBundleListener",
+        "projectGroupId": "it.acsoftware.hyperiot.bundle.listener",
+        "projectVersion": "1.0.0"
+    }
+}

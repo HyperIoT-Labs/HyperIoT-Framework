@@ -1,0 +1,38 @@
+
+dependencies {
+	//OSGi Basic Imports
+	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+	compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+	//SLF4J
+    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+	compile group: 'org.testcontainers', name: 'testcontainers', version: project.testContainersVersion
+	compile group: 'com.github.docker-java', name: 'docker-java-api', version: project.dockerJavaApiVersion
+	compile group: 'com.github.docker-java', name: 'docker-java-transport-zerodep', version: project.dockerJavaApiVersion
+	compile group: 'net.java.dev.jna', name: 'jna', version: project.jnaVersion
+	compile group: 'org.yaml', name:'snakeyaml', version: 1.30
+
+}
+
+jar {
+	manifest {
+		attributes('dsannotations': '*')
+	}
+	zip64 true
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+task buildHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install' ]
+}
+
+task publishHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install','publish' ]
+}
+
+publishing {
+    	publications {
+        	hyperiot(MavenPublication) {
+            	from components.java
+        	}
+    }
+ }

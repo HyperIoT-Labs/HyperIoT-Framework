@@ -1,0 +1,41 @@
+
+
+dependencies {
+	//OSGi Basic Imports
+	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //SLF4J
+    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+	//Validation
+    compileOnly group: 'javax.validation', name: 'validation-api', version: project.javaxValidationVersion
+	compileOnly group: "org.hibernate.javax.persistence", name: "hibernate-jpa-2.1-api",version: project.hibernateJpaApiVersion
+	compileOnly group: "org.hibernate",name: "hibernate-validator",version:project.hibernateValidatorVersion
+
+	compileOnly project(":modules:HyperIoTBase:HyperIoTBase-api")
+	compileOnly project(":modules:HyperIoTBase:HyperIoTBase-util")
+
+	compileOnly group: "org.passay", name:"passay",version:"1.4.0"
+
+}
+
+jar {
+	manifest {
+		attributes('dsannotations': '*')
+	}
+}
+
+task buildHIT(type: GradleBuild) {
+	tasks = [ 'clean','build','install' ]
+}
+
+task publishHIT(type: GradleBuild) {
+	tasks = ['publish']
+}
+
+publishing {
+    	publications {
+        	hyperiot(MavenPublication) {
+            	from components.java
+        	}
+    }
+ }

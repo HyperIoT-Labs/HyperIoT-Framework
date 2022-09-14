@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "service",
+        "projectName": "HyperIoTAssetTag",
+        "projectGroupId": "it.acsoftware.hyperiot.asset.tag",
+        "projectVersion": "1.0.0"
+    }
+}

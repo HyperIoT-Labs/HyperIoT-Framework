@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "test",
+        "projectName": "HyperIoTPermission",
+        "projectGroupId": "it.acsoftware.hyperiot.permission",
+        "projectVersion": "1.0.0",
+        "projectFolder": "HyperIoTPermission-test"
+    }
+}

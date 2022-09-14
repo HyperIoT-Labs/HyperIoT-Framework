@@ -1,0 +1,37 @@
+Import-Package: \
+     org.slf4j.*,\
+     it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.base.security.util;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.osgi.util.filter;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.base.service;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.base.model;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.kafka.connector.api;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.kafka.connector.model;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.zookeeper.connector.api;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.zookeeper.connector.model;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.zookeeper.connector.util;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.websocket.api.channel;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.websocket.api;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.websocket.model;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.websocket.model.message;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.websocket.session;version='${range;[===,+)}',\
+     org.apache.curator.*,\
+     org.apache.kafka.clients,\
+     org.apache.kafka.clients.admin,\
+     org.apache.kafka.common,\
+     org.apache.kafka.common.serialization,\
+     javax.crypto,\
+     reactor.core,\
+     reactor.core.publisher,\
+     reactor.kafka.receiver,\
+     org.apache.kafka.clients.producer,\
+     org.eclipse.jetty.websocket.api,\
+     org.osgi.service*,\
+     org.osgi.framework*
+Export-Package: \
+     it.acsoftware.hyperiot.kafka.connector.service.websocket,\
+     it.acsoftware.hyperiot.kafka.connector.service.websocket.channel
+
+

@@ -1,0 +1,7 @@
+Bundle-Activator: it.acsoftware.hyperiot.hadoopmanager.actions.HadoopManagerActionsBundleActivator
+Import-Package: \
+    it.acsoftware.hyperiot.base.action;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.action.util;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.hadoopmanager.model;version='${range;[===,+)}'
+Export-Package: it.acsoftware.hyperiot.hadoopmanager.actions
+

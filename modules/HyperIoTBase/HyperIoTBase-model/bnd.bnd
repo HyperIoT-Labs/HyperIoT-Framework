@@ -1,0 +1,24 @@
+Import-Package: \
+    javax.persistence*;version='${range;[===,+)}',\
+    javax.validation*;version='${range;[====,+)}',\
+    org.hibernate.*;version='${range;[=,+)}',\
+    org.hibernate.proxy;version='${range;[=,+)}',\
+    javassist.util.proxy;version='${range;[=,+)}',\
+    org.osgi.framework,\
+    org.postgresql,\
+    com.fasterxml.jackson*;version='${range;[===,+)}',\
+    javax.ws.rs.ext,\
+    javax.ws.rs.core,\
+    org.apache.cxf*,\
+    it.acsoftware.hyperiot.base.validation;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.base.api;version='${range;[===,+==)}',\
+    it.acsoftware.hyperiot.base.util;version='${range;[===,+==)}',\
+    org.slf4j.*
+Export-Package: \
+    it.acsoftware.hyperiot.base.model,\
+    it.acsoftware.hyperiot.base.exception,\
+    it.acsoftware.hyperiot.base.model.authentication,\
+    it.acsoftware.hyperiot.base.model.authentication.context,\
+    it.acsoftware.hyperiot.base.model.authentication.principal
+

@@ -1,0 +1,10 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "custom",
+        "projectName": "HyperIoTHUser",
+        "projectGroupId": "it.acsoftware.hyperiot.huser",
+        "projectVersion": "1.0.0",
+        "projectFolder": "HyperIoTHUser-command"
+    }
+}

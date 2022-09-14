@@ -1,0 +1,9 @@
+{
+    "generator-hyperiot": {
+        "inner-project": true,
+        "project-type": "actions",
+        "projectName": "HyperIoTKafkaMQTTConnector",
+        "projectGroupId": "it.acsoftware.hyperiot.kafka.connector",
+        "projectVersion": "1.0.0"
+    }
+}

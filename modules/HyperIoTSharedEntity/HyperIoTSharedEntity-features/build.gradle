@@ -1,0 +1,95 @@
+apply plugin: 'com.github.lburgazzoli.karaf'
+
+
+
+configurations {
+	sharedEntity {
+		transitive = false
+	}
+      sharedEntityRest {
+		transitive = false
+	}
+}
+
+dependencies {
+	sharedEntity 'it.acsoftware.hyperiot.shared.entity:HyperIoTSharedEntity-actions:'+project.version
+ 	sharedEntity 'it.acsoftware.hyperiot.shared.entity:HyperIoTSharedEntity-api:'+project.version
+	sharedEntity 'it.acsoftware.hyperiot.shared.entity:HyperIoTSharedEntity-service:'+project.version
+	sharedEntity 'it.acsoftware.hyperiot.shared.entity:HyperIoTSharedEntity-model:'+project.version
+	sharedEntity 'it.acsoftware.hyperiot.shared.entity:HyperIoTSharedEntity-repository:'+project.version
+ 	sharedEntityRest 'it.acsoftware.hyperiot.shared.entity:HyperIoTSharedEntity-service-rest:'+project.version
+}
+
+
+karaf {
+    features {
+        // See section below for karaf 4 support if using 1.3.0
+        xsdVersion  = '1.2.0'
+        version     = '4.0.0' // Your project version
+        description = 'Karaf features'
+
+        // Include the current project, false by default
+        includeProject = false
+
+        // Add in extra repositories to the features xml file
+        //Example:
+        //repository "mvn:org.code-house.jackson/features/2.8.7/xml/features"
+
+        feature {
+            name        = 'hyperiot-sharedentity'
+            description = 'All  HyperIoT HyperIoTSharedEntity modules'
+
+            feature 'hyperiot-base'
+            configurations 'sharedEntity','sharedEntityRest'
+
+        }
+
+
+        feature {
+            name        = 'hyperiot-sharedentity-basic'
+            description = 'All  HyperIoT HyperIoTSharedEntity modules with NO rest services'
+
+            feature 'hyperiot-base-basic'
+            configurations 'sharedEntity'
+        }
+
+    }
+
+    // Enable generation of Karaf Archive KAR based on features defined above.
+    // To generate kar either use generateKar, assemble or install
+    kar {
+        // Optionally set the kar name, default is:
+        //
+        //     ${features.name}-${features.version}.kar
+        //
+        // Extension is automatically set to .kar
+        archiveName = 'HyperIoTSharedEntity'
+    }
+}
+
+
+task buildHIT(type: GradleBuild) {
+
+}
+
+task buildFeatures(type: GradleBuild) {
+	tasks = [ 'clean','generateFeatures','build','install' ]
+}
+
+task publishHIT(type: GradleBuild) {
+
+}
+
+task publishFeatures(type: GradleBuild) {
+	tasks = [ 'clean','generateFeatures','build','install','publish' ]
+}
+
+def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
+publishing {
+    publications {
+        hyperiot(MavenPublication) {
+            artifactId project.name
+            artifact source: featureFile, classifier: 'features'
+        }
+    }
+ }
