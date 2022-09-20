@@ -4,6 +4,9 @@
 
 - [What is HyperIoT Framework ?](#what-is-hyperiot-framework-?)
 - [Convention Over Coding](#convention-over-coding)
+- [Architecture](#architecture)
+- [Core Concepts](#core-concepts)
+- [Getting Started](#getting-started)
 
 ## What is HyperIoT Framework ?
 
