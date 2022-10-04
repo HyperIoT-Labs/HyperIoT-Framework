@@ -1,5 +1,6 @@
 package it.acsoftware.hyperiot.kafka.connector.service.websocket.channel;
 
+import it.acsoftware.hyperiot.base.model.HyperIoTClusterNodeInfo;
 import it.acsoftware.hyperiot.base.util.HyperIoTConstants;
 import it.acsoftware.hyperiot.base.util.HyperIoTUtil;
 import it.acsoftware.hyperiot.kafka.connector.api.KafkaConnectorSystemApi;
@@ -7,6 +8,7 @@ import it.acsoftware.hyperiot.kafka.connector.api.KafkaMessageReceiver;
 import it.acsoftware.hyperiot.kafka.connector.api.KafkaProducerPool;
 import it.acsoftware.hyperiot.kafka.connector.model.HyperIoTKafkaMessage;
 import it.acsoftware.hyperiot.kafka.connector.util.HyperIoTKafkaConnectorConstants;
+import it.acsoftware.hyperiot.websocket.api.channel.HyperIoTWebSocketChannel;
 import it.acsoftware.hyperiot.websocket.api.channel.HyperIoTWebSocketChannelClusterMessageBroker;
 import it.acsoftware.hyperiot.websocket.api.channel.HyperIoTWebSocketChannelManager;
 import it.acsoftware.hyperiot.websocket.api.channel.HyperIoTWebSocketChannelRemoteCommand;
@@ -73,6 +75,22 @@ public class HyperIoTWebSocketChannelKafkaMessageBroker implements HyperIoTWebSo
         kafkaProducerPool = this.getKafkaConnectorSystemApi().getNewProducerPool(producersPoolSize);
     }
 
+    /**
+     * Return the basic name communication topic on which nodeId is added <comm_basic_topic>-<nodeId>
+     *
+     * @return
+     */
+    private String getBaseCommunicationTopic() {
+        int nodeIdIndex = this.communicationTopic.lastIndexOf("-");
+        if (this.communicationTopic != null && nodeIdIndex > 0)
+            return this.communicationTopic.substring(0, nodeIdIndex);
+        return this.communicationTopic;
+    }
+
+    private String getClusterNodeCommunicationTopic(HyperIoTClusterNodeInfo nodeInfo){
+        return this.getBaseCommunicationTopic()+"-"+nodeInfo.getNodeId();
+    }
+
     @Override
     public void registerChannelManager(HyperIoTWebSocketChannelManager hyperIoTWebSocketChannelManager) {
         this.channelManager = hyperIoTWebSocketChannelManager;
@@ -84,8 +102,19 @@ public class HyperIoTWebSocketChannelKafkaMessageBroker implements HyperIoTWebSo
      */
     @Override
     public void sendMessage(String channelId, HyperIoTWebSocketMessage hyperIoTWebSocketMessage) {
-        HyperIoTKafkaMessage message = new HyperIoTKafkaMessage(channelId.getBytes(StandardCharsets.UTF_8), this.communicationTopic, hyperIoTWebSocketMessage.toJson().getBytes(StandardCharsets.UTF_8));
-        this.kafkaProducerPool.send(message);
+        Optional<HyperIoTWebSocketChannel> channelOpt = this.channelManager.getAvailableChannels().stream().filter(channel -> channel.getChannelId().equalsIgnoreCase(channelId)).findAny();
+        if (channelOpt.isPresent()) {
+            //gets all server hosting a user session and sends to the related topics the message
+            //todo manage private messages since at this moment it's like a broadcast message
+            Set<HyperIoTClusterNodeInfo> info = channelOpt.get().getPeers();
+            Iterator<HyperIoTClusterNodeInfo> it = info.iterator();
+            while (it.hasNext()) {
+                HyperIoTClusterNodeInfo clusterNodeInfo = it.next();
+                String destTopic = getClusterNodeCommunicationTopic(clusterNodeInfo);
+                HyperIoTKafkaMessage message = new HyperIoTKafkaMessage(channelId.getBytes(StandardCharsets.UTF_8), destTopic, hyperIoTWebSocketMessage.toJson().getBytes(StandardCharsets.UTF_8));
+                this.kafkaProducerPool.send(message);
+            }
+        }
     }
 
     @Override
