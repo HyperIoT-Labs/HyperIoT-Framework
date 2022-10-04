@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HyperIoTWebSocketDefaultChannelManager<T extends HyperIoTWebSocketChannel> implements HyperIoTWebSocketChannelManager {
     private static Logger log = LoggerFactory.getLogger(HyperIoTWebSocketDefaultChannelManager.class);
@@ -26,7 +27,7 @@ public class HyperIoTWebSocketDefaultChannelManager<T extends HyperIoTWebSocketC
     private Class<T> channelClass;
 
     public HyperIoTWebSocketDefaultChannelManager(Class<T> channelClass, HyperIoTWebSocketChannelClusterCoordinator coordinator, HyperIoTWebSocketChannelClusterMessageBroker clusterBroker) {
-        this.channels = Collections.synchronizedMap(new HashMap<>());
+        this.channels = new ConcurrentHashMap<>();
         //loading already create channels eventually on other cluster instances
         this.coordinator = coordinator;
         this.clusterBroker = clusterBroker;
