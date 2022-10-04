@@ -162,7 +162,7 @@ public class HyperIoTWebSocketDefaultChannelManager<T extends HyperIoTWebSocketC
     //callbacks from cluster coordinator
     @Override
     public void onChannelAdded(HyperIoTWebSocketChannel channel) {
-        if (!this.channels.containsKey(channel)) {
+        if (!this.channels.containsKey(channel.getChannelId())) {
             channels.put(channel.getChannelId(), channel);
         }
     }
