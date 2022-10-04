@@ -25,6 +25,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.kafka.receiver.KafkaReceiver;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -146,6 +147,8 @@ public class HyperIoTWebSocketChannelKafkaMessageBroker implements HyperIoTWebSo
         KafkaConnectorSystemApi kafkaConnectorSystemApi = this.getKafkaConnectorSystemApi();
         try {
             kafkaConnectorSystemApi.consumeReactiveAsSystem(groupId, communicationTopic, pollTime, ByteArrayDeserializer.class, ByteArrayDeserializer.class);
+            this.registration = HyperIoTUtil.getBundleContext(this).registerService( KafkaReceiver.class.getName(),this,getServicerRegistrationProeperties());
+            this.reference = this.registration.getReference();
         } catch (ClassNotFoundException e) {
             log.error(e.getMessage(), e);
         }
