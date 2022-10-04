@@ -21,13 +21,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class HyperIoTWebSocketDefaultChannelManager<T extends HyperIoTWebSocketChannel> implements HyperIoTWebSocketChannelManager {
     private static Logger log = LoggerFactory.getLogger(HyperIoTWebSocketDefaultChannelManager.class);
 
-    private Map<String, HyperIoTWebSocketChannel> channels;
+    private ConcurrentHashMap<String, HyperIoTWebSocketChannel> channels;
     private HyperIoTWebSocketChannelClusterCoordinator coordinator;
     private HyperIoTWebSocketChannelClusterMessageBroker clusterBroker;
     private Class<T> channelClass;
 
     public HyperIoTWebSocketDefaultChannelManager(Class<T> channelClass, HyperIoTWebSocketChannelClusterCoordinator coordinator, HyperIoTWebSocketChannelClusterMessageBroker clusterBroker) {
-        this.channels = new ConcurrentHashMap<>();
+        this.channels = new ConcurrentHashMap<>(1);
         //loading already create channels eventually on other cluster instances
         this.coordinator = coordinator;
         this.clusterBroker = clusterBroker;
@@ -56,11 +56,14 @@ public class HyperIoTWebSocketDefaultChannelManager<T extends HyperIoTWebSocketC
     public void createChannel(String channelType, String channelName, String newChannelId, int maxPartecipants, Map<String, Object> params, HyperIoTWebSocketChannelSession ownerSession, Set<HyperIoTWebSocketChannelRole> roles) {
         try {
             HyperIoTWebSocketChannel newChannel = HyperIoTWebSocketChannelFactory.createChannelFromChannelType(channelType, newChannelId, channelName, maxPartecipants, params, this.clusterBroker);
-            Set<HyperIoTWebSocketChannelRole> channelOwnerRoles = HyperIoTWebSocketChannelRoleManager.newRoleSet(roles, defineChannelOwnerRoles());
-            this.channels.put(newChannelId, newChannel);
-            notifyChannelCreated(newChannel, ownerSession, roles);
-            //automatically join channel after creation
-            joinChannel(channelName, ownerSession, roles);
+            if(!this.channels.containsKey(newChannelId)) {
+                this.channels.put(newChannelId, newChannel);
+                //automatically join channel after creation
+                joinChannel(newChannelId, ownerSession, roles);
+                notifyChannelCreated(newChannel, ownerSession, roles);
+            } else {
+                throw new HyperIoTRuntimeException("Channel Already exists!");
+            }
         } catch (Throwable t) {
             throw new HyperIoTRuntimeException(t.getMessage());
         }
@@ -163,9 +166,7 @@ public class HyperIoTWebSocketDefaultChannelManager<T extends HyperIoTWebSocketC
     //callbacks from cluster coordinator
     @Override
     public void onChannelAdded(HyperIoTWebSocketChannel channel) {
-        if (!this.channels.containsKey(channel.getChannelId())) {
-            channels.put(channel.getChannelId(), channel);
-        }
+        channels.putIfAbsent(channel.getChannelId(), channel);
     }
 
     @Override
@@ -235,7 +236,7 @@ public class HyperIoTWebSocketDefaultChannelManager<T extends HyperIoTWebSocketC
      */
     private void notifyChannelCreated(HyperIoTWebSocketChannel channel, HyperIoTWebSocketChannelSession partecipantSession, Set<HyperIoTWebSocketChannelRole> roles) {
         //notify inside the cluster
-        coordinator.notifyChannelAdded(channel);
+        coordinator.notifyChannelAdded(partecipantSession.getUserInfo().getClusterNodeInfo(),channel);
     }
 
     /**

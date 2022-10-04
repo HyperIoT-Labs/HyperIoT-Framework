@@ -1,5 +1,6 @@
 package it.acsoftware.hyperiot.websocket.api.channel;
 
+import it.acsoftware.hyperiot.base.model.HyperIoTClusterNodeInfo;
 import it.acsoftware.hyperiot.websocket.model.HyperIoTWebSocketUserInfo;
 
 import java.util.Map;
@@ -21,7 +22,7 @@ public interface HyperIoTWebSocketChannelClusterCoordinator {
     /**
      * @param channel
      */
-    void notifyChannelAdded(HyperIoTWebSocketChannel channel);
+    void notifyChannelAdded(HyperIoTClusterNodeInfo sourceNode,HyperIoTWebSocketChannel channel);
 
     /**
      * @param channelId

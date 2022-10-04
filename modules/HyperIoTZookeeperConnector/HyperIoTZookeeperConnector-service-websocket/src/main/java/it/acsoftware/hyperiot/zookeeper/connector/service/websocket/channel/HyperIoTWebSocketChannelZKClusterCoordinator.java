@@ -1,5 +1,6 @@
 package it.acsoftware.hyperiot.zookeeper.connector.service.websocket.channel;
 
+import it.acsoftware.hyperiot.base.model.HyperIoTClusterNodeInfo;
 import it.acsoftware.hyperiot.base.util.HyperIoTUtil;
 import it.acsoftware.hyperiot.websocket.api.channel.*;
 import it.acsoftware.hyperiot.websocket.channel.factory.HyperIoTWebSocketChannelFactory;
@@ -42,6 +43,7 @@ public class HyperIoTWebSocketChannelZKClusterCoordinator implements HyperIoTWeb
     private static final Pattern channelPattern = Pattern.compile(CHANNEL_EVENT_PATH_PATTERN);
     private static final Pattern partecipantPattern = Pattern.compile(CHANNEL_PARTECIPANT_EVENT_PATH_PATTENR);
 
+    private static final String CHANNEL_EVENT_CLUSTER_SOURCE_NODE_DATA_FIELD = "sourceNode";
     private static final String CHANNEL_ZK_DATA_FIELD = "channel";
     private static final String CHANNEL_CLASS_ZK_DATA_FIELD = "channelClass";
 
@@ -127,12 +129,13 @@ public class HyperIoTWebSocketChannelZKClusterCoordinator implements HyperIoTWeb
     }
 
     @Override
-    public void notifyChannelAdded(HyperIoTWebSocketChannel hyperIoTWebSocketChannel) {
+    public void notifyChannelAdded(HyperIoTClusterNodeInfo sourceNode,HyperIoTWebSocketChannel hyperIoTWebSocketChannel) {
         try {
             HyperIoTZooKeeperData data = new HyperIoTZooKeeperData();
             String path = GLOBAL_CHANNELS_PATH + "/" + hyperIoTWebSocketChannel.getChannelId();
             data.addParam(CHANNEL_ZK_DATA_FIELD, hyperIoTWebSocketChannel.toJson().getBytes(StandardCharsets.UTF_8));
             data.addParam(CHANNEL_CLASS_ZK_DATA_FIELD, hyperIoTWebSocketChannel.getClass().getName().getBytes(StandardCharsets.UTF_8));
+            data.addParam(CHANNEL_EVENT_CLUSTER_SOURCE_NODE_DATA_FIELD,sourceNode.toJson().getBytes(StandardCharsets.UTF_8));
             logger.debug("Registering Channel info on zookeeper  \n {}", new Object[]{hyperIoTWebSocketChannel.toJson()});
             zookeeperConnectorSystemApi.create(path, data.getBytes(), true);
         } catch (Exception e) {
@@ -185,18 +188,18 @@ public class HyperIoTWebSocketChannelZKClusterCoordinator implements HyperIoTWeb
         try {
             String path = GLOBAL_CHANNELS_PATH + "/" + channelId;
             byte[] data = this.zookeeperConnectorSystemApi.read(path);
-            return loadChannel(data);
+            HyperIoTZooKeeperData zkData = HyperIoTZooKeeperData.fromBytes(data);
+            return loadChannel(zkData);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
         return null;
     }
 
-    private HyperIoTWebSocketChannel loadChannel(byte[] zkData) {
-        HyperIoTZooKeeperData data = HyperIoTZooKeeperData.fromBytes(zkData);
-        if (data != null) {
-            String channelClassStr = new String(data.getParam(CHANNEL_CLASS_ZK_DATA_FIELD));
-            String channelData = new String(data.getParam(CHANNEL_ZK_DATA_FIELD));
+    private HyperIoTWebSocketChannel loadChannel(HyperIoTZooKeeperData zkData) {
+        if (zkData != null) {
+            String channelClassStr = new String(zkData.getParam(CHANNEL_CLASS_ZK_DATA_FIELD));
+            String channelData = new String(zkData.getParam(CHANNEL_ZK_DATA_FIELD));
             HyperIoTWebSocketChannel channel = HyperIoTWebSocketChannelFactory.createFromString(channelData, channelClassStr);
             return channel;
         }
@@ -241,7 +244,10 @@ public class HyperIoTWebSocketChannelZKClusterCoordinator implements HyperIoTWeb
             String rolesCommaSeparatedList = new String(zkData.getParam(PARTECIPANT_ROLES_ZK_DATA_FIELD));
             Set<HyperIoTWebSocketChannelRole> roles = HyperIoTWebSocketChannelRoleManager.fromCommaSeparatedList(rolesCommaSeparatedList);
             //partecipant added
-            this.channelManager.onPartecipantAdded(channelId, info, roles);
+            //processing event if the current node is not the one who generated it
+            //reduntand but makes code more readable
+            if(!info.getClusterNodeInfo().isOnLocalNode())
+                this.channelManager.onPartecipantAdded(channelId, info, roles);
         } else if (type.equals(CuratorCacheListener.Type.NODE_CHANGED)) {
             //partecipant changed
             //do nothing
@@ -249,20 +255,28 @@ public class HyperIoTWebSocketChannelZKClusterCoordinator implements HyperIoTWeb
             //partecipant gone
             HyperIoTZooKeeperData zkData = HyperIoTZooKeeperData.fromBytes(oldData.getData());
             HyperIoTWebSocketUserInfo info = HyperIoTWebSocketUserInfo.fromString(new String(zkData.getParam(PARTECIPANT_ZK_DATA_FIELD)));
-            this.channelManager.onPartecipantGone(channelId, info);
+            if(!info.getClusterNodeInfo().isOnLocalNode())
+                this.channelManager.onPartecipantGone(channelId, info);
         }
     }
 
     private void channelEvent(CuratorCacheListener.Type type, String channelId,ChildData oldData, ChildData data) {
         if (type.equals(CuratorCacheListener.Type.NODE_CREATED)) {
-            HyperIoTWebSocketChannel channel = loadChannel(data.getData());
-            if(channel != null)
-                this.channelManager.onChannelAdded(channel);
+            HyperIoTZooKeeperData zkData = HyperIoTZooKeeperData.fromBytes(data.getData());
+            HyperIoTClusterNodeInfo clusterNode = HyperIoTClusterNodeInfo.fromString(new String(zkData.getParam(CHANNEL_EVENT_CLUSTER_SOURCE_NODE_DATA_FIELD)));
+            //skip the event if this node is the one that has generated it
+            if(!clusterNode.isOnLocalNode()) {
+                HyperIoTWebSocketChannel channel = loadChannel(zkData);
+                if (channel != null)
+                    this.channelManager.onChannelAdded(channel);
+            }
         } else if (type.equals(CuratorCacheListener.Type.NODE_CHANGED)) {
             //channel updated
         } else if (type.equals(CuratorCacheListener.Type.NODE_DELETED)) {
             //channel deleted
+            //no worries since if the channel has been delete it won't be found
             this.channelManager.onChannelRemoved(channelId);
         }
     }
+
 }
