@@ -59,8 +59,8 @@ public class HyperIoTWebSocketDefaultChannelManager<T extends HyperIoTWebSocketC
             if(!this.channels.containsKey(newChannelId)) {
                 this.channels.put(newChannelId, newChannel);
                 //automatically join channel after creation
-                joinChannel(newChannelId, ownerSession, roles);
                 notifyChannelCreated(newChannel, ownerSession, roles);
+                joinChannel(newChannelId, ownerSession, roles);
             } else {
                 throw new HyperIoTRuntimeException("Channel Already exists!");
             }
