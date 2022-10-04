@@ -17,6 +17,7 @@ Import-Package: \
      it.acsoftware.hyperiot.websocket.model;version='${range;[===,+)}',\
      it.acsoftware.hyperiot.websocket.model.message;version='${range;[===,+)}',\
      it.acsoftware.hyperiot.websocket.session;version='${range;[===,+)}',\
+     it.acsoftware.hyperiot.websocket.channel.*;version='${range;[===,+)}',\
      org.apache.curator.*,\
      org.apache.kafka.clients,\
      org.apache.kafka.clients.admin,\

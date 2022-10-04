@@ -28,7 +28,8 @@ public class KafkaOSGISystemNotifier implements KafkaSystemMessageNotifier {
         try {
             BundleContext ctx = HyperIoTUtil.getBundleContext(this);
             //getting al registered message receiver that wants to receive all keys from a topic and a specific key or all keys.
-            OSGiFilter specificKeyFilter = OSGiFilterBuilder.createFilter(HyperIoTKafkaConnectorConstants.HYPERIOT_KAFKA_OSGI_KEY_FILTER, new String(message.getKey())).or(OSGiFilterBuilder.createFilter(HyperIoTKafkaConnectorConstants.HYPERIOT_KAFKA_OSGI_KEY_FILTER,"*"));
+            OSGiFilter specificKeyFilter = OSGiFilterBuilder.createFilter(HyperIoTKafkaConnectorConstants.HYPERIOT_KAFKA_OSGI_KEY_FILTER, new String(message.getKey()))
+                    .or(OSGiFilterBuilder.createFilter(HyperIoTKafkaConnectorConstants.HYPERIOT_KAFKA_OSGI_KEY_FILTER,"*"));
             OSGiFilter filter = OSGiFilterBuilder
                     .createFilter(HyperIoTKafkaConnectorConstants.HYPERIOT_KAFKA_OSGI_TOPIC_FILTER,
                             message.getTopic())

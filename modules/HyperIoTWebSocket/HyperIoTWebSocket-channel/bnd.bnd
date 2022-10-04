@@ -19,6 +19,7 @@ Import-Package: \
     org.eclipse.jetty.websocket*
 Export-Package: \
     it.acsoftware.hyperiot.websocket.channel,\
+    it.acsoftware.hyperiot.websocket.channel.command,\
     it.acsoftware.hyperiot.websocket.channel.util,\
     it.acsoftware.hyperiot.websocket.channel.session,\
     it.acsoftware.hyperiot.websocket.channel.session.encryption,\
