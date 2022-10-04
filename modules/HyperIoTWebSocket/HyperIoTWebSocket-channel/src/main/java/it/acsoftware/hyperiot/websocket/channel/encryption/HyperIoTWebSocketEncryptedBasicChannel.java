@@ -20,6 +20,10 @@ public abstract class HyperIoTWebSocketEncryptedBasicChannel extends HyperIoTWeb
         initChannelEncryption();
     }
 
+    protected HyperIoTWebSocketEncryptedBasicChannel() {
+        super();
+    }
+
     @Override
     protected void partecipantJoined(HyperIoTWebSocketChannelSession userSession) {
         super.partecipantJoined(userSession);

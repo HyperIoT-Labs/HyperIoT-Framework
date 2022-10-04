@@ -27,6 +27,11 @@ public class HyperIoTWebSocketRSAWithAESEncryptedBasicChannel extends HyperIoTWe
         super(channelName, channelId, maxPartecipants, channelParams, clusterMessageBroker);
     }
 
+    //used for deserialization
+    private HyperIoTWebSocketRSAWithAESEncryptedBasicChannel(){
+        super();
+    }
+
     /**
      * This is invoked at channel creation.
      * We create specific key for each channel
