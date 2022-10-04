@@ -147,7 +147,7 @@ public class HyperIoTWebSocketChannelKafkaMessageBroker implements HyperIoTWebSo
         KafkaConnectorSystemApi kafkaConnectorSystemApi = this.getKafkaConnectorSystemApi();
         try {
             kafkaConnectorSystemApi.consumeReactiveAsSystem(groupId, communicationTopic, pollTime, ByteArrayDeserializer.class, ByteArrayDeserializer.class);
-            this.registration = HyperIoTUtil.getBundleContext(this).registerService( KafkaReceiver.class.getName(),this,getServicerRegistrationProeperties());
+            this.registration = HyperIoTUtil.getBundleContext(this).registerService( KafkaMessageReceiver.class.getName(),this,getServicerRegistrationProeperties());
             this.reference = this.registration.getReference();
         } catch (ClassNotFoundException e) {
             log.error(e.getMessage(), e);
