@@ -150,9 +150,9 @@ public class HyperIoTWebSocketDefaultChannelManager<T extends HyperIoTWebSocketC
         final String sender = message.getParams().get(HyperIoTWebSocketMessage.WS_MESSAGE_SENDER_PARAM_NAME);
         HyperIoTWebSocketChannel channel = findChannel(channelId);
         Optional<HyperIoTWebSocketUserInfo> senderInfo = channel.findUserInfo(sender);
-        if (channel != null && senderInfo.isPresent()) {
+        if (channel != null) {
             if (message.getCmd().equals(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND))
-                channel.deliverMessage(senderInfo.get(), message);
+                channel.deliverMessage(senderInfo.orElse(null), message);
         } else {
             log.error("Impossible to forward message to user from sender :" + sender + " and channel :" + channelId);
         }

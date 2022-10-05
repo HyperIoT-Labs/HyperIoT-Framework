@@ -103,6 +103,9 @@ public class HyperIoTWebSocketChannelZKClusterCoordinator implements HyperIoTWeb
                         HyperIoTWebSocketChannel channel = loadChannel(path);
                         if (channel != null) {
                             channels.put(channel.getChannelId(), channel);
+                            if(!path.startsWith("/")){
+                                path = "/"+path;
+                            }
                             String partecipantsPath = path + CHANNELS_PARTECIPANTS_PATH.replace("${channelId}", channel.getChannelId());
                             Map<HyperIoTWebSocketUserInfo, Set<HyperIoTWebSocketChannelRole>> partecipants = loadChannelsPartecipants(partecipantsPath);
                             partecipants.keySet().parallelStream().forEach(partecipant -> {
