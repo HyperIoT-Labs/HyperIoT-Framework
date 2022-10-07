@@ -75,14 +75,6 @@ public class HyperIoTWebSocketBasicChannel implements HyperIoTWebSocketChannel, 
         this.clusterMessageBroker = clusterMessageBroker;
     }
 
-    protected HyperIoTWebSocketBasicChannel() {
-        this(null, null, 0, null, null);
-    }
-
-    public void defineClusterMessageBroker(HyperIoTWebSocketChannelClusterMessageBroker clusterMessageBroker) {
-        this.clusterMessageBroker = clusterMessageBroker;
-    }
-
     @Override
     public String getChannelId() {
         return channelId;

@@ -211,11 +211,13 @@ public class HyperIoTWebSocketChannelZKClusterCoordinator implements HyperIoTWeb
         Map<HyperIoTWebSocketUserInfo, Set<HyperIoTWebSocketChannelRole>> partecipants = Collections.synchronizedMap(new HashMap<>());
         try {
             byte[] data = this.zookeeperConnectorSystemApi.read(path);
-            HyperIoTZooKeeperData zkData = HyperIoTZooKeeperData.fromBytes(data);
-            HyperIoTWebSocketUserInfo info = HyperIoTWebSocketUserInfo.fromString(new String(zkData.getParam(PARTECIPANT_ZK_DATA_FIELD)));
-            String rolesCommaSeparatedList = new String(zkData.getParam(PARTECIPANT_ROLES_ZK_DATA_FIELD));
-            Set<HyperIoTWebSocketChannelRole> roles = HyperIoTWebSocketChannelRoleManager.fromCommaSeparatedList(rolesCommaSeparatedList);
-            partecipants.put(info, roles);
+            if(data.length > 0) {
+                HyperIoTZooKeeperData zkData = HyperIoTZooKeeperData.fromBytes(data);
+                HyperIoTWebSocketUserInfo info = HyperIoTWebSocketUserInfo.fromString(new String(zkData.getParam(PARTECIPANT_ZK_DATA_FIELD)));
+                String rolesCommaSeparatedList = new String(zkData.getParam(PARTECIPANT_ROLES_ZK_DATA_FIELD));
+                Set<HyperIoTWebSocketChannelRole> roles = HyperIoTWebSocketChannelRoleManager.fromCommaSeparatedList(rolesCommaSeparatedList);
+                partecipants.put(info, roles);
+            }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
