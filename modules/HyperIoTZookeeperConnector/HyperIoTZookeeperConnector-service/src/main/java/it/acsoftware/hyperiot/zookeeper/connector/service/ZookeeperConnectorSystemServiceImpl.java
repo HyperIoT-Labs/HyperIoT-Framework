@@ -234,6 +234,8 @@ public final class ZookeeperConnectorSystemServiceImpl extends HyperIoTBaseSyste
      */
     @Override
     public byte[] read(String path) throws Exception {
+        if(path.endsWith("/") || path.endsWith("\\"))
+            path = path.substring(0,path.length()-1);
         return this.client.getData().forPath(path);
     }
 
