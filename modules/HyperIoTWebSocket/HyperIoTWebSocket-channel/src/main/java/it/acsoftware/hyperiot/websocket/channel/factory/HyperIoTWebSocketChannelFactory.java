@@ -39,6 +39,7 @@ public class HyperIoTWebSocketChannelFactory {
             Class<? extends HyperIoTWebSocketChannel> channelClassType = (Class<? extends HyperIoTWebSocketChannel>) Class.forName(classNameStr);
             HyperIoTWebSocketChannel channel = mapper.readValue(channelJson, channelClassType);
             channel.defineClusterMessageBroker(clusterMessageBroker);
+            return channel;
         } catch (Throwable t) {
             log.debug("Error while parsing websocket channel: {}", new Object[]{t.getMessage()});
         }
