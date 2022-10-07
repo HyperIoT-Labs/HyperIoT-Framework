@@ -60,7 +60,7 @@ public class HyperIoTWebSocketBasicChannel implements HyperIoTWebSocketChannel, 
         this.channelId = channelId;
         this.maxPartecipants = maxPartecipants;
         this.partecipantsInfo = Collections.synchronizedMap(new HashMap<>());
-        this.partecipantsSessions = Collections.synchronizedMap(new HashMap<>());
+        this.partecipantsSessions = new HashMap<>();
         this.bennedIps = Collections.synchronizedList(new ArrayList<>());
         this.bannedUsernames = Collections.synchronizedList(new ArrayList<>());
         this.channelParams = channelParams;
@@ -303,8 +303,7 @@ public class HyperIoTWebSocketBasicChannel implements HyperIoTWebSocketChannel, 
      * @param message
      */
     public void deliverMessage(HyperIoTWebSocketUserInfo sender, HyperIoTWebSocketMessage message) {
-        //avoiding concurrent modificaiton expcetion with unmodifiable set
-        Collections.unmodifiableSet(partecipantsSessions.keySet()).parallelStream().forEach(userInfo -> {
+        partecipantsSessions.keySet().parallelStream().forEach(userInfo -> {
             try {
                 //not delivering to the sender eventually
                 boolean isMessageSender = sender != null && userInfo.getUsername().equalsIgnoreCase(sender.getUsername());
