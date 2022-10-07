@@ -311,7 +311,8 @@ public class HyperIoTWebSocketBasicChannel implements HyperIoTWebSocketChannel, 
      * @param message
      */
     public void deliverMessage(HyperIoTWebSocketUserInfo sender, HyperIoTWebSocketMessage message) {
-        partecipantsSessions.keySet().parallelStream().forEach(userInfo -> {
+        //avoiding concurrent modificaiton expcetion with unmodifiable set
+        Collections.unmodifiableSet(partecipantsSessions.keySet()).parallelStream().forEach(userInfo -> {
             try {
                 //not delivering to the sender eventually
                 boolean isMessageSender = sender != null && userInfo.getUsername().equalsIgnoreCase(sender.getUsername());
