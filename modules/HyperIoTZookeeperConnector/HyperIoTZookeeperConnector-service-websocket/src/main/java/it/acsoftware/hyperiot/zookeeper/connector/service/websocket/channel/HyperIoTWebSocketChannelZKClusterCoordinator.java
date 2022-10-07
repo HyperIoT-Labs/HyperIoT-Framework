@@ -203,7 +203,8 @@ public class HyperIoTWebSocketChannelZKClusterCoordinator implements HyperIoTWeb
         if (zkData != null) {
             String channelClassStr = new String(zkData.getParam(CHANNEL_CLASS_ZK_DATA_FIELD));
             String channelData = new String(zkData.getParam(CHANNEL_ZK_DATA_FIELD));
-            HyperIoTWebSocketChannel channel = HyperIoTWebSocketChannelFactory.createFromString(channelData, channelClassStr);
+            HyperIoTWebSocketChannelClusterMessageBroker broker = channelManager.getClusterBroker();
+            HyperIoTWebSocketChannel channel = HyperIoTWebSocketChannelFactory.createFromString(channelData, channelClassStr,broker);
             return channel;
         }
         return null;

@@ -64,11 +64,15 @@ public class HyperIoTWebSocketBasicChannel implements HyperIoTWebSocketChannel, 
         this.bennedIps = Collections.synchronizedList(new ArrayList<>());
         this.bannedUsernames = Collections.synchronizedList(new ArrayList<>());
         this.channelParams = channelParams;
-        this.clusterMessageBroker = clusterMessageBroker;
+        defineClusterMessageBroker(clusterMessageBroker);
     }
 
-    protected HyperIoTWebSocketBasicChannel(){
-        this(null,null,0,null,null);
+    protected HyperIoTWebSocketBasicChannel() {
+        this(null, null, 0, null, null);
+    }
+
+    public void defineClusterMessageBroker(HyperIoTWebSocketChannelClusterMessageBroker clusterMessageBroker) {
+        this.clusterMessageBroker = clusterMessageBroker;
     }
 
     @Override

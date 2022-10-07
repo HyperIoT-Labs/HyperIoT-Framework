@@ -9,6 +9,7 @@ import java.util.Set;
 
 
 public interface HyperIoTWebSocketChannelManager {
+    HyperIoTWebSocketChannelClusterMessageBroker getClusterBroker();
 
     HyperIoTWebSocketChannel findChannel(String channelId);
 

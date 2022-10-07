@@ -16,6 +16,8 @@ public interface HyperIoTWebSocketChannel {
 
     String getChannelName();
 
+    void defineClusterMessageBroker(HyperIoTWebSocketChannelClusterMessageBroker clusterMessageBroker);
+
     Map<String, Object> getChannelParams();
 
     Object getChannelParam(String name);

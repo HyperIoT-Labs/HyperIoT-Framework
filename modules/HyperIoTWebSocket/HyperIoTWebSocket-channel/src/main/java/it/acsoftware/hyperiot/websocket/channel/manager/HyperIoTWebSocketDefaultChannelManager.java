@@ -37,6 +37,10 @@ public class HyperIoTWebSocketDefaultChannelManager<T extends HyperIoTWebSocketC
         this.channelClass = channelClass;
     }
 
+    public HyperIoTWebSocketChannelClusterMessageBroker getClusterBroker() {
+        return clusterBroker;
+    }
+
     @Override
     public HyperIoTWebSocketChannel findChannel(String channelId) {
         return channels.get(channelId);

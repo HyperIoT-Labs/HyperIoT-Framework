@@ -1,8 +1,6 @@
 package it.acsoftware.hyperiot.websocket.channel.factory;
 
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException;
 import it.acsoftware.hyperiot.websocket.api.channel.HyperIoTWebSocketChannel;
 import it.acsoftware.hyperiot.websocket.api.channel.HyperIoTWebSocketChannelClusterMessageBroker;
@@ -36,10 +34,11 @@ public class HyperIoTWebSocketChannelFactory {
         return (HyperIoTWebSocketChannel) classType.getDeclaredConstructors()[0].newInstance(channelId, channelName, maxPartecipants, params, clusterMessageBroker);
     }
 
-    public static <T extends HyperIoTWebSocketChannel> HyperIoTWebSocketChannel createFromString(String channelJson, String classNameStr) {
+    public static <T extends HyperIoTWebSocketChannel> HyperIoTWebSocketChannel createFromString(String channelJson, String classNameStr, HyperIoTWebSocketChannelClusterMessageBroker clusterMessageBroker) {
         try {
             Class<? extends HyperIoTWebSocketChannel> channelClassType = (Class<? extends HyperIoTWebSocketChannel>) Class.forName(classNameStr);
-            return mapper.readValue(channelJson, channelClassType);
+            HyperIoTWebSocketChannel channel = mapper.readValue(channelJson, channelClassType);
+            channel.defineClusterMessageBroker(clusterMessageBroker);
         } catch (Throwable t) {
             log.debug("Error while parsing websocket channel: {}", new Object[]{t.getMessage()});
         }
