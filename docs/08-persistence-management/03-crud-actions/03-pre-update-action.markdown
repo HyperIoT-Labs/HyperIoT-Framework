@@ -1,8 +1,8 @@
-# PreUpdate Action(id=pre-update-action)
+# PreUpdate Action [](id=pre-update-action)
 
 In HyperIoTPreUpdateAction, the execute method is executed just before the entity is saved within the database. 
 
-![Pre Save Action Class Hierarchy](../../images/crud-pre-post-actions/pre-update-action.png)
+![Pre Save Action Class Hierarchy](../../images/pre-update-action.png)
 
 To define a custom behavior hooked to a pre-update action, simply register a component as follows:
 

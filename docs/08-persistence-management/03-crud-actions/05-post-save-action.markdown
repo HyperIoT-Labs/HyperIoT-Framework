@@ -1,8 +1,8 @@
-# PostSave Action(id=post-save-action)
+# PostSave Action [](id=post-save-action)
 
 In HyperIoTPostSaveAction, the execute method is executed just before the entity is saved within the database. 
 
-![Pre Save Action Class Hierarchy](../../images/crud-pre-post-actions/post-save-action.png)
+![Pre Save Action Class Hierarchy](../../images/post-save-action.png)
 
 To define a custom behavior hooked to a post-save action, simply register a component as follows:
 

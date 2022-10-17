@@ -1,4 +1,4 @@
-# Persitence Class Hierarchy(id=persistence-class-hierarchy)
+# Persitence Class Hierarchy [](id=persistence-class-hierarchy)
 
 The hierarchy of persistence classes within the HyperIoT Framework is as follows:
 

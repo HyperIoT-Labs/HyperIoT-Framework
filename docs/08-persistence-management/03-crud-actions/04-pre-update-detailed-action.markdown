@@ -1,8 +1,8 @@
-# PreUpdate Detailed Action(id=pre-update-detailed-action)
+# PreUpdate Detailed Action [](id=pre-update-detailed-action)
 
 In HyperIoTPreUpdateDetailedAction the execute method is executed just before the entity is saved within the database.
 
-![Pre Save Action Class Hierarchy](../../images/crud-pre-post-actions/pre-update-detailed-action.png)
+![Pre Save Action Class Hierarchy](../../images/pre-update-detailed-action.png)
 
 To define a custom behavior hooked to a pre-update detailed action, simply register a component as follows:
 

@@ -1,4 +1,4 @@
-# Query Definitions
+# Query Definitions [](id=query-definitions)
 
 Data is accessed through Repository objects. These components allow the selected persistence type to be abstracted and interact properly with the database.
 Persistence or query logic (such as SQL queries) should be avoided as much as possible outside these objects precisely so as not to create relationships with the type of technology used.

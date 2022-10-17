@@ -1,8 +1,8 @@
-# PostRemove Action(id=post-remove-action)
+# PostRemove Action [](id=post-remove-action)
 
 In HyperIoTPostRemoveAction, the execute method is executed just before the entity is saved within the database. 
 
-![Pre Save Action Class Hierarchy](../../images/crud-pre-post-actions/pre-remove-action.png)
+![Pre Save Action Class Hierarchy](../../images/pre-remove-action.png)
 
 To define a custom behavior hooked to a post-remove action, simply register a component as follows:
 

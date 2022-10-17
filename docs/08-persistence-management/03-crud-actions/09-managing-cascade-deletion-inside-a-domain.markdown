@@ -1,4 +1,4 @@
-# Managing Delete Cascade On External Domains (id=managing-delete-cascade-on-external-domains)
+# Managing Delete Cascade On External Domains [](id=managing-delete-cascade-on-external-domains)
 
 Pre/Post Actions can be very useful for implementing cascade logic between modules inherent in different domains.
 It has been mentioned several times that to best implement domain driven design concepts, it is not recommended to use objects for relationships between entities inherent to different domains (projects), while , in these cases, it is strongly recommended to use ids as a mechanism to track relationships.

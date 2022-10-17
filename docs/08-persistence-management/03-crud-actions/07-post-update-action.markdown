@@ -1,8 +1,8 @@
-# PostUpdate Action(id=post-update-action)
+# PostUpdate Action [](id=post-update-action)
 
 In HyperIoTUpdateAction, the execute method is executed just before the entity is saved within the database. 
 
-![Pre Save Action Class Hierarchy](../../images/crud-pre-post-actions/post-update-action.png)
+![Pre Save Action Class Hierarchy](../../images/post-update-action.png)
 
 To define a custom behavior hooked to a post-update action, simply register a component as follows:
 

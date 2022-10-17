@@ -1,8 +1,8 @@
-# PreSave Action(id=pre-save-action)
+# PreSave Action [](id=pre-save-action)
 
 In HyperIoTPreSaveAction, the execute method is executed just before the entity is saved within the database. 
 
-![Pre Save Action Class Hierarchy](../../images/crud-pre-post-actions/pre-save-action.png)
+![Pre Save Action Class Hierarchy](../../images/pre-save-action.png)
 
 To define a custom behavior hooked to a pre-save action, simply register a component as follows:
 

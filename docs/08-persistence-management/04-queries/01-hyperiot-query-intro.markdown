@@ -1,4 +1,4 @@
-# HyperIoTQuery (id=hyperiot-query)
+# HyperIoTQuery [](id=hyperiot-query)
 
 HyperIoT Framework allows some repository methods to be invoked by passing HyperIoTQuery as an argument. This class represents the abstraction (which will be exploited more and more within the framework) to implement custom query logic that is, however, agnostic to the currently used persistence layer.
 
