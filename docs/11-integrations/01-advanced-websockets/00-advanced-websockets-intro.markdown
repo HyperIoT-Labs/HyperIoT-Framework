@@ -133,7 +133,7 @@ A message you send has the following attributes :
 
 The standard websocket mode allows you to open a connection directly with the server and hook some kind of logic to it for sending information.
 
-![WebSocket Message](../../images/websockets-standard-mode.png)
+![WebSocket Standard Mode](../../images/websockets-standard-mode.png)
 
 As you can see from the image above, the standard mode involves connecting with the enduser by sending/receiving information that can reside anywhere. 
 Secure WSS Connection can be hooked into compression and encryption logic.
@@ -149,6 +149,7 @@ public class MyCustomWebSocketSession extends AbstractWebSocketSession {
     ....
 }
 ```
+
 Below is the endpoint to be created to be connected to the websocket :
 
 ```
@@ -179,7 +180,7 @@ public class MyCustomWSEndpoint implements HyperIoTWebSocketEndPoint {
 
 <strong> At this point the websocket will be available at: </strong>
 
-```wss://<serverHost>:<serverPort>/<contextRoot>/ws/my-custom-ws```
+```wss://{serverHost}:{serverPort}/{contextRoot}/ws/my-custom-ws```
 
 ## Channel Mode
 
