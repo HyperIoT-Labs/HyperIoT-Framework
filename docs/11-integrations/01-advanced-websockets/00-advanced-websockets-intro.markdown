@@ -178,10 +178,6 @@ public class MyCustomWSEndpoint implements HyperIoTWebSocketEndPoint {
 }
 ```
 
-<strong> At this point the websocket will be available at: </strong>
-
-```wss://{serverHost}:{serverPort}/{contextRoot}/ws/my-custom-ws```
-
 ## Channel Mode
 
 Channel mode was included starting with version 1.4.0. 
