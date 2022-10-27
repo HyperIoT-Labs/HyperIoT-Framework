@@ -14,6 +14,7 @@ Import-Package: \
     it.acsoftware.hyperiot.websocket.api.channel;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.websocket.actions;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.websocket.model;version='${range;[===,+)}',\
+    it.acsoftware.hyperiot.websocket.model.message;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.websocket.compression;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.websocket.encryption;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.websocket.session;version='${range;[===,+)}',\
