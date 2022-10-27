@@ -11,9 +11,9 @@ HyperIoT Framework provides a number of facilities to be able to work with webso
 
 It also supports two basic modes:
 
-* Standard mode: User opens a websocket with custom logic on the server
-* Bridge mode (1.x) <b>-DEPRECATED-</b> : User opens a bridge-type websocket to initiate a 2-way message exchange with a user who could potentially reside on the same node or on different cluster nodes
-* Channel mode (from version 2.1.0): Extension of the bridge concept to multiple users. Thus, there is the possibility of being able to connect multiple clients simultaneously by having them participate in a channel. Key feature that this type of functionality is not to be enjoyed as an "instant-messaging" for clients, but can be used as a cross-platform communication system between different applications.
+* <b>Standard mode:</b> User opens a websocket with custom logic on the server
+* <b>Bridge mode (1.x) <b>-DEPRECATED-</b> :</b> User opens a bridge-type websocket to initiate a 2-way message exchange with a user who could potentially reside on the same node or on different cluster nodes
+* <b>Channel mode (from version 2.1.0):</b> Extension of the bridge concept to multiple users. Thus, there is the possibility of being able to connect multiple clients simultaneously by having them participate in a channel. Key feature that this type of functionality is not to be enjoyed as an "instant-messaging" for clients, but can be used as a cross-platform communication system between different applications.
 
 The standard mode allows dealing with the most common cases, while the bridge mode allows dealing with all those use cases that need to connect two users. 
 One application of bridge is found in the Newfoundland System product that underlies the game Codename: Newfoundland. 
