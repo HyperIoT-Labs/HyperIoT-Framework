@@ -208,7 +208,7 @@ public interface HBaseConnectorSystemApi extends HyperIoTBaseSystemApi {
      */
     @SuppressWarnings("unused")
     List<Result> scanWithCompleteResult(String tableName, Map<byte[], List<byte[]>> columns,
-                                        byte[] rowKeyLowerBound, byte[] rowKeyUpperBound) throws IOException;
+                                        byte[] rowKeyLowerBound, byte[] rowKeyUpperBound,int limit) throws IOException;
 
     /**
      * It scans HBase table. TODO: more generic than the above one, use this wherever

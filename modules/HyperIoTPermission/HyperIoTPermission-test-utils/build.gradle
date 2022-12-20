@@ -15,6 +15,8 @@ dependencies {
 	compileOnly group: "org.apache.karaf", name:"apache-karaf", version: project.karafVersion
 	compileOnly group: 'org.ops4j.pax.exam', name: 'pax-exam-container-karaf', version: project.paxExamVersion
 
+	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api",version:project.jaxWsRsApiVersion
+
 	//HyperIoTBase Dependencies
 	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version:project.hyperIoTVersion
 	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version:project.hyperIoTVersion
@@ -23,12 +25,15 @@ dependencies {
 	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test-utils", version:project.hyperIoTVersion
 	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version:project.hyperIoTVersion
 	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version:project.hyperIoTVersion
+	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service-rest", version:project.hyperIoTVersion
 
 	compileOnly group: "it.acsoftware.hyperiot.huser", name: "HyperIoTHUser-api", version:project.hyperIoTVersion
 	compileOnly group: "it.acsoftware.hyperiot.huser", name: "HyperIoTHUser-model", version:project.hyperIoTVersion
+	compileOnly group: "it.acsoftware.hyperiot.huser", name: "HyperIoTHUser-test-utils", version:project.hyperIoTVersion
 
 	compileOnly project(":modules:HyperIoTPermission:HyperIoTPermission-api")
 	compileOnly project(":modules:HyperIoTPermission:HyperIoTPermission-model")
+	compileOnly project(":modules:HyperIoTPermission:HyperIoTPermission-service-rest")
 }
 
 jar {

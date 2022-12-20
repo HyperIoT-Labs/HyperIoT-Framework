@@ -330,11 +330,11 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
 
     @Override
     public List<Result> scanWithCompleteResult(String tableName, Map<byte[], List<byte[]>> columns,
-                                               byte[] rowKeyLowerBound, byte[] rowKeyUpperBound)
+                                               byte[] rowKeyLowerBound, byte[] rowKeyUpperBound,int limit)
             throws IOException {
         // get scan
         ResultScanner scanner =
-                getScanner(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, 0);
+                getScanner(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, limit);
         // collect scan result
         List<Result> results = new ArrayList<>();
         for (Result result : scanner)

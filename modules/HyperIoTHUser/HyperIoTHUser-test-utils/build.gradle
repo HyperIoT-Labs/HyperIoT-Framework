@@ -5,9 +5,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
 	//SLF4J
     compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
-
-	//SLF4J
-	compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api",version:project.jaxWsRsApiVersion
 
 	compileOnly group: "org.apache.karaf.itests", name:"common", version:project.karafVersion
 	compileOnly group: "org.apache.karaf", name:"apache-karaf", version: project.karafVersion
@@ -21,9 +19,11 @@ dependencies {
 	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test-utils", version:project.hyperIoTVersion
 	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version:project.hyperIoTVersion
 	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version:project.hyperIoTVersion
+	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service-rest", version:project.hyperIoTVersion
 
 	compileOnly project(":modules:HyperIoTHUser:HyperIoTHUser-api")
 	compileOnly project(":modules:HyperIoTHUser:HyperIoTHUser-model")
+	compileOnly project(":modules:HyperIoTHUser:HyperIoTHUser-service-rest")
 }
 
 jar {
