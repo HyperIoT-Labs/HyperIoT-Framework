@@ -64,31 +64,6 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
     }
 
     /**
-     * Step2 2.
-     * Adding repositories to settings buildscript.
-     * Adding Dependency for BND tools
-     * Adding Dependency for Karaf feature plugin
-     * Apply plugin BND TOOLS
-     *
-     * @param gradle
-     */
-    @Override
-    public void buildStarted(Gradle gradle) {
-        System.out.println("Build Started, updating build scripts...");
-        settings.getBuildscript().getRepositories().add(settings.getBuildscript().getRepositories().mavenCentral());
-        //adding maven Locale
-        settings.getBuildscript().getRepositories().add(settings.getBuildscript().getRepositories().mavenLocal());
-        settings.getBuildscript().getRepositories().add(settings.getBuildscript().getRepositories().maven(mavenArtifactRepository -> {
-            mavenArtifactRepository.setUrl("http://central.maven.org/maven2");
-        }));
-        System.out.println("Adding required dependencies..");
-        this.addBndGradleDep(settings.getBuildscript().getDependencies());
-        this.addKarafFeatureDep(settings.getBuildscript().getDependencies());
-        System.out.println("Applying BND TOOLS plugin..");
-        settings.getPlugins().apply("biz.aQute.bnd.workspace");
-    }
-
-    /**
      * Step 3
      * Adding projects to current build base on system property.
      *

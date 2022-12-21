@@ -25,6 +25,7 @@ Import-Package: \
     javax.crypto,\
     javax.crypto.spec,\
     org.eclipse.jetty.websocket*,\
+    org.eclipse.jetty.websocket.server,\
     javax.ws*,\
     org.apache.cxf*
 
