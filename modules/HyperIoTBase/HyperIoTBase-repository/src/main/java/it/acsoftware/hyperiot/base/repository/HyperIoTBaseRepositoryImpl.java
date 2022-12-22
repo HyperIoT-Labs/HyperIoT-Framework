@@ -182,7 +182,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
     public T find(HyperIoTQuery filter, HyperIoTContext ctx) {
         log.debug(
                 "Repository Find entity {} with filter: {}", new Object[]{this.type.getSimpleName(), filter});
-        return this.getJpa().txExpr(TransactionType.Required, entityManager -> {
+        return this.getJpa().txExpr(TransactionType.RequiresNew, entityManager -> {
             log.debug("Transaction found, invoke find");
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<T> query = criteriaBuilder.createQuery(this.type);
