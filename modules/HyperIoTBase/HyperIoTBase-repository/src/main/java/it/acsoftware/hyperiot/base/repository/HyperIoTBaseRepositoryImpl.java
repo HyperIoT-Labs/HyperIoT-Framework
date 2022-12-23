@@ -145,18 +145,19 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
     public void remove(long id) {
         log.debug(
                 "Repository Remove entity {} with id: {}", new Object[]{this.type.getSimpleName(), id});
+        T entity = find(id, null);
+        HyperIoTUtil.invokePreActions(entity, HyperIoTPreRemoveAction.class); // execute pre actions after removing
         this.getJpa().tx(TransactionType.Required, entityManager -> {
             log.debug("Transaction found, invoke remove");
-            T entity = find(id, null);
-            HyperIoTUtil.invokePreActions(entity, HyperIoTPreRemoveAction.class); // execute pre actions after removing
-            entityManager.remove(entity);
-            manageAssets(entity, AssetManagementOperation.DELETE);
+            T toRemove = entityManager.find(type,id);
+            entityManager.remove(toRemove);
+            manageAssets(toRemove, AssetManagementOperation.DELETE);
             entityManager.flush();
             log.debug(
                     "Entity {}  with id: {}  removed", new Object[]{this.type.getSimpleName(), id});
-            //we can use global post actions since there's no need to pass "before" entity
-            HyperIoTUtil.invokePostActions(entity, HyperIoTPostRemoveAction.class); // execute post actions after removing
         });
+        //we can use global post actions since there's no need to pass "before" entity
+        HyperIoTUtil.invokePostActions(entity, HyperIoTPostRemoveAction.class); // execute post actions after removing
     }
 
     /**
@@ -182,7 +183,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
     public T find(HyperIoTQuery filter, HyperIoTContext ctx) {
         log.debug(
                 "Repository Find entity {} with filter: {}", new Object[]{this.type.getSimpleName(), filter});
-        return this.getJpa().txExpr(TransactionType.RequiresNew, entityManager -> {
+        return this.getJpa().txExpr(TransactionType.Supports, entityManager -> {
             log.debug("Transaction found, invoke find");
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<T> query = criteriaBuilder.createQuery(this.type);
@@ -210,7 +211,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
     @Override
     public Collection<T> findAll(HyperIoTQuery filter) {
         log.debug("Repository Find All entities {}", this.type.getSimpleName());
-        return (Collection<T>) this.getJpa().txExpr(TransactionType.RequiresNew, entityManager -> {
+        return (Collection<T>) this.getJpa().txExpr(TransactionType.Supports, entityManager -> {
             log.debug("Transaction found, invoke findAll");
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<T> query = criteriaBuilder.createQuery(this.type);
@@ -235,7 +236,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
     @Override
     public Collection<T> findAll(HyperIoTQuery filter,HyperIoTQueryOrder queryOrder) {
         log.debug("Repository Find All entities {}", this.type.getSimpleName());
-        return (Collection<T>) this.getJpa().txExpr(TransactionType.RequiresNew, entityManager -> {
+        return (Collection<T>) this.getJpa().txExpr(TransactionType.Supports, entityManager -> {
             log.debug("Transaction found, invoke findAll");
             CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
             CriteriaQuery<T> query = criteriaBuilder.createQuery(this.type);
@@ -276,7 +277,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
     @Override
     public HyperIoTPaginatedResult<T> findAll(int delta, int page, HyperIoTQuery filter) {
         log.debug("Repository Find All entities {}", this.type.getSimpleName());
-        return (HyperIoTPaginatedResult<T>) this.getJpa().txExpr(TransactionType.RequiresNew,
+        return (HyperIoTPaginatedResult<T>) this.getJpa().txExpr(TransactionType.Supports,
                 entityManager -> {
                     log.debug("Transaction found, invoke findAll");
                     CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -319,7 +320,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
     @Override
     public HyperIoTPaginatedResult<T> findAll(int delta, int page, HyperIoTQuery filter,HyperIoTQueryOrder queryOrder) {
         log.debug("Repository Find All entities {}", this.type.getSimpleName());
-        return (HyperIoTPaginatedResult<T>) this.getJpa().txExpr(TransactionType.RequiresNew,
+        return (HyperIoTPaginatedResult<T>) this.getJpa().txExpr(TransactionType.Supports,
                 entityManager -> {
                     log.debug("Transaction found, invoke findAll");
                     CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -365,7 +366,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
 
     public final T queryForSingleResult(String query, HashMap<String, Object> params) {
         log.debug("Repository queryForSingleResult {}", new Object[]{query, params});
-        T returnResult = (T) this.getJpa().txExpr(TransactionType.RequiresNew, entityManager -> {
+        T returnResult = (T) this.getJpa().txExpr(TransactionType.Supports, entityManager -> {
             log.debug("Transaction found, invoke findAll");
             Query q = entityManager.createQuery(query, this.type);
             Iterator<String> it = params.keySet().iterator();
@@ -687,7 +688,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
     @Override
     public long countAll(HyperIoTQuery filter) {
         log.debug("Repository countAll entities {}", this.type.getSimpleName());
-        return this.getJpa().txExpr(TransactionType.RequiresNew,
+        return this.getJpa().txExpr(TransactionType.Supports,
                 entityManager -> {
                     log.debug("Transaction found, invoke countAll");
                     CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
