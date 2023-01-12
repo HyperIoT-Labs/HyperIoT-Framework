@@ -207,7 +207,7 @@ public abstract class HyperIoTBaseEntityServiceImpl<T extends HyperIoTBaseEntity
     @AllowGenericPermissions(actions = HyperIoTCrudAction.Names.FINDALL)
     public Collection<T> findAll(HashMap<String, Object> filter, HyperIoTContext ctx) {
         HyperIoTQuery finalFilter = HyperIoTQueryBuilder.fromMapInAndCondition(filter);
-        return this.findAll(finalFilter, ctx);
+        return this.getSystemService().findAll(finalFilter, ctx);
     }
 
     /**
@@ -221,7 +221,7 @@ public abstract class HyperIoTBaseEntityServiceImpl<T extends HyperIoTBaseEntity
     @AllowGenericPermissions(actions = HyperIoTCrudAction.Names.FINDALL)
     public HyperIoTPaginableResult<T> findAll(HashMap<String, Object> filter, HyperIoTContext ctx, int delta, int page) {
         HyperIoTQuery finalFilter = HyperIoTQueryBuilder.fromMapInAndCondition(filter);
-        return this.findAll(filter, ctx, delta, page);
+        return this.findAll(finalFilter, ctx, delta, page);
     }
 
     /**
