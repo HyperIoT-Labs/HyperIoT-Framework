@@ -32,10 +32,10 @@ dependencies {
 	compileOnly group: "org.apache.storm", name: "storm-core", version: project.stormCoreVersion
 	compileOnly group: 'org.apache.storm', name: 'storm-client', version: project.stormCoreVersion
 
-
-
 	//Project Dependencies	
 	compileOnly project(":modules:HyperIoTStorm:HyperIoTStorm-api")
+	compileOnly project(":modules:HyperIoTStorm:HyperIoTStorm-bundles")
+	compileOnly project(":modules:HyperIoTStorm:HyperIoTStorm-2.4-bundles")
 
 
 	
