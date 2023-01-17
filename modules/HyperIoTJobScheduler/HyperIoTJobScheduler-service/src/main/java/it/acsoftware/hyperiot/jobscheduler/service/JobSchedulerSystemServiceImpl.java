@@ -213,7 +213,7 @@ public final class JobSchedulerSystemServiceImpl extends HyperIoTBaseSystemServi
             triggerBuilder = newTrigger().withIdentity(triggerKey);
         }
         Trigger trigger = triggerBuilder
-                .withSchedule(cronSchedule(cronExpression).withMisfireHandlingInstructionDoNothing())
+                .withSchedule(cronSchedule(cronExpression).withMisfireHandlingInstructionFireAndProceed())
                 .forJob(jobKey)
                 .build();
         // Tell quartz to schedule the job using trigger set above
