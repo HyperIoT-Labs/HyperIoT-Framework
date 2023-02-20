@@ -52,8 +52,8 @@ publishing {
        mavenLocal()
        maven {
             credentials {
-                username project.publishRepoUsername
-                password project.publishRepoPassword
+                username System.getProperty("publishRepoUsername", "noUser")
+                password System.getProperty("publishRepoPassword", "noPassword")
             }
             name = 'ACSoftwareRepository'
             url = "https://nexus.acsoftware.it/nexus/repository/maven-hyperiot/"
