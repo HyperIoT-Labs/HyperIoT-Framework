@@ -1,76 +1,9 @@
-
-
-configurations {
-
-    base {
-        transitive = false
-    }
-
-    baseRest {
-        transitive = false
-    }
-
-    baseTest {
-        transitive = false
-    }
-
-    baseHooks {
-        transitive = false
-    }
-}
-
-dependencies {
-    baseHooks 'it.acsoftware.hyperiot.base:HyperIoTBase-service-hooks:' + project.version
-    base 'org.passay:passay:'+project.passayVersion
-    base 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:' + project.jacksonVersion
-    base 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:' + project.jacksonVersion
-    base 'com.fasterxml.jackson.core:jackson-annotations:' + project.jacksonVersion
-    base 'com.fasterxml.jackson.core:jackson-core:' + project.jacksonVersion
-    base 'com.fasterxml.jackson.core:jackson-databind:' + project.jacksonVersion
-    base 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:'+ project.jacksonVersion
-    base 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:'+ project.jacksonVersion
-    base 'com.fasterxml.jackson.dataformat:jackson-dataformat-properties:'+ project.jacksonVersion
-    base 'com.fasterxml.jackson.module:jackson-module-jaxb-annotations:' + project.jacksonVersion
-    base 'org.webjars:swagger-ui:' + project.swaggerUIVersion
-    base 'javax.validation:validation-api:' + project.javaxValidationVersion
-    base 'org.bouncycastle:bcprov-jdk15on:' + project.bouncyCastleVersion
-    base 'org.bouncycastle:bcpkix-jdk15on:' + project.bouncyCastleVersion
-    base 'org.bouncycastle:bcmail-jdk15on:' + project.bouncyCastleVersion
-    base 'org.postgresql:postgresql:' + project.postgresDriverVersion
-    base 'it.acsoftware.hyperiot.base:HyperIoTBase-api:' + project.version
-    base 'it.acsoftware.hyperiot.base:HyperIoTBase-model:' + project.version
-    base 'it.acsoftware.hyperiot.base:HyperIoTBase-security:' + project.version
-    base 'it.acsoftware.hyperiot.base:HyperIoTBase-actions:' + project.version
-    base 'it.acsoftware.hyperiot.base:HyperIoTBase-command:' + project.version
-    base 'it.acsoftware.hyperiot.base:HyperIoTBase-util:' + project.version
-    base 'it.acsoftware.hyperiot.base:HyperIoTBase-validation:' + project.version
-    base 'it.acsoftware.hyperiot.base:HyperIoTBase-repository:' + project.version
-    base 'it.acsoftware.hyperiot.base:HyperIoTBase-service:' + project.version
-    baseRest 'it.acsoftware.hyperiot.base:HyperIoTBase-service-rest-provider:' + project.version
-    baseRest 'it.acsoftware.hyperiot.base:HyperIoTBase-service-rest:' + project.version
-    baseTest 'it.acsoftware.hyperiot.base:HyperIoTBase-test-containers:' + project.version
-    baseTest 'it.acsoftware.hyperiot.base:HyperIoTBase-test-utils:' + project.version
-}
-
-
-
-
-task buildFeatures(type: GradleBuild) {
-    tasks = ['clean', 'generateFeatures', 'build', 'install']
-}
-
-
-
-task publishFeatures(type: GradleBuild) {
-    tasks = ['clean', 'generateFeatures', 'build', 'install', 'publish']
-}
-
-def featureFile = 'build/karaf/features/' + project.name + '-' + project.version + '.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
 }
+

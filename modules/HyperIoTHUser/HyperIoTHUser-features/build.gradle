@@ -1,47 +1,8 @@
-configurations {
-    hUser {
-        transitive = false
-    }
-
-    hUserRest {
-        transitive = false
-    }
-
-
-    hUserTest {
-        transitive = false
-    }
-}
-
-dependencies {
-    hUser 'it.acsoftware.hyperiot.huser:HyperIoTHUser-actions:' + project.version
-    hUser 'it.acsoftware.hyperiot.huser:HyperIoTHUser-model:' + project.version
-    hUser 'it.acsoftware.hyperiot.huser:HyperIoTHUser-api:' + project.version
-    hUser 'it.acsoftware.hyperiot.huser:HyperIoTHUser-command:' + project.version
-    hUser 'it.acsoftware.hyperiot.huser:HyperIoTHUser-repository:' + project.version
-    hUser 'it.acsoftware.hyperiot.huser:HyperIoTHUser-service:' + project.version
-    hUserRest 'it.acsoftware.hyperiot.huser:HyperIoTHUser-service-rest:' + project.version
-    hUserTest 'it.acsoftware.hyperiot.huser:HyperIoTHUser-test-utils:' + project.version
-}
-
-
-
-task buildFeatures(type: GradleBuild) {
-    tasks = ['clean', 'generateFeatures', 'build', 'install']
-}
-
-
-
-task publishFeatures(type: GradleBuild) {
-    tasks = ['clean', 'generateFeatures', 'build', 'install', 'publish']
-}
-
-def featureFile = 'build/karaf/features/' + project.name + '-' + project.version + '.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
 }

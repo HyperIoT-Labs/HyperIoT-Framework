@@ -1,45 +1,8 @@
-configurations {
-	zookeeperConnector {
-		transitive = false
-	}
-    zookeeperConnectorRest {
-        transitive = false
-    }
-    zookeeperConnectorTest {
-        transitive = false
-    }
-    zookeeperConnectorWebSocket {
-        transitive = false
-    }
-}
-
-dependencies {
-    zookeeperConnector 'com.google.guava:failureaccess:1.0.1'
-    zookeeperConnector 'com.google.guava:guava:27.1-jre'
-	zookeeperConnector 'it.acsoftware.hyperiot.zookeeper.connector:HyperIoTZookeeperConnector-actions:'+project.version
-	zookeeperConnector 'it.acsoftware.hyperiot.zookeeper.connector:HyperIoTZookeeperConnector-api:'+project.version
-	zookeeperConnector 'it.acsoftware.hyperiot.zookeeper.connector:HyperIoTZookeeperConnector-service:'+project.version
-    zookeeperConnector 'it.acsoftware.hyperiot.zookeeper.connector:HyperIoTZookeeperConnector-model:'+project.version
-    zookeeperConnector 'it.acsoftware.hyperiot.zookeeper.connector:HyperIoTZookeeperConnector-util:'+project.version
-    zookeeperConnector 'it.acsoftware.hyperiot.zookeeper.connector:HyperIoTZookeeperConnector-zkbundles:'+project.version
-    zookeeperConnectorRest 'it.acsoftware.hyperiot.zookeeper.connector:HyperIoTZookeeperConnector-service-rest:'+project.version
-    zookeeperConnectorWebSocket 'it.acsoftware.hyperiot.zookeeper.connector:HyperIoTZookeeperConnector-service-websocket:'+project.version
-}
-
-
-
-
-
-
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

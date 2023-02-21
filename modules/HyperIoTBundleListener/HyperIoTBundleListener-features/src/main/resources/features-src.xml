@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTBundleListener-features">
+  <feature name="hyperiot-bundlelistener" version="${project.version}" description="All  HyperIoT HyperIoTBundleListener modules">
+    <feature>hyperiot-base</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.bundle.listener/HyperIoTBundleListener-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.bundle.listener/HyperIoTBundleListener-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.bundle.listener/HyperIoTBundleListener-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.bundle.listener/HyperIoTBundleListener-service-rest/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-bundlelistener-basic" version="${project.version}" description="All  HyperIoT HyperIoTBundleListener modules with NO rest services">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.bundle.listener/HyperIoTBundleListener-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.bundle.listener/HyperIoTBundleListener-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.bundle.listener/HyperIoTBundleListener-service/${project.version}</bundle>
+  </feature>
+</features>

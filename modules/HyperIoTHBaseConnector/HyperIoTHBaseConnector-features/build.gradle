@@ -1,39 +1,8 @@
-configurations {
-    hBaseConnector {
-		transitive = false
-	}
-    hBaseConnectorRest {
-		transitive = false
-	}
-    hBaseConnectorTest {
-        transitive = false
-    }
-}
-
-dependencies {
-    hBaseConnector 'it.acsoftware.hyperiot.hbase.connector:HyperIoTHBaseConnector-util:'+project.version
-    hBaseConnector 'it.acsoftware.hyperiot.hbase.connector:HyperIoTHBaseConnector-actions:'+project.version
-    hBaseConnector 'it.acsoftware.hyperiot.hbase.connector:HyperIoTHBaseConnector-api:'+project.version
-    hBaseConnector 'it.acsoftware.hyperiot.hbase.connector:HyperIoTHBaseConnector-hbaseBundles:'+project.version
-    hBaseConnector 'it.acsoftware.hyperiot.hbase.connector:HyperIoTHBaseConnector-model:'+project.version
-    hBaseConnector 'it.acsoftware.hyperiot.hbase.connector:HyperIoTHBaseConnector-service:'+project.version
-    hBaseConnectorRest 'it.acsoftware.hyperiot.hbase.connector:HyperIoTHBaseConnector-service-rest:'+project.version
-}
-
-
-
-
-
-
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

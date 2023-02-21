@@ -1,34 +1,8 @@
-
-
-configurations {
-	avro {
-        transitive = false
-    }
-}
-
-dependencies {
-    avro 'it.acsoftware.hyperiot.avro:HyperIoTAvro-bundles:'+project.version
-    avro 'com.thoughtworks.paranamer:paranamer:'+project.paranamerVersion
-    avro 'org.codehaus.jackson:jackson-core-asl:'+project.orgCodehausJackson
-    avro 'org.codehaus.jackson:jackson-mapper-asl:'+project.orgCodehausJackson
-    avro 'org.apache.commons:commons-compress:'+project.orgApacheCommonsCompress
-}
-
-
-
-
-
-
-${project.version}
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

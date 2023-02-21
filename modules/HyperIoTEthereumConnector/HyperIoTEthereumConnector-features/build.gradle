@@ -1,41 +1,8 @@
-
-
-configurations {
-	ethereumConnector {
-		transitive = false
-	}
-      ethereumConnectorRest {
-		transitive = false
-	} 
-}
-
-dependencies {
-	ethereumConnector 'it.acsoftware.hyperiot.blockchain.ethereum.connector:HyperIoTEthereumConnector-actions:'+project.version
- 	ethereumConnector 'it.acsoftware.hyperiot.blockchain.ethereum.connector:HyperIoTEthereumConnector-api:'+project.version
-    ethereumConnector 'it.acsoftware.hyperiot.blockchain.ethereum.connector:HyperIoTEthereumConnector-model:'+project.version
-    ethereumConnector 'it.acsoftware.hyperiot.blockchain.ethereum.connector:HyperIoTEthereumConnector-repository:'+project.version
-    ethereumConnector 'it.acsoftware.hyperiot.blockchain.ethereum.connector:HyperIoTEthereumConnector-web3j-client:'+project.version
-    ethereumConnector 'it.acsoftware.hyperiot.blockchain.ethereum.connector:HyperIoTEthereumConnector-util:'+project.version
-	ethereumConnector 'it.acsoftware.hyperiot.blockchain.ethereum.connector:HyperIoTEthereumConnector-service:'+project.version
-    ethereumConnector 'io.reactivex.rxjava2:rxjava:'+project.rxjava2Version
-    ethereumConnector 'org.reactivestreams:reactive-streams:'+project.reactiveStreamsVersion
-}
-
-
-
-
-
-
-${project.version}
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

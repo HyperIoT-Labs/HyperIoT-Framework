@@ -1,31 +1,9 @@
-
-
-configurations {
-	cloudEvents {
-		transitive = false
-	}
-     
-}
-
-dependencies {
-	cloudEvents 'it.acsoftware.hyperiot.cloud.events:HyperIoTCloudEvents-bundles:'+project.version
-}
-
-
-
-
-
-
-${project.version}
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}
+

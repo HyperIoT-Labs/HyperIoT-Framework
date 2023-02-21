@@ -1,36 +1,8 @@
-/**
- * This plugin installs all required modules for having a fresh installation of hyperiot microservices
- */
-
-
-
-
-
-configurations {
-	core {
-		transitive = false
-	}
-
-}
-
-dependencies {
-
-}
-
-
-
-
-
-
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

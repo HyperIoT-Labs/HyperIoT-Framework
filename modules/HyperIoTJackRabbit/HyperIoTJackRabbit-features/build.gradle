@@ -1,33 +1,8 @@
-
-
-configurations {
-	jackRabbit {
-		transitive = false
-	}
-     
-}
-
-dependencies {
-    jackRabbit 'org.apache.jackrabbit:jackrabbit-bundle:2.19.3'
-    jackRabbit 'javax.jcr:jcr:2.0'
-    //Jackrabbit module depend on logkit . This dependency can be exported in another bundle in the future .
-    jackRabbit 'logkit:logkit:2.0'
-}
-
-
-
-
-
-${project.version}
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

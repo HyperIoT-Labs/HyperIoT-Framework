@@ -1,36 +1,8 @@
-
-
-
-
-configurations {
-	jobScheduler {
-		transitive = false
-	}
-
-}
-
-dependencies {
-	jobScheduler 'it.acsoftware.hyperiot.jobscheduler:HyperIoTJobScheduler-actions:'+project.version
- 	jobScheduler 'it.acsoftware.hyperiot.jobscheduler:HyperIoTJobScheduler-api:'+project.version
- 	jobScheduler 'it.acsoftware.hyperiot.jobscheduler:HyperIoTJobScheduler-model:'+project.version
-	jobScheduler 'it.acsoftware.hyperiot.jobscheduler:HyperIoTJobScheduler-service:'+project.version
-    jobScheduler 'it.acsoftware.hyperiot.jobscheduler:HyperIoTJobScheduler-repository:'+project.version
-}
-
-
-
-
-
-
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

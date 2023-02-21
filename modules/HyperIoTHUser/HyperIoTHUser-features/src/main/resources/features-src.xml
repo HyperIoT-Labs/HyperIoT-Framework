@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTHUser-features">
+  <feature name="hyperiot-huser" version="${project.version}" description="All Hyperiot HyperIoTHUser Modules">
+    <feature>hyperiot-base</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-command/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-repository/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-service-rest/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-huser-test" version="${project.version}" description="All Hyperiot HyperIoTHUser Modules">
+    <feature>hyperiot-base</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-command/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-repository/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-service-rest/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-test-utils/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-huser-basic" version="${project.version}" description="All Hyperiot HyperIoTHUser Modules with NO rest services ">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-command/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-repository/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-service/${project.version}</bundle>
+  </feature>
+</features>

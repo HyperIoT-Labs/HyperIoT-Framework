@@ -1,49 +1,8 @@
-
-
-configurations {
-	webSocket {
-		transitive = false
-	}
-
-    webSocketChannel {
-        transitive = false
-    }
-
-    webSocketTest {
-        transitive = false
-    }
-     
-}
-
-dependencies {
-	webSocket 'it.acsoftware.hyperiot.websocket:HyperIoTWebSocket-actions:'+project.version
- 	webSocket 'it.acsoftware.hyperiot.websocket:HyperIoTWebSocket-api:'+project.version
-    webSocket 'it.acsoftware.hyperiot.websocket:HyperIoTWebSocket-model:'+project.version
-	webSocket 'it.acsoftware.hyperiot.websocket:HyperIoTWebSocket-service:'+project.version
-    webSocket 'it.acsoftware.hyperiot.websocket:HyperIoTWebSocket-compression:'+project.version
-    webSocket 'it.acsoftware.hyperiot.websocket:HyperIoTWebSocket-encryption:'+project.version
-    webSocket 'it.acsoftware.hyperiot.websocket:HyperIoTWebSocket-policy:'+project.version
-    webSocket 'it.acsoftware.hyperiot.websocket:HyperIoTWebSocket-session:'+project.version
-    webSocketChannel 'it.acsoftware.hyperiot.websocket:HyperIoTWebSocket-channel:'+project.version
-    webSocketTest 'it.acsoftware.hyperiot.websocket:HyperIoTWebSocket-test-websocket:'+project.version
-    webSocketTest 'org.awaitility:awaitility:3.1.6'
-    webSocketTest 'org.json:json:20220320'
-}
-
-
-
-
-
-${project.version}
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

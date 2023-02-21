@@ -3,7 +3,7 @@ allprojects {
     version project.hyperIoTVersion
     repositories {
         mavenCentral()
-        mavenLocal{
+        mavenLocal {
             content {
                 // Used only for test and development phase.
                 includeGroupByRegex "it\\.acsoftware.*"
@@ -27,7 +27,7 @@ allprojects {
         }
     }
 
-    
+
     apply plugin: 'biz.aQute.bnd.builder'
     apply plugin: 'maven-publish'
 
@@ -48,11 +48,4 @@ allprojects {
             }
         }
     }
-    
-
-    ${project.version}
 }
-
-
-
-${project.version}

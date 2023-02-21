@@ -1,34 +1,9 @@
-
-
-configurations {
-	authentication {
-		transitive = false
-	}
-
-	authenticationRest {
-		transitive = false
-	}
-}
-
-dependencies {
-    authentication 'it.acsoftware.hyperiot.authentication:HyperIoTAuthentication-service:'+project.version
-    authenticationRest 'it.acsoftware.hyperiot.authentication:HyperIoTAuthentication-service-rest:'+project.version
-}
-
-
-
-
-
-
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}
+

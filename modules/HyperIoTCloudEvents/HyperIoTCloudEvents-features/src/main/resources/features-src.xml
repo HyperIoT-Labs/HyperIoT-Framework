@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTCloudEvents-features">
+  <feature name="hyperiot-cloudevents" version="${project.version}" description="All  HyperIoT HyperIoTCloudEvents modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.cloud.events/HyperIoTCloudEvents-bundles/${project.version}</bundle>
+  </feature>
+</features>

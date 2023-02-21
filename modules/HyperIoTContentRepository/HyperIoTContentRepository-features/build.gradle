@@ -1,37 +1,8 @@
-
-
-configurations {
-	contentRepository {
-		transitive = false
-	}
-      contentRepositoryRest {
-		transitive = false
-	} 
-}
-
-dependencies {
- 	contentRepository 'it.acsoftware.hyperiot.contentrepository:HyperIoTContentRepository-api:'+project.version
-	contentRepository 'it.acsoftware.hyperiot.contentrepository:HyperIoTContentRepository-service:'+project.version
-	contentRepository 'it.acsoftware.hyperiot.contentrepository:HyperIoTContentRepository-model:'+project.version
-    contentRepository 'it.acsoftware.hyperiot.contentrepository:HyperIoTContentRepository-actions:'+project.version
-    contentRepository 'it.acsoftware.hyperiot.contentrepository:HyperIoTContentRepository-util:'+project.version
- 	contentRepositoryRest 'it.acsoftware.hyperiot.contentrepository:HyperIoTContentRepository-service-rest:'+project.version
-}
-
-
-
-
-
-${project.version}
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

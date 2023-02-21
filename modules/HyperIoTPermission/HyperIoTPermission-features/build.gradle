@@ -1,46 +1,8 @@
-
-
-
-
-configurations {
-	hyperiot{
-		transitive = false
-	}
-
-	hyperiotRest{
-		transitive = false
-	}
-
-    hyperiotTest{
-        transitive = false
-    }
-}
-
-dependencies {
-	//Need Role model beacuse permissions use Role class
-    hyperiot 'it.acsoftware.hyperiot.permission:HyperIoTPermission-actions:'+project.version
-    hyperiot 'it.acsoftware.hyperiot.permission:HyperIoTPermission-api:'+project.version
-    hyperiot 'it.acsoftware.hyperiot.permission:HyperIoTPermission-model:'+project.version
-    hyperiot 'it.acsoftware.hyperiot.permission:HyperIoTPermission-repository:'+project.version
-    hyperiot 'it.acsoftware.hyperiot.permission:HyperIoTPermission-service:'+project.version
-    hyperiotRest 'it.acsoftware.hyperiot.permission:HyperIoTPermission-service-rest:'+project.version
-    hyperiotRest 'it.acsoftware.hyperiot.permission:HyperIoTPermission-test-utils:'+project.version
-}
-
-
-
-
-
-
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

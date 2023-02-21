@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTMail-features">
+  <feature name="hyperiot-mail" version="${project.version}" description="All  Hyperiot HyperIoTMail modules">
+    <feature>hyperiot-base</feature>
+    <bundle>mvn:org.freemarker/freemarker/2.3.28</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-repository/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-util/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-service-rest/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-mail-basic" version="${project.version}" description="All  Hyperiot HyperIoTMail modules with NO rest services">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:org.freemarker/freemarker/2.3.28</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-repository/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-util/${project.version}</bundle>
+  </feature>
+</features>

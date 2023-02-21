@@ -1,45 +1,8 @@
-
-
-configurations {
-    storm {
-        transitive = false
-    }
-
-    storm_2_3 {
-		transitive = false
-	}
-
-    storm_2_4 {
-        transitive = false
-    }
-
-    stormTest {
-        transitive = false
-    }
-}
-
-dependencies {
-	storm_2_3 'it.acsoftware.hyperiot.storm:HyperIoTStorm-bundles:'+project.version
-    storm_2_4 'it.acsoftware.hyperiot.storm:HyperIoTStorm-2.4-bundles:'+project.version
-    storm 'it.acsoftware.hyperiot.storm:HyperIoTStorm-api:'+project.version
-    storm 'it.acsoftware.hyperiot.storm:HyperIoTStorm-service:'+project.version
-}
-
-
-
-
-
-
-
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

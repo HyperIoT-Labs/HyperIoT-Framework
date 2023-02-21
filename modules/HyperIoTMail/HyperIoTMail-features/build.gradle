@@ -1,37 +1,8 @@
-configurations {
-	util {
-		transitive = false
-	}
-      utilRest {
-		transitive = false
-	}
-}
-
-dependencies {
-	util 'org.freemarker:freemarker:2.3.28'
-	util 'it.acsoftware.hyperiot.mail:HyperIoTMail-actions:'+project.version
- 	util 'it.acsoftware.hyperiot.mail:HyperIoTMail-api:'+project.version
-	util 'it.acsoftware.hyperiot.mail:HyperIoTMail-service:'+project.version
-	util 'it.acsoftware.hyperiot.mail:HyperIoTMail-model:'+project.version
-	util 'it.acsoftware.hyperiot.mail:HyperIoTMail-repository:'+project.version
-	util 'it.acsoftware.hyperiot.mail:HyperIoTMail-util:'+project.version
- 	utilRest 'it.acsoftware.hyperiot.mail:HyperIoTMail-service-rest:'+project.version
-}
-
-
-
-
-
-
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
-    publications {
-        hyperiot(MavenPublication) {
-            artifactId project.name
-            artifact source: featureFile, classifier: 'features'
-        }
-    }
- }
+	publications {
+		hyperiot(MavenPublication) {
+			artifact source: "src/main/resources/features.xml", classifier: 'features'
+			artifactId project.name
+		}
+	}
+}

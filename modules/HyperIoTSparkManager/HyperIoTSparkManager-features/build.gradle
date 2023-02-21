@@ -1,42 +1,8 @@
-
-
-
-
-configurations {
-	sparkManager {
-		transitive = false
-	}
-      sparkManagerRest {
-		transitive = false
-	}
-}
-
-dependencies {
-    sparkManager 'org.apache.httpcomponents:httpclient:'+project.apacheHttpComponentsClientVersion
-    sparkManager 'org.apache.httpcomponents:httpcore:'+project.apacheHttpComponentsCoreVersion
-	sparkManager 'it.acsoftware.hyperiot.sparkmanager:HyperIoTSparkManager-actions:'+project.version
- 	sparkManager 'it.acsoftware.hyperiot.sparkmanager:HyperIoTSparkManager-api:'+project.version
- 	sparkManager 'it.acsoftware.hyperiot.sparkmanager:HyperIoTSparkManager-model:'+project.version
- 	sparkManager 'it.acsoftware.hyperiot.sparkmanager:HyperIoTSparkManager-job:'+project.version
-	sparkManager 'it.acsoftware.hyperiot.sparkmanager:HyperIoTSparkManager-service:'+project.version
-	sparkManager 'it.acsoftware.hyperiot.sparkmanager:HyperIoTSparkManager-util:'+project.version
-	sparkManagerRest 'it.acsoftware.hyperiot.sparkmanager:HyperIoTSparkManager-service-rest:'+project.version
-}
-
-
-
-
-
-
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

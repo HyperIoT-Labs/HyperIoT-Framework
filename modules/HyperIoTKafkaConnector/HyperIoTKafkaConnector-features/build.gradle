@@ -1,51 +1,8 @@
-
-
-configurations {
-	kafkaConnector {
-		transitive = false
-	}
-      kafkaConnectorRest {
-		transitive = false
-	}
-
-    kafkaConnectorWebSocket {
-        transitive = false
-    }
-
-    kafkaConnectorTest {
-        transitive = false
-    }
-}
-
-dependencies {
-    kafkaConnector 'org.apache.httpcomponents:httpclient:'+project.apacheHttpComponentsClientVersion
-    kafkaConnector 'org.apache.httpcomponents:httpcore:'+project.apacheHttpComponentsCoreVersion
-    kafkaConnector 'org.apache.servicemix.bundles:org.apache.servicemix.bundles.kafka-clients:2.3.1_1'
-    kafkaConnector 'org.reactivestreams:reactive-streams:1.0.2'
-    kafkaConnector 'io.projectreactor:reactor-core:3.2.6.RELEASE'
-    kafkaConnector 'io.projectreactor.kafka:reactor-kafka:1.1.0.RELEASE'
-    kafkaConnector 'it.acsoftware.hyperiot.kafka.connector:HyperIoTKafkaConnector-actions:'+project.version
-    kafkaConnector 'it.acsoftware.hyperiot.kafka.connector:HyperIoTKafkaConnector-api:'+project.version
-    kafkaConnector 'it.acsoftware.hyperiot.kafka.connector:HyperIoTKafkaConnector-model:'+project.version
-	kafkaConnector 'it.acsoftware.hyperiot.kafka.connector:HyperIoTKafkaConnector-service:'+project.version
-	kafkaConnectorRest 'it.acsoftware.hyperiot.kafka.connector:HyperIoTKafkaConnector-service-rest:'+project.version
-    kafkaConnectorWebSocket 'it.acsoftware.hyperiot.kafka.connector:HyperIoTKafkaConnector-service-websocket:'+project.version
-}
-
-
-
-
-
-
-
-
-
-def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {
     publications {
         hyperiot(MavenPublication) {
+            artifact source: "src/main/resources/features.xml", classifier: 'features'
             artifactId project.name
-            artifact source: featureFile, classifier: 'features'
         }
     }
- }
+}

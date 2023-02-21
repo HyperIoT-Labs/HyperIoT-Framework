@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTHadoopManager-features">
+  <feature name="hyperiot-hadoopmanager" version="${project.version}" description="All  HyperIoT HyperIoTHadoopManager modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-util/${project.version}</bundle>
+  </feature>
+</features>
