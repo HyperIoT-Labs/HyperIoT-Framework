@@ -1,45 +1,41 @@
-
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-	compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
-	//SLF4J
+    //OSGi Basic Imports
+    compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //SLF4J
     compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
-	//Jackson
-	compileOnly group:"com.fasterxml.jackson.module",name:"jackson-module-jaxb-annotations",version:project.jacksonVersion
-	//HyperIoTBase Dependencies
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-util", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-security", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.permission", name: "HyperIoTPermission-api", version:project.hyperIoTVersion
+    //Jackson
+    compileOnly group: "com.fasterxml.jackson.module", name: "jackson-module-jaxb-annotations", version: project.jacksonVersion
+    //HyperIoTBase Dependencies
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-util", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-security", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.permission", name: "HyperIoTPermission-api", version: project.hyperIoTVersion
 
-	compileOnly group: 'org.eclipse.jetty.websocket', name: 'websocket-servlet', version: project.jettyWSVersion
+    compileOnly group: 'org.eclipse.jetty.websocket', name: 'websocket-servlet', version: project.jettyWSVersion
 
-	//Project Dependencies
-	compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-api")
-	compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-model")
-	compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-session")
-	compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-encryption")
-	compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-compression")
+    //Project Dependencies
+    compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-api")
+    compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-model")
+    compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-session")
+    compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-encryption")
+    compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-compression")
 }
 
 jar {
-	manifest {
-		attributes('dsannotations': '*')
-	}
+    manifest {
+        attributes('dsannotations': '*')
+    }
 }
 
 
-
-
-
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

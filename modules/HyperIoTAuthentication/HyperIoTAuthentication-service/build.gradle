@@ -1,57 +1,51 @@
-
-
-
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-	compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //OSGi Basic Imports
+    compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
     //SLF4J
     compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
-	//JPA Dependencies
-	compileOnly group: "javax.transaction", name: "javax.transaction-api",version: project.javaxTransactionVersion
-	compileOnly group: "org.apache.aries.jpa", name: "org.apache.aries.jpa.api", version:project.apacheAriesJpaVersion
-	//Validation
-	compileOnly group: "javax.validation", name: "validation-api",version:project.javaxValidationVersion
-	compileOnly group: "org.hibernate",name: "hibernate-validator",version:project.hibernateValidatorVersion
-	compileOnly group: 'org.javassist', name: 'javassist', version: project.hibernateJavassistVersion
-	//Jose
-	compileOnly group: "org.apache.cxf" ,name: "cxf-rt-rs-security-jose",version: project.cxfVersion
-	compileOnly group: "org.apache.cxf" ,name: "cxf-rt-rs-security-jose-jaxrs",version: project.cxfVersion
-	//HyperIoTBase Dependencies
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-util", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-security", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.huser", name: "HyperIoTHUser-api", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.huser", name: "HyperIoTHUser-model", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.permission", name: "HyperIoTPermission-model", version:project.hyperIoTVersion
-    compileOnly group: "it.acsoftware.hyperiot.permission", name: "HyperIoTPermission-api", version:project.hyperIoTVersion
-    compileOnly group: "it.acsoftware.hyperiot.mail", name: "HyperIoTMail-api", version:project.hyperIoTVersion
+    //JPA Dependencies
+    compileOnly group: "javax.transaction", name: "javax.transaction-api", version: project.javaxTransactionVersion
+    compileOnly group: "org.apache.aries.jpa", name: "org.apache.aries.jpa.api", version: project.apacheAriesJpaVersion
+    //Validation
+    compileOnly group: "javax.validation", name: "validation-api", version: project.javaxValidationVersion
+    compileOnly group: "org.hibernate", name: "hibernate-validator", version: project.hibernateValidatorVersion
+    compileOnly group: 'org.javassist', name: 'javassist', version: project.hibernateJavassistVersion
+    //Jose
+    compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-security-jose", version: project.cxfVersion
+    compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-security-jose-jaxrs", version: project.cxfVersion
+    //HyperIoTBase Dependencies
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-util", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-security", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.huser", name: "HyperIoTHUser-api", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.huser", name: "HyperIoTHUser-model", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.permission", name: "HyperIoTPermission-model", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.permission", name: "HyperIoTPermission-api", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.mail", name: "HyperIoTMail-api", version: project.hyperIoTVersion
 
-	// Jaas
-	compileOnly group: 'org.apache.karaf.jaas', name: 'org.apache.karaf.jaas.config', version: project.karafVersion
-	compileOnly group: 'org.apache.karaf.jaas', name: 'org.apache.karaf.jaas.boot', version: project.karafVersion
+    // Jaas
+    compileOnly group: 'org.apache.karaf.jaas', name: 'org.apache.karaf.jaas.config', version: project.karafVersion
+    compileOnly group: 'org.apache.karaf.jaas', name: 'org.apache.karaf.jaas.boot', version: project.karafVersion
     compileOnly group: 'org.apache.karaf.jaas', name: 'org.apache.karaf.jaas.modules', version: project.karafVersion
-	//Project Dependencies
+    //Project Dependencies
 
 }
 
 jar {
-	manifest {
-		attributes('dsannotations': '*')
-	}
+    manifest {
+        attributes('dsannotations': '*')
+    }
 }
 
 
-
-
-
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

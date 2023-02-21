@@ -1,25 +1,22 @@
 dependencies {
-	compile group: "org.apache.avro", name: "avro", version: project.apacheAvroVersion
-	compile group: 'org.tukaani', name: 'xz', version: project.orgTukaani
-	compile group: 'org.xerial.snappy',name:'snappy-java', version:project.orgXerialSnappy
+    compile group: "org.apache.avro", name: "avro", version: project.apacheAvroVersion
+    compile group: 'org.tukaani', name: 'xz', version: project.orgTukaani
+    compile group: 'org.xerial.snappy', name: 'snappy-java', version: project.orgXerialSnappy
 }
 
 jar {
-	manifest {
-		attributes('dsannotations': '*')
-	}
-	zip64 true
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes('dsannotations': '*')
+    }
+    zip64 true
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 
-
-
-
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

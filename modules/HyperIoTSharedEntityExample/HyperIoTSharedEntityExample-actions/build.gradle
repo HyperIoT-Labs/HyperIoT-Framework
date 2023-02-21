@@ -1,33 +1,30 @@
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-	compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //OSGi Basic Imports
+    compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
     //SLF4J
     compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
-	//Project Dependencies
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
+    //Project Dependencies
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
 
-	compileOnly project(":modules:HyperIoTSharedEntityExample:HyperIoTSharedEntityExample-model")
+    compileOnly project(":modules:HyperIoTSharedEntityExample:HyperIoTSharedEntityExample-model")
 
 }
 
 jar {
-	manifest {
-		attributes('dsannotations': '*')
-	}
+    manifest {
+        attributes('dsannotations': '*')
+    }
 }
 
 
-
-
-
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

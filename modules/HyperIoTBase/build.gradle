@@ -1,9 +1,8 @@
-
 allprojects {
     group 'it.acsoftware.hyperiot.base'
     version = project.hyperIoTVersion
-    repositories{
-        mavenLocal{
+    repositories {
+        mavenLocal {
             content {
                 // Used only for test and development phase.
                 includeGroupByRegex "it\\.acsoftware.*"
@@ -12,7 +11,7 @@ allprojects {
         mavenCentral()
 
         maven {
-         url "https://plugins.gradle.org/m2/"
+            url "https://plugins.gradle.org/m2/"
         }
 
         maven {
@@ -21,11 +20,11 @@ allprojects {
         }
     }
 
-   
-   apply plugin: 'biz.aQute.bnd.builder'
-   apply plugin: 'maven-publish'
 
-	publishing {
+    apply plugin: 'biz.aQute.bnd.builder'
+    apply plugin: 'maven-publish'
+
+    publishing {
         repositories {
             maven {
                 credentials {

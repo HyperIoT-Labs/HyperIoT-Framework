@@ -1,39 +1,35 @@
-
-
 dependencies {
-	//OSGi Basic Imports
-	testCompile group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-	testCompile group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
-	// HyperIoTBase dependencies
-	testCompile group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test", version:project.hyperIoTVersion
-	testCompile group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-util", version:project.hyperIoTVersion
-	testCompile group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test-containers", version:project.hyperIoTVersion
-	//Test dependencies
-	testCompile group: "org.apache.karaf.itests", name:"common", version: project.karafVersion
-	testCompile group: "org.apache.karaf", name:"apache-karaf", version: project.karafVersion
-	testCompile group: "org.apache.karaf.shell", name:"org.apache.karaf.shell.core", version: project.karafVersion
-	testCompile group: "org.ops4j.pax.exam", name: "pax-exam-container-karaf",version: project.paxExamVersion
-	testCompile group: "org.ops4j.pax.exam", name: "pax-exam-junit4",version: project.paxExamVersion
-	testCompile group: "org.ops4j.pax.exam", name: "pax-exam",version: project.paxExamVersion
+    //OSGi Basic Imports
+    testCompile group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    testCompile group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    // HyperIoTBase dependencies
+    testCompile group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test", version: project.hyperIoTVersion
+    testCompile group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-util", version: project.hyperIoTVersion
+    testCompile group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test-containers", version: project.hyperIoTVersion
+    //Test dependencies
+    testCompile group: "org.apache.karaf.itests", name: "common", version: project.karafVersion
+    testCompile group: "org.apache.karaf", name: "apache-karaf", version: project.karafVersion
+    testCompile group: "org.apache.karaf.shell", name: "org.apache.karaf.shell.core", version: project.karafVersion
+    testCompile group: "org.ops4j.pax.exam", name: "pax-exam-container-karaf", version: project.paxExamVersion
+    testCompile group: "org.ops4j.pax.exam", name: "pax-exam-junit4", version: project.paxExamVersion
+    testCompile group: "org.ops4j.pax.exam", name: "pax-exam", version: project.paxExamVersion
 }
 
 
-
-
 test {
-	//Forwarding system properties passed by arguments
-	systemProperties(System.getProperties())
-	filter {
-		includeTestsMatching "it.acsoftware.hyperiot.storm.test.HyperIoTStormTestSuite"
-	}
-	useJUnit()
+    //Forwarding system properties passed by arguments
+    systemProperties(System.getProperties())
+    filter {
+        includeTestsMatching "it.acsoftware.hyperiot.storm.test.HyperIoTStormTestSuite"
+    }
+    useJUnit()
 }
 
 
 publishing {
-	publications {
-		hyperiot(MavenPublication) {
-			from components.java
-		}
-	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
+    }
 }

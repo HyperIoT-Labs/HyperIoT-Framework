@@ -1,23 +1,21 @@
-
-
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-	//HyperIoTBase Dependencies
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version:project.hyperIoTVersion
-	//HBase dependencies
-	compileOnly group: "org.apache.hbase", name: "hbase-client", version: project.hbaseVersion
-	//Project dependencies
-	compileOnly project(":modules:HyperIoTHBaseConnector:HyperIoTHBaseConnector-hbaseBundles")
-	compileOnly project(":modules:HyperIoTHBaseConnector:HyperIoTHBaseConnector-model")
+    //OSGi Basic Imports
+    compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    //HyperIoTBase Dependencies
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
+    //HBase dependencies
+    compileOnly group: "org.apache.hbase", name: "hbase-client", version: project.hbaseVersion
+    //Project dependencies
+    compileOnly project(":modules:HyperIoTHBaseConnector:HyperIoTHBaseConnector-hbaseBundles")
+    compileOnly project(":modules:HyperIoTHBaseConnector:HyperIoTHBaseConnector-model")
 
 }
 
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

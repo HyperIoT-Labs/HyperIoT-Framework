@@ -1,27 +1,26 @@
-
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-	//SLF4J
+    //OSGi Basic Imports
+    compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    //SLF4J
     compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
-	//HyperIoTBase Dependencies
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version:project.hyperIoTVersion
+    //HyperIoTBase Dependencies
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
+    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version: project.hyperIoTVersion
 
-	compileOnly group: 'org.eclipse.jetty.websocket', name: 'websocket-servlet', version: project.jettyWSVersion
+    compileOnly group: 'org.eclipse.jetty.websocket', name: 'websocket-servlet', version: project.jettyWSVersion
 
-	//Jax RS
-	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api",version:project.jaxWsRsApiVersion
-	compile group: 'org.jasypt', name: 'jasypt', version: '1.9.3'
+    //Jax RS
+    compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: project.jaxWsRsApiVersion
+    compile group: 'org.jasypt', name: 'jasypt', version: '1.9.3'
 
-	compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-model")
+    compileOnly project(":modules:HyperIoTWebSocket:HyperIoTWebSocket-model")
 }
 
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

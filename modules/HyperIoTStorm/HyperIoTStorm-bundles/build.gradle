@@ -1,12 +1,11 @@
-
 dependencies {
-    compile group: "org.apache.storm", name:"storm-core", version: project.stormCoreVersion
-    compile group: "org.apache.storm", name:"storm-kafka-client", version: project.stormCoreVersion
-    compile group: "org.apache.storm", name:"storm-hdfs",version: project.stormCoreVersion
-    compile group: 'org.apache.storm', name:'storm-hbase', version: project.stormCoreVersion
-    compile group: 'org.apache.storm', name:'flux-core', version: project.stormCoreVersion
-    compile group: 'org.apache.storm', name:'flux-wrappers', version: project.stormCoreVersion
-    compile group: 'commons-lang', name:'commons-lang', version: '2.6'
+    compile group: "org.apache.storm", name: "storm-core", version: project.stormCoreVersion
+    compile group: "org.apache.storm", name: "storm-kafka-client", version: project.stormCoreVersion
+    compile group: "org.apache.storm", name: "storm-hdfs", version: project.stormCoreVersion
+    compile group: 'org.apache.storm', name: 'storm-hbase', version: project.stormCoreVersion
+    compile group: 'org.apache.storm', name: 'flux-core', version: project.stormCoreVersion
+    compile group: 'org.apache.storm', name: 'flux-wrappers', version: project.stormCoreVersion
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
 }
 
 jar {
@@ -18,13 +17,10 @@ jar {
 }
 
 
-
-
-
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}
