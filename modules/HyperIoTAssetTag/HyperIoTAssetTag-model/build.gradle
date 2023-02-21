@@ -1,6 +1,3 @@
-
-
-
 dependencies {
 	//OSGi Basic Imports
 	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
@@ -21,14 +18,6 @@ dependencies {
 	compileOnly group: "it.acsoftware.hyperiot.huser", name: "HyperIoTHUser-model", version:project.hyperIoTVersion
 
     compileOnly group: "it.acsoftware.hyperiot.permission", name: "HyperIoTPermission-model", version:project.hyperIoTVersion
-}
-
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-	tasks = ['publish']
 }
 
 publishing {

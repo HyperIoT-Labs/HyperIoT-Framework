@@ -26,13 +26,9 @@ dependencies {
 	compileOnly group: 'org.eclipse.jetty.websocket', name: 'websocket-servlet', version: project.jettyWSVersion
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
 
-task publishHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install','publish' ]
-}
+
+
 
 publishing {
         publications {

@@ -50,13 +50,9 @@ jar {
 	}
 }
 
-task buildHIT(type: GradleBuild) {
 
-}
 
-task publishHIT(type: GradleBuild) {
 
-}
 
 test {
 	//Forwarding system properties passed by arguments

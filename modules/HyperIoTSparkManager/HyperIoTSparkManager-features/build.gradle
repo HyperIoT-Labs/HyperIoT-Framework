@@ -23,21 +23,13 @@ dependencies {
 	sparkManagerRest 'it.acsoftware.hyperiot.sparkmanager:HyperIoTSparkManager-service-rest:'+project.version
 }
 
-task buildHIT(type: GradleBuild) {
 
-}
 
-task buildFeatures(type: GradleBuild) {
-	tasks = [ 'clean','generateFeatures','build','install' ]
-}
 
-task publishHIT(type: GradleBuild) {
 
-}
 
-task publishFeatures(type: GradleBuild) {
-	tasks = [ 'clean','generateFeatures','build','install','publish' ]
-}
+
+
 
 def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {

@@ -17,13 +17,9 @@ jar {
     from { configurations.compile.findAll { !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
 
-task publishHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install','publish' ]
-}
+
+
 
 publishing {
     	publications {

@@ -27,14 +27,6 @@ dependencies {
 	compileOnly project(":modules:HyperIoTCompany:HyperIoTCompany-model")
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-		tasks = [ 'clean','build','install','publish' ]
-}
-
 publishing {
     	publications {
         	hyperiot(MavenPublication) {

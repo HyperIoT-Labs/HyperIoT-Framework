@@ -14,13 +14,9 @@ dependencies {
 	compileOnly group: 'org.apache.kafka', name: 'kafka-clients', version: project.apacheKafkaVersion
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
 
-task publishHIT(type: GradleBuild) {
-		tasks = ['publish']
-}
+
+
 
 
 publishing {

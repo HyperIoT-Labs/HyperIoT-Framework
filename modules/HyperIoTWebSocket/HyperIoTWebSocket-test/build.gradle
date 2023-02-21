@@ -67,11 +67,7 @@ test {
 }
 
 
-task buildHIT(type: GradleBuild) {
-}
 
-task publishHIT(type: GradleBuild) {
-}
 
 
 publishing {

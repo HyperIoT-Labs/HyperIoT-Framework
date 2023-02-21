@@ -30,21 +30,13 @@ dependencies {
     webSocketTest 'org.json:json:20220320'
 }
 
-task buildHIT(type: GradleBuild) {
-	
-}
 
-task buildFeatures(type: GradleBuild) {
-	tasks = [ 'clean','generateFeatures','build','install' ]
-}
 
-task publishHIT(type: GradleBuild) {
-	
-}
 
-task publishFeatures(type: GradleBuild) {
-	tasks = [ 'clean','generateFeatures','build','install','publish' ]
-}
+
+${project.version}
+
+
 
 def featureFile = 'build/karaf/features/'+project.name+'-'+project.version+'.xml'
 publishing {

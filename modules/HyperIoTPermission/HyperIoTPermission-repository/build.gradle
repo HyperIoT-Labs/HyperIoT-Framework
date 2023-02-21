@@ -24,13 +24,9 @@ dependencies {
 	compileOnly project(":modules:HyperIoTPermission:HyperIoTPermission-model")
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
 
-task publishHIT(type: GradleBuild) {
-	tasks = ['publish']
-}
+
+
 
 
 publishing {

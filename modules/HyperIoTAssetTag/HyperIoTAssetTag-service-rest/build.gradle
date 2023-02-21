@@ -25,13 +25,9 @@ dependencies {
 	compileOnly project(":modules:HyperIoTAssetTag:HyperIoTAssetTag-api")
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
 
-task publishHIT(type: GradleBuild) {
-	tasks = ['publish']
-}
+
+
 
 publishing {
     	publications {

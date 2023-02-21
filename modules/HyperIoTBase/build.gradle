@@ -21,7 +21,7 @@ allprojects {
         }
     }
 
-   apply plugin: 'maven'
+   
    apply plugin: 'biz.aQute.bnd.builder'
    apply plugin: 'maven-publish'
 
@@ -37,21 +37,4 @@ allprojects {
             }
         }
     }
- 	//this task will be executed even on test module
- 	task testAndBuildHIT(type: GradleBuild) {
-		tasks = [ 'clean','build','install' ]
-	}
-
-	//this task will be executed even on test module
- 	task testAndPublishHIT(type: GradleBuild) {
-		tasks = ['publish']
-	}
-
-}
-task buildHIT {
-	dependsOn gradle.includedBuilds*.task(':buildHIT')
-}
-
-task publishHIT(type: GradleBuild) {
-	dependsOn gradle.includedBuilds*.task(':publishHIT')
 }

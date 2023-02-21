@@ -35,13 +35,9 @@ dependencies {
     testCompile group: "org.awaitility", name:"awaitility", version:"3.1.6"
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
 
-task publishHIT(type: GradleBuild) {
-	tasks = ['publish']
-}
+
+
 
 publishing {
     	publications {
