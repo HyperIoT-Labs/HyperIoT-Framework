@@ -92,7 +92,6 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
      *
      * @param gradle
      */
-
     public void buildStarted(Gradle gradle) {
         System.out.println("Build Started, updating build scripts...");
         settings.getBuildscript().getRepositories().add(settings.getBuildscript().getRepositories().mavenCentral());

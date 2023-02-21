@@ -1,45 +1,8 @@
-
-configurations {
-	assetCategory {
-		transitive = false
-	}
-      assetCategoryRest {
-		transitive = false
-	}
-}
-
-dependencies {
-	assetCategory 'it.acsoftware.hyperiot.asset.category:HyperIoTAssetCategory-actions:'+project.version
- 	assetCategory 'it.acsoftware.hyperiot.asset.category:HyperIoTAssetCategory-api:'+project.version
-	assetCategory 'it.acsoftware.hyperiot.asset.category:HyperIoTAssetCategory-service:'+project.version
-	assetCategory 'it.acsoftware.hyperiot.asset.category:HyperIoTAssetCategory-model:'+project.version
-	assetCategory 'it.acsoftware.hyperiot.asset.category:HyperIoTAssetCategory-repository:'+project.version
- 	assetCategoryRest 'it.acsoftware.hyperiot.asset.category:HyperIoTAssetCategory-service-rest:'+project.version
-}
-
-
-task buildHIT(type: GradleBuild) {
-
-}
-
-task buildFeatures(type: GradleBuild) {
-	tasks = [ 'clean','generateFeatures','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-
-}
-
-task publishFeatures(type: GradleBuild) {
-	tasks = [ 'clean','generateFeatures','build','install','publish' ]
-}
-
-def featureFile = 'src/main/resources/features.xml'
 publishing {
     publications {
-        hyperiot(MavenPublication) {
-            artifactId project.name
-            artifact source: featureFile, classifier: 'features'
+        java(MavenPublication) {
+			artifact source: "src/main/resources/features.xml", classifier: 'features'
+			artifactId project.name
         }
     }
  }

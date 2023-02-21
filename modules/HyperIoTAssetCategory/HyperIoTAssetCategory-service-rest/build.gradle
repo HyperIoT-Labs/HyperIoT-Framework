@@ -25,14 +25,6 @@ dependencies {
 	compileOnly project(":modules:HyperIoTAssetCategory:HyperIoTAssetCategory-api")
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-	tasks = ['publish']
-}
-
 publishing {
     	publications {
         	hyperiot(MavenPublication) {
