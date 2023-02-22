@@ -1,12 +1,12 @@
 dependencies {
     //OSGi Basic Imports
-    compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    implementation group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
     //SLF4J
-    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
-    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-api")
-    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-util")
-    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-model")
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-api")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-util")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-model")
 }
 
 jar {

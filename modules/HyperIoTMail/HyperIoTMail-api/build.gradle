@@ -1,14 +1,14 @@
 dependencies {
     //OSGi Basic Imports
-    compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
     //HyperIoTBase Dependencies
-    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
-    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
-    compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version: project.hyperIoTVersion
     // https://mvnrepository.com/artifact/javax.mail/mail
-    compileOnly group: 'javax.mail', name: 'mail', version: '1.4'
+    implementation group: 'javax.mail', name: 'mail', version: '1.4'
     //Project Dependencies
-    compileOnly project(":modules:HyperIoTMail:HyperIoTMail-model")
+    implementation project(":modules:HyperIoTMail:HyperIoTMail-model")
 
 
 }

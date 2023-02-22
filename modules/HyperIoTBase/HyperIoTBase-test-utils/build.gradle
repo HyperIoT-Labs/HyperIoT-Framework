@@ -1,36 +1,37 @@
 dependencies {
-    compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    implementation group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
     //SLF4J
-    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
 
-    compileOnly group: "org.apache.karaf.itests", name: "common", version: project.karafVersion
-    compileOnly group: "org.apache.karaf", name: "apache-karaf", version: project.karafVersion
-    compileOnly group: 'org.ops4j.pax.exam', name: 'pax-exam-container-karaf', version: project.paxExamVersion
+    implementation group: "org.apache.karaf.itests", name: "common", version: project.karafVersion
+    implementation group: "org.apache.karaf", name: "apache-karaf", version: project.karafVersion
+    implementation group: 'org.ops4j.pax.exam', name: 'pax-exam-container-karaf', version: project.paxExamVersion
 
     //HttpClient
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: project.apacheHttpComponentsClientVersion
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: project.apacheHttpComponentsClientVersion
 
     //JsonSchema generator/validator dependency.
-    compile group: "com.networknt", name: "json-schema-validator", version: "1.0.67"
-    compile group: 'com.kjetland', name: 'mbknor-jackson-jsonschema_2.13', version: '1.0.39'
-    compile group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
+    implementation group: "com.networknt", name: "json-schema-validator", version: "1.0.67"
+    implementation group: 'com.kjetland', name: 'mbknor-jackson-jsonschema_2.13', version: '1.0.39'
+    implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
 
     //Jackson
-    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: project.jacksonVersion
-    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: project.jacksonVersion
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: project.jacksonVersion
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: project.jacksonVersion
 
-    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-api")
-    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-model")
-    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-actions")
-    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-service-rest")
-    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-util")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-api")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-model")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-actions")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-service-rest")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-util")
 
-    compileOnly group: "org.mockito", name: "mockito-inline", version: project.mockitoInlineVersion
+    implementation group: "org.mockito", name: "mockito-inline", version: project.mockitoInlineVersion
 
 }
 
 jar {
+    duplicatesStrategy = duplicatesStrategy.INCLUDE
     from('src/main/resources') {
         include("*")
     }

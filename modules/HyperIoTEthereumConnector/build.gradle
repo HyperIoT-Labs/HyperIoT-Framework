@@ -28,7 +28,7 @@ allprojects {
     project.ext.set("reactiveStreamsVersion", "1.0.3")
 
     configurations {
-        testCompile.extendsFrom compileOnly
+        testImplementation.extendsFrom implementation
     }
 
 
