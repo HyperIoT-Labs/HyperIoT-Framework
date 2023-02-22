@@ -44,12 +44,15 @@ dependencies {
     testImplementation group: "org.ops4j.pax.exam", name: "pax-exam-container-karaf", version: project.paxExamVersion
     testImplementation group: "org.ops4j.pax.exam", name: "pax-exam-junit4", version: project.paxExamVersion
     testImplementation group: "org.ops4j.pax.exam", name: "pax-exam", version: project.paxExamVersion
-    testImplementation group: 'org.awaitility', name: 'awaitility', version: '3.1.6'
+
+    testImplementation group: 'org.awaitility', name: 'awaitility', version: '4.2.0'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.1'
+
 
     testImplementation group: 'org.eclipse.jetty.websocket', name: 'websocket-client', version: project.jettyWSVersion
     // https://mvnrepository.com/artifact/org.json/json
     testImplementation group: 'org.json', name: 'json', version: '20190722'
-    testCompileOnly group: 'org.bouncycastle', name: 'bcmail-jdk15on', version: project.bouncyCastleVersion
+    testImplementation group: 'org.bouncycastle', name: 'bcmail-jdk15on', version: project.bouncyCastleVersion
     // https://mvnrepository.com/artifact/commons-cli/commons-cli
     testImplementation group: 'commons-cli', name: 'commons-cli', version: '1.4'
 

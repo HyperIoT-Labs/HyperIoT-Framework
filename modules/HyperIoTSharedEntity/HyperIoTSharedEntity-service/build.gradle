@@ -5,6 +5,7 @@ dependencies {
     //Persistence
     implementation group: "org.hibernate.javax.persistence", name: "hibernate-jpa-2.1-api", version: project.hibernateJpaApiVersion
     //JPA Dependencies
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: project.hibernateVersion
     implementation group: "javax.transaction", name: "javax.transaction-api", version: project.javaxTransactionVersion
     implementation group: "org.apache.aries.jpa", name: "org.apache.aries.jpa.api", version: project.apacheAriesJpaVersion
     implementation group: "org.apache.cxf", name: "cxf-rt-rs-security-jose-jaxrs", version: project.cxfVersion
