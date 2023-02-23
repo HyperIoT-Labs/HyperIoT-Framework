@@ -169,7 +169,6 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
     public void projectsEvaluated(Gradle gradle) {
         Project project = gradle.getRootProject();
         addDepListTask(project);
-        addBuildHITTask(project);
         addKarafFeaturesTask(project, project);
     }
 
