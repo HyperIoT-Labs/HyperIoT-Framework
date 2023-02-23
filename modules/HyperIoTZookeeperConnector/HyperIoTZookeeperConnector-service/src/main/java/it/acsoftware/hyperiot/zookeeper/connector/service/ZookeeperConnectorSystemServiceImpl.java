@@ -24,7 +24,6 @@ import it.acsoftware.hyperiot.base.util.HyperIoTUtil;
 import it.acsoftware.hyperiot.zookeeper.connector.api.ZookeeperConnectorSystemApi;
 import it.acsoftware.hyperiot.zookeeper.connector.model.HyperIoTZooKeeperData;
 import it.acsoftware.hyperiot.zookeeper.connector.util.HyperIoTZookeeperConstants;
-import org.apache.curator.CuratorZookeeperClient;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -230,7 +229,7 @@ public final class ZookeeperConnectorSystemServiceImpl extends HyperIoTBaseSyste
     @Override
     public void create(String path, byte[] data, boolean createParentFolders) throws Exception {
         if (createParentFolders)
-            this.client.create().creatingParentsIfNeeded().forPath(path,data);
+            this.client.create().creatingParentsIfNeeded().forPath(path, data);
         else
             this.client.create().forPath(path);
     }
@@ -251,8 +250,8 @@ public final class ZookeeperConnectorSystemServiceImpl extends HyperIoTBaseSyste
      */
     @Override
     public byte[] read(String path) throws Exception {
-        if(path.endsWith("/") || path.endsWith("\\"))
-            path = path.substring(0,path.length()-1);
+        if (path.endsWith("/") || path.endsWith("\\"))
+            path = path.substring(0, path.length() - 1);
         return this.client.getData().forPath(path);
     }
 

@@ -1,10 +1,3 @@
-configurations {
-    includeInJar {
-        canBeResolved(true)
-        canBeConsumed(false)
-    }
-}
-
 dependencies {
     //OSGi Basic Imports
     implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
@@ -14,10 +7,6 @@ dependencies {
     implementation group: 'org.apache.curator', name: 'curator-client', version: '5.2.1'
     implementation group: 'org.apache.curator', name: 'curator-recipes', version: '5.2.1'
     implementation group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.5.5'
-    includeInJar group: 'org.apache.curator', name: 'curator-framework', version: '5.2.1'
-    includeInJar group: 'org.apache.curator', name: 'curator-client', version: '5.2.1'
-    includeInJar group: 'org.apache.curator', name: 'curator-recipes', version: '5.2.1'
-    includeInJar group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.5.5'
 }
 
 jar {
@@ -25,8 +14,6 @@ jar {
     manifest {
         attributes('dsannotations': '*')
     }
-    zip64 true
-    from { configurations.includeInJar.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 

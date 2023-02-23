@@ -50,6 +50,7 @@ import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerSuite;
 
 import java.time.Duration;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -168,7 +169,7 @@ public class WebSocketChannelTest extends KarafTestSupport {
     public void test005_maxParticipantsShouldNotBeExceeded() throws Exception {
         // assert on an available service
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "1");
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "SUCCESFULLY_JOINED");
         //max participant is 1 , so user should not be available to join
@@ -184,7 +185,7 @@ public class WebSocketChannelTest extends KarafTestSupport {
     @Test
     public void test006_partcipantsShouldReceiveJoinNotifications() throws Exception {
         // assert on an available service
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "2");
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "SUCCESFULLY_JOINED");
@@ -195,13 +196,13 @@ public class WebSocketChannelTest extends KarafTestSupport {
         participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "SUCCESFULLY_JOINED");
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.PARTICIPANT_ADDED, null);
 
-        assertChannelSize(channelName,2);
+        assertChannelSize(channelName, 2);
     }
 
     @Test
     public void test007_partcipantsShouldReceiveLeaveNotifications() throws Exception {
         // assert on an available service
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "2");
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "SUCCESFULLY_JOINED");
@@ -216,13 +217,13 @@ public class WebSocketChannelTest extends KarafTestSupport {
         participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "CHANNEL_LEAVED");
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.PARTICIPANT_GONE, null);
 
-        assertChannelSize(channelName,1);
+        assertChannelSize(channelName, 1);
     }
 
     @Test
     public void test008_partcipantsShouldExchangeMessagesInsideChannel() throws Exception {
         // assert on an available service
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "2");
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "SUCCESFULLY_JOINED");
@@ -238,7 +239,7 @@ public class WebSocketChannelTest extends KarafTestSupport {
 
     @Test
     public void test009_messagesCannotBeSentOutsideChannels() throws Exception {
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "2");
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "SUCCESFULLY_JOINED");
@@ -253,7 +254,7 @@ public class WebSocketChannelTest extends KarafTestSupport {
         participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "CHANNEL_LEAVED");
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.PARTICIPANT_GONE, null);
 
-        assertChannelSize(channelName,1);
+        assertChannelSize(channelName, 1);
 
         participant.sendMessage("ciao", channelName);
         participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.ERROR, "Unauthorized to send message");
@@ -261,7 +262,7 @@ public class WebSocketChannelTest extends KarafTestSupport {
 
     @Test
     public void test010_ownerCanKickParticipant() throws Exception {
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
 
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "2");
@@ -276,12 +277,12 @@ public class WebSocketChannelTest extends KarafTestSupport {
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.PARTICIPANT_KICKED, "ciao ciao!");
         participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.PARTICIPANT_KICKED, "ciao ciao!");
 
-        assertChannelSize(channelName,1);
+        assertChannelSize(channelName, 1);
     }
 
     @Test
     public void test011_participantCannotKickOthers() throws Exception {
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
 
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "2");
@@ -295,12 +296,12 @@ public class WebSocketChannelTest extends KarafTestSupport {
         participant.kickUser(channelName, participant.getUsername(), owner.getUsername(), "ciao ciao!");
         participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.ERROR, "You do not have permissions to perform kick!");
 
-        assertChannelSize(channelName,2);
+        assertChannelSize(channelName, 2);
     }
 
     @Test
     public void test012_ownerCanBanParticipant() throws Exception {
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
 
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "2");
@@ -316,10 +317,10 @@ public class WebSocketChannelTest extends KarafTestSupport {
         participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.PARTICIPANT_KICKED, "ciao ciao!");
 
         participant.joinChannel(channelName);
-        participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.ERROR, "Cannot join channel new-channel, you have been banned!");
-        assertChannelSize(channelName,1);
+        participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.ERROR, "Cannot join channel " + channelName + ", you have been banned!");
+        assertChannelSize(channelName, 1);
 
-        owner.unbanUser(channelName,"127.0.0.1",participant.getUsername());
+        owner.unbanUser(channelName, "127.0.0.1", participant.getUsername());
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "UNBANNED");
         participant.joinChannel(channelName);
         participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "SUCCESFULLY_JOINED");
@@ -328,7 +329,7 @@ public class WebSocketChannelTest extends KarafTestSupport {
 
     @Test
     public void test013_participantCannotBanOthers() throws Exception {
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
 
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "2");
@@ -345,7 +346,7 @@ public class WebSocketChannelTest extends KarafTestSupport {
 
     @Test
     public void test014_ownerCanDeleteChannel() throws Exception {
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "2");
 
@@ -357,13 +358,13 @@ public class WebSocketChannelTest extends KarafTestSupport {
         owner.deleteChannel(channelName);
         owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "CHANNEL_DELETED");
 
-        owner.sendMessage("prova",channelName);
-        owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.ERROR, "Channel new-channel not found!");
+        owner.sendMessage("prova", channelName);
+        owner.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.ERROR, "Channel " + channelName + " not found!");
     }
 
     @Test
     public void test015_participantsCannotDeleteChannel() throws Exception {
-        String channelName = "new-channel";
+        String channelName = "new-channel" + UUID.randomUUID();
         HyperIoTChannelParticipant owner = createAndConnectNewParticipant("owner");
         owner.createChannel(channelName, channelName, HyperIoTWebSocketChannelType.PLAIN, "2");
 
@@ -378,8 +379,8 @@ public class WebSocketChannelTest extends KarafTestSupport {
 
     @Test
     public void test016_channelsShouldBeIsolated() throws Exception {
-        String firstChannelName = "new-channel";
-        String secondChannelName = "new-channel-2";
+        String firstChannelName = "new-channel" + UUID.randomUUID();
+        String secondChannelName = "new-channel-2" + UUID.randomUUID();
         HyperIoTChannelParticipant ownerChannel = createAndConnectNewParticipant("ownerFirstChannel");
         ownerChannel.createChannel(firstChannelName, firstChannelName, HyperIoTWebSocketChannelType.PLAIN, "2");
 
@@ -397,13 +398,13 @@ public class WebSocketChannelTest extends KarafTestSupport {
         participant.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.OK, "SUCCESFULLY_JOINED");
         ownerSecondChannel.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.PARTICIPANT_ADDED, null);
 
-        assertChannelSize(firstChannelName,2);
-        assertChannelSize(secondChannelName,2);
+        assertChannelSize(firstChannelName, 2);
+        assertChannelSize(secondChannelName, 2);
 
-        participant.sendMessage("ciao-first-channel",firstChannelName);
-        ownerChannel.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND,HyperIoTWebSocketMessageType.APPLICATION,"ciao-first-channel");
-        participant.sendMessage("ciao-second-channel",secondChannelName);
-        ownerSecondChannel.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND,HyperIoTWebSocketMessageType.APPLICATION,"ciao-second-channel");
+        participant.sendMessage("ciao-first-channel", firstChannelName);
+        ownerChannel.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.APPLICATION, "ciao-first-channel");
+        participant.sendMessage("ciao-second-channel", secondChannelName);
+        ownerSecondChannel.awaitForMessage(HyperIoTWebSocketBasicCommandType.READ_MESSAGE_COMMAND, HyperIoTWebSocketMessageType.APPLICATION, "ciao-second-channel");
     }
 
 }
