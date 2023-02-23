@@ -20,8 +20,7 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.7.1'
     includeInJar group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.7.1'
     //Apache
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
-    includeInJar group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: project.apacheCommonsLang3Version
 }
 
 jar {

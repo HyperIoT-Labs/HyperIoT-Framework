@@ -38,7 +38,6 @@ import it.acsoftware.hyperiot.websocket.test.client.HyperIoTChannelWebSocketClie
 import org.apache.karaf.features.FeaturesService;
 import org.apache.karaf.itests.KarafTestSupport;
 import org.awaitility.Awaitility;
-import org.awaitility.Duration;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -50,6 +49,7 @@ import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerSuite;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -65,8 +65,8 @@ public class WebSocketChannelTest extends KarafTestSupport {
     @Override
     public Option[] config() {
         Awaitility.setDefaultPollInterval(10, TimeUnit.MILLISECONDS);
-        Awaitility.setDefaultPollDelay(Duration.TWO_SECONDS);
-        Awaitility.setDefaultTimeout(Duration.ONE_MINUTE);
+        Awaitility.setDefaultPollDelay(Duration.ofSeconds(2));
+        Awaitility.setDefaultTimeout(Duration.ofMinutes(1));
         return null;
     }
 

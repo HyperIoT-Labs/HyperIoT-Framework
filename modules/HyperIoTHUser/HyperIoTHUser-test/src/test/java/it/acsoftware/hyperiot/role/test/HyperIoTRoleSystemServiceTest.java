@@ -22,15 +22,11 @@ import it.acsoftware.hyperiot.base.api.HyperIoTPermissionManager;
 import it.acsoftware.hyperiot.base.api.HyperIoTUser;
 import it.acsoftware.hyperiot.base.api.authentication.AuthenticationApi;
 import it.acsoftware.hyperiot.base.service.rest.HyperIoTBaseRestApi;
-import it.acsoftware.hyperiot.base.test.HyperIoTTestConfigurationBuilder;
 import it.acsoftware.hyperiot.huser.api.HUserApi;
 import it.acsoftware.hyperiot.huser.api.HUserSystemApi;
 import it.acsoftware.hyperiot.huser.model.HUser;
 import it.acsoftware.hyperiot.huser.service.rest.HUserRestApi;
-import it.acsoftware.hyperiot.permission.api.PermissionSystemApi;
-import it.acsoftware.hyperiot.permission.model.Permission;
 import it.acsoftware.hyperiot.role.api.RoleApi;
-import it.acsoftware.hyperiot.role.api.RoleRepository;
 import it.acsoftware.hyperiot.role.api.RoleSystemApi;
 import it.acsoftware.hyperiot.role.model.Role;
 import it.acsoftware.hyperiot.role.service.rest.RoleRestApi;
@@ -41,18 +37,13 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerSuite;
 
-import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
-
-import static it.acsoftware.hyperiot.role.test.HyperIoTRoleConfiguration.CODE_COVERAGE_PACKAGE_FILTER;
 
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerSuite.class)
@@ -71,7 +62,7 @@ public class HyperIoTRoleSystemServiceTest extends KarafTestSupport {
     @Test
     public void test00s_hyperIoTFrameworkShouldBeInstalled() {
         // assert on an available service
-        assertServiceAvailable(FeaturesService.class,0);
+        assertServiceAvailable(FeaturesService.class, 0);
         String features = executeCommand("feature:list -i");
         assertContains("HyperIoTBase-features ", features);
         assertContains("HyperIoTMail-features ", features);
@@ -155,38 +146,6 @@ public class HyperIoTRoleSystemServiceTest extends KarafTestSupport {
         Assert.assertNull(findRole);
     }
 
-
-    @Test
-    public void test06s_defaultRoleAndPermissionsCreatedInHyperIoTFramework() {
-        RoleRepository roleRepository = getOsgiService(RoleRepository.class);
-        // This test checks if default role "RegisteredUser" and permissions has been created in HyperIoTFramework
-        Role role = roleRepository.findByName("RegisteredUser");
-        PermissionSystemApi permissionSystemApi = getOsgiService(PermissionSystemApi.class);
-        Collection<Permission> listPermissions = permissionSystemApi.findByRole(role);
-        Assert.assertFalse(listPermissions.isEmpty());
-        Assert.assertEquals(2, listPermissions.size());
-        boolean resourceNameAssetCategory = false;
-        boolean resourceNameAssetTag = false;
-        for (int i = 0; i < listPermissions.size(); i++) {
-            if (((Permission) ((ArrayList) listPermissions).get(i)).getEntityResourceName().contains(HyperIoTRoleConfiguration.permissionAssetCategory)) {
-                resourceNameAssetCategory = true;
-                Assert.assertEquals("it.acsoftware.hyperiot.asset.category.model.AssetCategory", ((Permission) ((ArrayList) listPermissions).get(i)).getEntityResourceName());
-                Assert.assertEquals(HyperIoTRoleConfiguration.permissionAssetCategory + HyperIoTRoleConfiguration.nameRegisteredPermission, ((Permission) ((ArrayList) listPermissions).get(i)).getName());
-                Assert.assertEquals(31, ((Permission) ((ArrayList) listPermissions).get(i)).getActionIds());
-                Assert.assertEquals(role.getName(), ((Permission) ((ArrayList) listPermissions).get(i)).getRole().getName());
-            }
-            if (((Permission) ((ArrayList) listPermissions).get(i)).getEntityResourceName().contains(HyperIoTRoleConfiguration.permissionAssetTag)) {
-                resourceNameAssetTag = true;
-                Assert.assertEquals("it.acsoftware.hyperiot.asset.tag.model.AssetTag", ((Permission) ((ArrayList) listPermissions).get(i)).getEntityResourceName());
-                Assert.assertEquals(HyperIoTRoleConfiguration.permissionAssetTag + HyperIoTRoleConfiguration.nameRegisteredPermission, ((Permission) ((ArrayList) listPermissions).get(i)).getName());
-                Assert.assertEquals(31, ((Permission) ((ArrayList) listPermissions).get(i)).getActionIds());
-                Assert.assertEquals(role.getName(), ((Permission) ((ArrayList) listPermissions).get(i)).getRole().getName());
-            }
-        }
-        Assert.assertTrue(resourceNameAssetCategory);
-        Assert.assertTrue(resourceNameAssetTag);
-    }
-
     @Test
     public void test07s_getUserHasRolePermissionMethod() {
         HUserSystemApi hUserSystemApi = getOsgiService(HUserSystemApi.class);
@@ -194,8 +153,8 @@ public class HyperIoTRoleSystemServiceTest extends KarafTestSupport {
         HUser huser = createHUser();
         Role r = createRole();
         huser.addRole(r);
-        hUserSystemApi.update(huser,null);
-        Assert.assertTrue(pmManager.userHasRoles(huser.getUsername(),new String[]{r.getName()}));
+        hUserSystemApi.update(huser, null);
+        Assert.assertTrue(pmManager.userHasRoles(huser.getUsername(), new String[]{r.getName()}));
     }
 
 

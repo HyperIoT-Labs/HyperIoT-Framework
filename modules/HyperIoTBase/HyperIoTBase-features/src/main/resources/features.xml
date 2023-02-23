@@ -38,15 +38,15 @@
   <feature name="hyperiot-base-basic" version="2.2.4" description="Hyperiot HyperIoTBase Modules with NO rest services">
     <feature>hyperiot-base-karaf-features</feature>
     <bundle>mvn:org.passay/passay/1.4.0</bundle>
-    <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.13.3</bundle>
-    <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.13.3</bundle>
-    <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/2.13.3</bundle>
-    <bundle>mvn:com.fasterxml.jackson.core/jackson-core/2.13.3</bundle>
-    <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/2.13.3</bundle>
-    <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-csv/2.13.3</bundle>
-    <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-xml/2.13.3</bundle>
-    <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-properties/2.13.3</bundle>
-    <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.13.3</bundle>
+    <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.14.1</bundle>
+    <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.14.1</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/2.14.1</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-core/2.14.1</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/2.14.1</bundle>
+    <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-csv/2.14.1</bundle>
+    <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-xml/2.14.1</bundle>
+    <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-properties/2.14.1</bundle>
+    <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.14.1</bundle>
     <bundle>mvn:org.webjars/swagger-ui/4.15.5</bundle>
     <bundle>mvn:javax.validation/validation-api/2.0.1.Final</bundle>
     <bundle>mvn:org.bouncycastle/bcprov-jdk15on/1.69</bundle>

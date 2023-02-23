@@ -19,8 +19,6 @@ dependencies {
     testImplementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test", version: project.hyperIoTVersion
     testImplementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test-utils", version: project.hyperIoTVersion
 
-    testImplementation group: "it.acsoftware.hyperiot.huser", name: "HyperIoTHUser-model", version: project.hyperIoTVersion
-
     //Project dependencies
     testImplementation project(":modules:HyperIoTAuthentication:HyperIoTAuthentication-service")
     testImplementation project(":modules:HyperIoTAuthentication:HyperIoTAuthentication-service-rest")

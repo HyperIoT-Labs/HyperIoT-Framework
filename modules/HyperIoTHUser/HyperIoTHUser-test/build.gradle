@@ -6,6 +6,7 @@ dependencies {
     testImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: project.jaxWsRsApiVersion
     testImplementation group: "org.apache.cxf", name: "cxf-rt-rs-service-description-swagger", version: project.cxfVersion
     testImplementation group: "org.webjars", name: "swagger-ui", version: project.swaggerUIVersion
+    testImplementation group: 'org.hibernate', name: 'hibernate-core', version: project.hibernateVersion
     //Jackson
     testImplementation group: "com.fasterxml.jackson.module", name: "jackson-module-jaxb-annotations", version: project.jacksonVersion
     //Validation
@@ -21,6 +22,13 @@ dependencies {
     testImplementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version: project.hyperIoTVersion
     testImplementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test", version: project.hyperIoTVersion
     testImplementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test-utils", version: project.hyperIoTVersion
+
+    /*testImplementation group: 'it.acsoftware.hyperiot.authentication', name: 'HyperIoTAuthentication-service', version: project.hyperIoTVersion
+    testImplementation group: 'it.acsoftware.hyperiot.authentication', name: 'HyperIoTAuthentication-service-rest', version: project.hyperIoTVersion
+    testImplementation group: 'it.acsoftware.hyperiot.permission', name: 'HyperIoTPermission-model', version: project.hyperIoTVersion
+    testImplementation group: 'it.acsoftware.hyperiot.permission', name: 'HyperIoTPermission-api', version: project.hyperIoTVersion
+    testImplementation group: 'it.acsoftware.hyperiot.permission', name: 'HyperIoTPermission-model', version: project.hyperIoTVersion
+    testImplementation group: 'it.acsoftware.hyperiot.permission', name: 'HyperIoTPermission-service-rest', version: project.hyperIoTVersion*/
 
     //Project dependencies
     testImplementation project(":modules:HyperIoTHUser:HyperIoTHUser-actions")

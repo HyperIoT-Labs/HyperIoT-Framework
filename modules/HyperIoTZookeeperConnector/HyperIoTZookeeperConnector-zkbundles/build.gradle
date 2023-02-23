@@ -10,6 +10,10 @@ dependencies {
     implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
     implementation group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
     //Zookeeper - Apache Curator
+    implementation group: 'org.apache.curator', name: 'curator-framework', version: '5.2.1'
+    implementation group: 'org.apache.curator', name: 'curator-client', version: '5.2.1'
+    implementation group: 'org.apache.curator', name: 'curator-recipes', version: '5.2.1'
+    implementation group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.5.5'
     includeInJar group: 'org.apache.curator', name: 'curator-framework', version: '5.2.1'
     includeInJar group: 'org.apache.curator', name: 'curator-client', version: '5.2.1'
     includeInJar group: 'org.apache.curator', name: 'curator-recipes', version: '5.2.1'

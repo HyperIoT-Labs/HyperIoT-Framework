@@ -38,6 +38,7 @@ public class HyperIoTAssetCategoryConfiguration implements ConfigurationFactory 
     public Option[] createConfiguration() {
         return HyperIoTTestConfigurationBuilder.createStandardConfiguration()
                 .withCodeCoverage("it.acsoftware.hyperiot.asset.category.*")
+                .keepRuntime()
                 .build();
     }
 }

@@ -29,7 +29,7 @@ public class HyperIoTJobSchedulerConfiguration implements ConfigurationFactory {
         return new Option[]{
                 new KarafDistributionConfigurationFileExtendOption(
                         new ConfigurationPointer("etc/org.apache.karaf.features.cfg", "featuresRepositories"),
-                        ",mvn:it.acsoftware.hyperiot.jobscheduler/JobScheduler-features/" + HyperIoTTestConfigurationBuilder.getHyperIoTRuntimeVersion()
+                        ",mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-features/" + HyperIoTTestConfigurationBuilder.getHyperIoTRuntimeVersion()
                                 + "/xml/features"),
                 new KarafDistributionConfigurationFileExtendOption(
                         new ConfigurationPointer("etc/org.apache.karaf.features.cfg", "featuresRepositories"),

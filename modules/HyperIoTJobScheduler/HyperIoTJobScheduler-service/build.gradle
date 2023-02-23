@@ -31,6 +31,8 @@ dependencies {
     includeInJar group: 'org.quartz-scheduler', name: 'quartz', version: project.quartzVersion
 
     implementation group: 'org.apache.curator', name: 'curator-recipes', version: "5.2.1"
+    implementation group: 'org.apache.curator', name: 'curator-framework', version: '5.2.1'
+    implementation group: 'org.apache.curator', name: 'curator-client', version: '5.2.1'
     //Project Dependencies
     implementation project(":modules:HyperIoTJobScheduler:HyperIoTJobScheduler-api")
 }

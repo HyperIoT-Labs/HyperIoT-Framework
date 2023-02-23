@@ -14,7 +14,7 @@ Import-Package: org.slf4j.*,\
     it.acsoftware.hyperiot.websocket.session;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.zookeeper.connector.api;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.zookeeper.connector.model;version='${range;[===,+)}',\
-    org.apache.curator.*,\
+    org.apache.curator.*;version='${range;[===,+)}',\
     org.apache.zookeeper
 Export-Package: \
     it.acsoftware.hyperiot.zookeeper.connector.service.websocket,\

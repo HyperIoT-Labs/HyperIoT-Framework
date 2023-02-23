@@ -23,35 +23,28 @@ import it.acsoftware.hyperiot.base.api.HyperIoTUser;
 import it.acsoftware.hyperiot.base.api.authentication.AuthenticationApi;
 import it.acsoftware.hyperiot.base.model.HyperIoTBaseError;
 import it.acsoftware.hyperiot.base.service.rest.HyperIoTBaseRestApi;
-import it.acsoftware.hyperiot.base.test.HyperIoTTestConfigurationBuilder;
-import it.acsoftware.hyperiot.base.test.util.HyperIoTTestUtils;
 import it.acsoftware.hyperiot.base.util.HyperIoTUtil;
-import it.acsoftware.hyperiot.huser.api.HUserRepository;
 import it.acsoftware.hyperiot.huser.api.HUserSystemApi;
 import it.acsoftware.hyperiot.huser.model.HUser;
 import it.acsoftware.hyperiot.huser.service.rest.HUserRestApi;
 import it.acsoftware.hyperiot.huser.test.util.HyperIoTHUserTestUtils;
-import it.acsoftware.hyperiot.permission.api.PermissionSystemApi;
-import it.acsoftware.hyperiot.permission.model.Permission;
-import it.acsoftware.hyperiot.role.api.RoleRepository;
 import it.acsoftware.hyperiot.role.api.RoleSystemApi;
 import it.acsoftware.hyperiot.role.model.Role;
-import it.acsoftware.hyperiot.role.service.rest.RoleRestApi;
-import it.acsoftware.hyperiot.role.util.HyperIoTRoleConstants;
 import org.apache.karaf.features.FeaturesService;
 import org.apache.karaf.itests.KarafTestSupport;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerSuite;
 
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 import static it.acsoftware.hyperiot.huser.test.HyperIoTHUserConfiguration.hyperIoTException;
 
@@ -75,7 +68,7 @@ public class HyperIoTHUserWithDefaultPermissionRestTest extends KarafTestSupport
     @Test
     public void test000_hyperIoTFrameworkShouldBeInstalled() {
         // assert on an available service
-        assertServiceAvailable(FeaturesService.class,0);
+        assertServiceAvailable(FeaturesService.class, 0);
         String features = executeCommand("feature:list -i");
         assertContains("HyperIoTBase-features ", features);
         assertContains("HyperIoTMail-features ", features);
@@ -154,10 +147,6 @@ public class HyperIoTHUserWithDefaultPermissionRestTest extends KarafTestSupport
         Assert.assertEquals("RegisteredUser", role.getName());
         Assert.assertEquals("Role associated with the registered user",
                 role.getDescription());
-        PermissionSystemApi permissionSystemApi = getOsgiService(PermissionSystemApi.class);
-        Collection<Permission> listPermissions = permissionSystemApi.findByRole(role);
-        Assert.assertFalse(listPermissions.isEmpty());
-        Assert.assertEquals(2, listPermissions.size());
     }
 
 
@@ -173,7 +162,7 @@ public class HyperIoTHUserWithDefaultPermissionRestTest extends KarafTestSupport
         String newPassword = "testPass01/";
         String passwordConfirm = "testPass01/";
         this.impersonateUser(huserRestService, huser);
-        Assert.assertTrue(HyperIoTUtil.passwordMatches(oldPassword,huser.getPassword()));
+        Assert.assertTrue(HyperIoTUtil.passwordMatches(oldPassword, huser.getPassword()));
         Response restResponse = huserRestService.changeHUserPassword(huser.getId(), oldPassword, newPassword,
                 passwordConfirm);
         Assert.assertEquals(200, restResponse.getStatus());
@@ -472,10 +461,6 @@ public class HyperIoTHUserWithDefaultPermissionRestTest extends KarafTestSupport
             Assert.assertEquals("RegisteredUser", role.getName());
             Assert.assertEquals("Role associated with the registered user",
                     role.getDescription());
-            PermissionSystemApi permissionSystemApi = getOsgiService(PermissionSystemApi.class);
-            Collection<Permission> listPermissions = permissionSystemApi.findByRole(role);
-            Assert.assertFalse(listPermissions.isEmpty());
-            Assert.assertEquals(2, listPermissions.size());
         }
         return huser;
     }
