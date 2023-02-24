@@ -269,7 +269,8 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
                                 depJson.get(projectName).put("dependencies", new ArrayList<String>());
                                 depJson.get(projectName).put("path", p.getBuildFile().getPath().replace("/build.gradle", ""));
                             }
-                            p.getConfigurations().stream().forEach(conf -> {
+                            //avoiding cycles on test dependencies
+                            p.getConfigurations().stream().filter(conf -> !conf.getName().startsWith("test")).forEach(conf -> {
                                 conf.getDependencies().stream().forEach(it -> {
                                     List<String> depList = (List<String>) depJson.get(projectName).get("dependencies");
                                     depList.add(it.getGroup() + ":" + it.getName() + ":" + it.getVersion());

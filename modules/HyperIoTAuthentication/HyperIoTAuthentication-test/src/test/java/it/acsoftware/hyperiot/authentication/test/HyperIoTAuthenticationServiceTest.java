@@ -20,7 +20,6 @@ package it.acsoftware.hyperiot.authentication.test;
 import it.acsoftware.hyperiot.base.api.authentication.AuthenticationApi;
 import it.acsoftware.hyperiot.base.api.HyperIoTUser;
 import it.acsoftware.hyperiot.base.test.HyperIoTTestConfigurationBuilder;
-import it.acsoftware.hyperiot.huser.model.HUser;
 import org.apache.karaf.features.FeaturesService;
 import org.apache.karaf.itests.KarafTestSupport;
 import org.junit.Assert;
@@ -66,7 +65,7 @@ public class HyperIoTAuthenticationServiceTest extends KarafTestSupport {
 	@Test
 	public void test01_loginApiShouldSuccess() {
 		AuthenticationApi authService = getOsgiService(AuthenticationApi.class);
-		HyperIoTUser loginUser = (HUser) authService.login("hadmin", "admin");
+		HyperIoTUser loginUser = (HyperIoTUser) authService.login("hadmin", "admin");
 		Assert.assertNotNull(authService);
 		Assert.assertNotNull(loginUser);
 	}
@@ -74,7 +73,7 @@ public class HyperIoTAuthenticationServiceTest extends KarafTestSupport {
 	@Test
 	public void test02_loginApiShouldFailIfInsertingBadCredential() {
 		AuthenticationApi authService = getOsgiService(AuthenticationApi.class);
-		HyperIoTUser loginUser = (HUser) authService.login("wrongUsername", "wrongPassword");
+		HyperIoTUser loginUser = (HyperIoTUser) authService.login("wrongUsername", "wrongPassword");
 		Assert.assertNotNull(authService);
 		Assert.assertNull(loginUser);
 	}
@@ -82,7 +81,7 @@ public class HyperIoTAuthenticationServiceTest extends KarafTestSupport {
 	@Test
 	public void test03_loginApiShouldFailIfUserIsWrong() {
 		AuthenticationApi authService = getOsgiService(AuthenticationApi.class);
-		HyperIoTUser loginUser = (HUser) authService.login("wrongUsername", "admin");
+		HyperIoTUser loginUser = (HyperIoTUser) authService.login("wrongUsername", "admin");
 		Assert.assertNotNull(authService);
 		Assert.assertNull(loginUser);
 	}
@@ -90,7 +89,7 @@ public class HyperIoTAuthenticationServiceTest extends KarafTestSupport {
 	@Test
 	public void test04_loginApiShouldFailIfPasswordIsWrong() {
 		AuthenticationApi authService = getOsgiService(AuthenticationApi.class);
-		HyperIoTUser loginUser = (HUser) authService.login("hadmin", "wrongPassword");
+		HyperIoTUser loginUser = (HyperIoTUser) authService.login("hadmin", "wrongPassword");
 		Assert.assertNotNull(authService);
 		Assert.assertNull(loginUser);
 	}
@@ -98,7 +97,7 @@ public class HyperIoTAuthenticationServiceTest extends KarafTestSupport {
 	@Test
 	public void test05_generateTokenApiShouldSuccess() {
 		AuthenticationApi authSystemService = getOsgiService(AuthenticationApi.class);
-		HyperIoTUser loginUser = (HUser) authSystemService.login("hadmin", "admin");
+		HyperIoTUser loginUser = (HyperIoTUser) authSystemService.login("hadmin", "admin");
 		String token = authSystemService.generateToken(loginUser);
 		Assert.assertNotNull(authSystemService);
 		Assert.assertNotNull(loginUser);
@@ -108,7 +107,7 @@ public class HyperIoTAuthenticationServiceTest extends KarafTestSupport {
 	@Test
 	public void test06_loginApiShouldFailIfUserInsertingHashedPassword() {
 		AuthenticationApi authService = getOsgiService(AuthenticationApi.class);
-		HyperIoTUser loginUser = (HUser) authService.login("hadmin", "ISMvKXpXpadDiUoOSoAfww==");
+		HyperIoTUser loginUser = (HyperIoTUser) authService.login("hadmin", "ISMvKXpXpadDiUoOSoAfww==");
 		Assert.assertNotNull(authService);
 		Assert.assertNull(loginUser);
 	}
@@ -116,7 +115,7 @@ public class HyperIoTAuthenticationServiceTest extends KarafTestSupport {
 	@Test
 	public void test07_loginApiWithEmailShouldSuccess() {
 		AuthenticationApi authService = getOsgiService(AuthenticationApi.class);
-		HyperIoTUser loginUser = (HUser) authService.login("hadmin@hyperiot.com", "admin");
+		HyperIoTUser loginUser = (HyperIoTUser) authService.login("hadmin@hyperiot.com", "admin");
 		Assert.assertNotNull(authService);
 		Assert.assertNotNull(loginUser);
 	}
@@ -124,7 +123,7 @@ public class HyperIoTAuthenticationServiceTest extends KarafTestSupport {
 	@Test
 	public void test08_loginApiWithEmailShouldFailIfPasswordIsWrong() {
 		AuthenticationApi authService = getOsgiService(AuthenticationApi.class);
-		HyperIoTUser loginUser = (HUser) authService.login("hadmin@hyperiot.com", "wrong=");
+		HyperIoTUser loginUser = (HyperIoTUser) authService.login("hadmin@hyperiot.com", "wrong=");
 		Assert.assertNotNull(authService);
 		Assert.assertNull(loginUser);
 	}

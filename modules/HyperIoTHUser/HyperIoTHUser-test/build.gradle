@@ -23,12 +23,12 @@ dependencies {
     testImplementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test", version: project.hyperIoTVersion
     testImplementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-test-utils", version: project.hyperIoTVersion
 
-    /*testImplementation group: 'it.acsoftware.hyperiot.authentication', name: 'HyperIoTAuthentication-service', version: project.hyperIoTVersion
+    testImplementation group: 'it.acsoftware.hyperiot.authentication', name: 'HyperIoTAuthentication-service', version: project.hyperIoTVersion
     testImplementation group: 'it.acsoftware.hyperiot.authentication', name: 'HyperIoTAuthentication-service-rest', version: project.hyperIoTVersion
     testImplementation group: 'it.acsoftware.hyperiot.permission', name: 'HyperIoTPermission-model', version: project.hyperIoTVersion
     testImplementation group: 'it.acsoftware.hyperiot.permission', name: 'HyperIoTPermission-api', version: project.hyperIoTVersion
     testImplementation group: 'it.acsoftware.hyperiot.permission', name: 'HyperIoTPermission-model', version: project.hyperIoTVersion
-    testImplementation group: 'it.acsoftware.hyperiot.permission', name: 'HyperIoTPermission-service-rest', version: project.hyperIoTVersion*/
+    testImplementation group: 'it.acsoftware.hyperiot.permission', name: 'HyperIoTPermission-service-rest', version: project.hyperIoTVersion
 
     //Project dependencies
     testImplementation project(":modules:HyperIoTHUser:HyperIoTHUser-actions")
