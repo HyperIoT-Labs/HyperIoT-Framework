@@ -2,9 +2,5 @@
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTAvro-features">
   <feature name="hyperiot-avro" version="${project.version}" description="All  HyperIoT HyperIoTAvro modules">
     <bundle>mvn:it.acsoftware.hyperiot.avro/HyperIoTAvro-bundles/${project.version}</bundle>
-    <bundle>mvn:com.thoughtworks.paranamer/paranamer/${project.paranamerVersion}</bundle>
-    <bundle>mvn:org.codehaus.jackson/jackson-core-asl/1.9.13</bundle>
-    <bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.13</bundle>
-    <bundle>mvn:org.apache.commons/commons-compress/1.8.1</bundle>
   </feature>
 </features>

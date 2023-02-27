@@ -25,7 +25,7 @@ task newRelease(){
   }
 
   ext.updateTestDistributionVersion = { karafVersion, hyperIoTVersion ->
-    def parser = new XmlParser()
+    def parser = new groovy.xml.XmlParser()
     def pomXmlFile = new File('./containers-src/hyperiot-karaf-distribution-test/pom.xml');
     def pomXmlStr = pomXmlFile.getText('UTF-8')
     def pomXml = parser.parseText(pomXmlStr)
