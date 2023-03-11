@@ -13,6 +13,8 @@ dependencies {
     implementation group: "org.hibernate", name: "hibernate-validator", version: project.hibernateValidatorVersion
     // HBase dependency
     implementation project(":modules:HyperIoTHBaseConnector:HyperIoTHBaseConnector-hbaseBundles")
+    implementation group: 'org.apache.hbase', name: 'hbase-client', version: project.hbaseVersion
+    implementation group: 'org.apache.hbase', name: 'hbase-protocol', version: project.hbaseVersion
     implementation group: "org.apache.avro", name: "avro", version: project.apacheAvroVersion
     implementation group: "com.google.protobuf", name: "protobuf-java", version: project.googleProtobufVersion
 
