@@ -30,12 +30,12 @@ public class HyperIoTConstants {
     public static final String OSGI_PERMISSION_MANAGER_IMPLEMENTATION_DEFAULT = "default";
     public static final String OSGI_AUTH_PROVIDER_RESOURCE = "it.acsoftware.hyperiot.authentication.provider.resource";
     public static final String OSGI_WEBSOCKET_CHANNEL_ROLE_NAME = "it.acsoftware.hyperiot.websocket.channel.model.role.name";
-
     public static final String HYPERIOT_PROPERTY_TEST_MODE = "it.acsoftware.hyperiot.testMode";
     public static final String HYPERIOT_PROPERTY_NODE_ID = "it.acsoftware.hyperiot.nodeId";
     public static final String HYPERIOT_PROPERTY_LAYER = "it.acsoftware.hyperiot.layer";
     public static final String HYPERIOT_PROPERTY_SERVICES_URL = "it.acsoftware.hyperiot.services.url";
     public static final String HYPERIOT_PROPERTY_FRONTEND_URL = "it.acsoftware.hyperiot.frontend.url";
+    public static final String HYPERIOT_PROPERTY_ACCOUNT_ACTIVATION_ENABLED = "it.acsoftware.hyperiot.activateAccount.enable";
     public static final String HYPERIOT_PROPERTY_ACTIVATE_ACCOUNT_URL = "it.acsoftware.hyperiot.activateAccount.url";
     public static final String HYPERIOT_PROPERTY_PASSWORD_RESET_URL = "it.acsoftware.hyperiot.resetPassword.url";
     public static final String HYPERIOT_PROPERTY_BASE_REST_CONTEXT = "it.acsoftware.hyperiot.base.rest.context";

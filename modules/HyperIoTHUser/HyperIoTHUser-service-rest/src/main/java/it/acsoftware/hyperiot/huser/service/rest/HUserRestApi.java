@@ -22,11 +22,14 @@ import io.swagger.annotations.*;
 import io.swagger.annotations.ApiKeyAuthDefinition.ApiKeyLocation;
 import it.acsoftware.hyperiot.base.api.HyperIoTContext;
 import it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException;
+import it.acsoftware.hyperiot.base.exception.HyperIoTUnauthorizedException;
 import it.acsoftware.hyperiot.base.model.HyperIoTBaseError;
 import it.acsoftware.hyperiot.base.model.HyperIoTJSONView;
 import it.acsoftware.hyperiot.base.security.rest.LoggedIn;
 import it.acsoftware.hyperiot.base.service.rest.HyperIoTBaseEntityRestApi;
+import it.acsoftware.hyperiot.base.util.HyperIoTConstants;
 import it.acsoftware.hyperiot.base.util.HyperIoTErrorConstants;
+import it.acsoftware.hyperiot.base.util.HyperIoTUtil;
 import it.acsoftware.hyperiot.huser.api.HUserApi;
 import it.acsoftware.hyperiot.huser.model.HUser;
 import it.acsoftware.hyperiot.huser.model.HUserPasswordReset;
@@ -156,6 +159,10 @@ public class HUserRestApi extends HyperIoTBaseEntityRestApi<HUser> {
     public Response register(@ApiParam(value = "HUser object to store in database", required = true) HUser h) {
         getLog().debug("In Rest Service POST /hyperiot/husers/register \n Body: {}", h);
         try {
+            if(!HyperIoTUtil.isAccountActivationEnabled()) {
+                getLog().warn("User activation is disabled by option : {}", HyperIoTConstants.HYPERIOT_PROPERTY_ACCOUNT_ACTIVATION_ENABLED);
+                throw new HyperIoTUnauthorizedException();
+            }
             // forcing active false
             h.setActive(false);
             h.setAdmin(false);

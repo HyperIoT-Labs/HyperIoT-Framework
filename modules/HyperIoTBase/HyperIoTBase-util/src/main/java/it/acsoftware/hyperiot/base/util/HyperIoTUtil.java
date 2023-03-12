@@ -56,33 +56,27 @@ public final class HyperIoTUtil {
 
     public static Properties getHyperIoTProperties(BundleContext context) {
         if (props == null) {
-            ServiceReference<?> configurationAdminReference = context
-                .getServiceReference(ConfigurationAdmin.class.getName());
+            ServiceReference<?> configurationAdminReference = context.getServiceReference(ConfigurationAdmin.class.getName());
 
             if (configurationAdminReference != null) {
-                ConfigurationAdmin confAdmin = (ConfigurationAdmin) context
-                    .getService(configurationAdminReference);
+                ConfigurationAdmin confAdmin = (ConfigurationAdmin) context.getService(configurationAdminReference);
                 try {
-                    Configuration configuration = confAdmin
-                        .getConfiguration("it.acsoftware.hyperiot");
+                    Configuration configuration = confAdmin.getConfiguration("it.acsoftware.hyperiot");
                     if (configuration != null && configuration.getProperties() != null) {
                         Dictionary<String, Object> dict = configuration.getProperties();
                         List<String> keys = Collections.list(dict.keys());
-                        Map<String, Object> dictCopy = keys.stream()
-                            .collect(Collectors.toMap(Function.identity(), dict::get));
+                        Map<String, Object> dictCopy = keys.stream().collect(Collectors.toMap(Function.identity(), dict::get));
                         props = new Properties();
                         props.putAll(dictCopy);
                         log.debug("Loaded properties For HyperIoT: {}", props);
                         return props;
                     }
                 } catch (IOException e) {
-                    log.error(
-                        "Impossible to find it.acsoftware.hyperiot.cfg, please create it!", e);
+                    log.error("Impossible to find it.acsoftware.hyperiot.cfg, please create it!", e);
                     return null;
                 }
             }
-            log.error(
-                "Impossible to find it.acsoftware.hyperiot.cfg, please create it!");
+            log.error("Impossible to find it.acsoftware.hyperiot.cfg, please create it!");
             return null;
         }
         return props;
@@ -101,11 +95,9 @@ public final class HyperIoTUtil {
      * file
      */
     public static boolean isInTestMode() {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
 
-        return Boolean.parseBoolean(
-            props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_TEST_MODE, "false"));
+        return Boolean.parseBoolean(props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_TEST_MODE, "false"));
     }
 
     /**
@@ -113,11 +105,9 @@ public final class HyperIoTUtil {
      * UUID
      */
     public static String getNodeId() {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
 
-        return props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_NODE_ID,
-            UUID.randomUUID().toString());
+        return props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_NODE_ID, UUID.randomUUID().toString());
     }
 
     /**
@@ -125,8 +115,7 @@ public final class HyperIoTUtil {
      * "undefined_layer"
      */
     public static String getLayer() {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
 
         return props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_LAYER, "undefined_layer");
     }
@@ -138,8 +127,7 @@ public final class HyperIoTUtil {
     public static String getPasswordHash(String password) {
         try {
             log.debug("Hashing password....");
-            return Base64.getEncoder()
-                    .encodeToString(MessageDigest.getInstance("MD5").digest(password.getBytes()));
+            return Base64.getEncoder().encodeToString(MessageDigest.getInstance("MD5").digest(password.getBytes()));
         } catch (NoSuchAlgorithmException e) {
             log.error(e.getMessage(), e);
             return Base64.getEncoder().encodeToString(password.getBytes());
@@ -147,11 +135,11 @@ public final class HyperIoTUtil {
     }
 
     /**
-     * @param rawPassword parameter that represent raw version of the password
+     * @param rawPassword     parameter that represent raw version of the password
      * @param encodedPassword parameter that represent encoded version of the password
      * @return true when encodedPassword is encoded version of rawPassword
      */
-    public static boolean passwordMatches(String rawPassword, String encodedPassword){
+    public static boolean passwordMatches(String rawPassword, String encodedPassword) {
         return getPasswordHash(rawPassword).equals(encodedPassword);
     }
 
@@ -159,7 +147,7 @@ public final class HyperIoTUtil {
         return encoder.encode(rawString);
     }
 
-    public static boolean matchesEncoding(String rawString, String encodedString){
+    public static boolean matchesEncoding(String rawString, String encodedString) {
         return encoder.matches(rawString, encodedString);
     }
 
@@ -168,8 +156,7 @@ public final class HyperIoTUtil {
      * "localhost:8080"
      */
     public static String getHyperIoTUrl() {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
 
         return props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_SERVICES_URL, "localhost:8181");
     }
@@ -178,18 +165,21 @@ public final class HyperIoTUtil {
      * @return
      */
     public static String getActivateAccountUrl() {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
-
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
         return props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_ACTIVATE_ACCOUNT_URL, "localhost:4200/auth/activation");
+    }
+
+    public static boolean isAccountActivationEnabled() {
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        //in test mode activation is always enabled
+        return isInTestMode() || Boolean.parseBoolean(props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_ACCOUNT_ACTIVATION_ENABLED, "false"));
     }
 
     /**
      * @return
      */
     public static String getFrontEndUrl() {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
 
         return props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_FRONTEND_URL, "localhost:4200");
     }
@@ -198,33 +188,28 @@ public final class HyperIoTUtil {
      * @return
      */
     public static String getPasswordResetUrl() {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
 
         return props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_PASSWORD_RESET_URL, "localhost:4200/auth/password-reset");
     }
 
     public static int getWebSocketOnOpenDispatchThreads(int defaultThreadNumber) {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
         return Integer.parseInt(props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_WEB_SOCKER_SERVICE_ON_OPEN_DISPATCH_THREADS, String.valueOf(defaultThreadNumber)));
     }
 
     public static int getWebSocketOnCloseDispatchThreads(int defaultThreadNumber) {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
         return Integer.parseInt(props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_WEB_SOCKER_SERVICE_ON_CLOSE_DISPATCH_THREADS, String.valueOf(defaultThreadNumber)));
     }
 
     public static int getWebSocketOnMessageDispatchThreads(int defaultThreadNumber) {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
         return Integer.parseInt(props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_WEB_SOCKER_SERVICE_ON_MESSAGE_DISPATCH_THREADS, String.valueOf(defaultThreadNumber)));
     }
 
     public static int getWebSocketOnErrorDispatchThreads(int defaultThreadNumber) {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(getBundleContext(HyperIoTUtil.class));
         return Integer.parseInt(props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_WEB_SOCKER_SERVICE_ON_ERROR_DISPATCH_THREADS, String.valueOf(defaultThreadNumber)));
     }
 
@@ -232,11 +217,9 @@ public final class HyperIoTUtil {
      * @return base rest context of rest services, default is: /hyperiot
      */
     public static String getHyperIoTBaseRestContext(BundleContext context) {
-        if (props == null)
-            HyperIoTUtil.getHyperIoTProperties(context);
+        if (props == null) HyperIoTUtil.getHyperIoTProperties(context);
         String baseRestUrl = props.getProperty(HyperIoTConstants.HYPERIOT_PROPERTY_BASE_REST_CONTEXT, "/hyperiot");
-        if (!baseRestUrl.startsWith("/"))
-            baseRestUrl = "/" + baseRestUrl;
+        if (!baseRestUrl.startsWith("/")) baseRestUrl = "/" + baseRestUrl;
         return baseRestUrl;
     }
 
@@ -248,8 +231,7 @@ public final class HyperIoTUtil {
      * @return The BundleContext of the bundle
      */
     public static BundleContext getBundleContext(Object instance) {
-        BundleContext bundleContext = FrameworkUtil.getBundle(instance.getClass())
-            .getBundleContext();
+        BundleContext bundleContext = FrameworkUtil.getBundle(instance.getClass()).getBundleContext();
         return bundleContext;
     }
 
@@ -272,24 +254,14 @@ public final class HyperIoTUtil {
      */
     private EntityManagerFactory getEntityManagerFactory(String persistenceUnitName) {
         if (emf == null) {
-            Bundle thisBundle = FrameworkUtil.getBundle(
-                this.getClass()
-            );
+            Bundle thisBundle = FrameworkUtil.getBundle(this.getClass());
 
             BundleContext context = thisBundle.getBundleContext();
 
-            ServiceReference serviceReference = context.getServiceReference(
-                PersistenceProvider.class.getName()
-            );
-            PersistenceProvider persistenceProvider = (PersistenceProvider) context
-                .getService(
-                    serviceReference
-                );
+            ServiceReference serviceReference = context.getServiceReference(PersistenceProvider.class.getName());
+            PersistenceProvider persistenceProvider = (PersistenceProvider) context.getService(serviceReference);
 
-            emf = persistenceProvider.createEntityManagerFactory(
-                persistenceUnitName,
-                null
-            );
+            emf = persistenceProvider.createEntityManagerFactory(persistenceUnitName, null);
         }
         return emf;
     }
@@ -301,8 +273,7 @@ public final class HyperIoTUtil {
     public static Object getService(Class<?> c) {
         BundleContext ctx = getBundleContext(c);
         ServiceReference<?> sr = ctx.getServiceReference(c);
-        if (sr != null)
-            return ctx.getService(sr);
+        if (sr != null) return ctx.getService(sr);
         return null;
     }
 
@@ -335,16 +306,10 @@ public final class HyperIoTUtil {
         OSGiFilter osgiFilter = OSGiFilterBuilder.createFilter("type", resource.getClass().getName());
 
         //include OSGi filters for all interfaces implemented by resource and its superclasses
-        String filter = ClassUtils.getAllInterfaces(resource.getClass())
-            .stream()
-            .map(interfaceClass -> OSGiFilterBuilder.createFilter("type", interfaceClass.getName()))
-            .reduce(osgiFilter, OSGiFilter::or)
-            .getFilter();
+        String filter = ClassUtils.getAllInterfaces(resource.getClass()).stream().map(interfaceClass -> OSGiFilterBuilder.createFilter("type", interfaceClass.getName())).reduce(osgiFilter, OSGiFilter::or).getFilter();
 
-        ServiceReference<? extends HyperIoTPostAction>[] serviceReferences =
-            HyperIoTUtil.getServices(postAction, filter);
-        if (serviceReferences == null)
-            log.debug("There are not post actions of type {}", postAction);
+        ServiceReference<? extends HyperIoTPostAction>[] serviceReferences = HyperIoTUtil.getServices(postAction, filter);
+        if (serviceReferences == null) log.debug("There are not post actions of type {}", postAction);
         else {
             log.debug("{} post actions fetched", serviceReferences.length);
             for (ServiceReference<? extends HyperIoTPostAction> serviceReference : serviceReferences)
@@ -371,16 +336,10 @@ public final class HyperIoTUtil {
         OSGiFilter osgiFilter = OSGiFilterBuilder.createFilter("type", resource.getClass().getName());
 
         //include OSGi filters for all interfaces implemented by resource and its superclasses
-        String filter = ClassUtils.getAllInterfaces(resource.getClass())
-            .stream()
-            .map(interfaceClass -> OSGiFilterBuilder.createFilter("type", interfaceClass.getName()))
-            .reduce(osgiFilter, OSGiFilter::or)
-            .getFilter();
+        String filter = ClassUtils.getAllInterfaces(resource.getClass()).stream().map(interfaceClass -> OSGiFilterBuilder.createFilter("type", interfaceClass.getName())).reduce(osgiFilter, OSGiFilter::or).getFilter();
 
-        ServiceReference<? extends HyperIoTPreAction>[] serviceReferences =
-            HyperIoTUtil.getServices(preAction, filter);
-        if (serviceReferences == null)
-            log.debug("There are not pre actions of type {}", preAction);
+        ServiceReference<? extends HyperIoTPreAction>[] serviceReferences = HyperIoTUtil.getServices(preAction, filter);
+        if (serviceReferences == null) log.debug("There are not pre actions of type {}", preAction);
         else {
             log.debug("{} pre actions fetched", serviceReferences.length);
             for (ServiceReference<? extends HyperIoTPreAction> serviceReference : serviceReferences) {
