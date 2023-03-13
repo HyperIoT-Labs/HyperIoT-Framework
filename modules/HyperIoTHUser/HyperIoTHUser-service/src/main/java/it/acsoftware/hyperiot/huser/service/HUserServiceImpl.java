@@ -54,7 +54,8 @@ import static it.acsoftware.hyperiot.base.util.HyperIoTConstants.OSGI_AUTH_PROVI
  * the system layer.
  */
 @Component(service = {HUserApi.class, HyperIoTAuthenticationProvider.class}, immediate = true, property = {
-        OSGI_AUTH_PROVIDER_RESOURCE + "=it.acsoftware.hyperiot.huser.model.HUser"
+        OSGI_AUTH_PROVIDER_RESOURCE + "=it.acsoftware.hyperiot.huser.model.HUser",
+        OSGI_AUTH_PROVIDER_RESOURCE + "=it.acsoftware.hyperiot.base.api.HyperIoTUser"
 })
 public final class HUserServiceImpl extends HyperIoTBaseEntityServiceImpl<HUser> implements HUserApi, HyperIoTAuthenticationProvider {
 
