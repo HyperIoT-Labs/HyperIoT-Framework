@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTHBaseConnector-features">
+  <feature name="hyperiot-hbaseconnector" version="2.2.4" description="All  HyperIoT HyperIoTHBaseConnector modules">
+    <feature>hyperiot-base</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-util/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-actions/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-api/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-hbaseBundles/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-model/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-service/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-service-rest/2.2.4</bundle>
+  </feature>
+  <feature name="hyperiot-hbaseconnector-basic" version="2.2.4" description="All  HyperIoT HyperIoTHBaseConnector modules with NO rest services">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-util/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-actions/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-api/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-hbaseBundles/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-model/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-service/2.2.4</bundle>
+  </feature>
+</features>

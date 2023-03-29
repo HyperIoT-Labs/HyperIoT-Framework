@@ -34,6 +34,7 @@ import org.gradle.api.plugins.ExtensionContainer;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
@@ -48,7 +49,9 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
     public static final String HYPERIOT_WS_EXTENSION = "HyperIoTWorkspace";
     public static String EXCLUDE_PROJECT_PATHS = null;
     public static final String BND_TOOL_DEP_NAME = "biz.aQute.bnd:biz.aQute.bnd.gradle";
-    public static final String KARAF_FEATURE_GRADLE_PLUGIN_DEP_NAME = "com.github.lburgazzoli:gradle-karaf-plugin";
+
+    public static final String FEATURES_SRC_FILE_PATH = "src/main/resources/features-src.xml";
+    public static final String FEATURES_FILE_PATH = "src/main/resources/features.xml";
     private static Properties versionsProperties;
 
     static {
@@ -89,7 +92,6 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
      *
      * @param gradle
      */
-
     public void buildStarted(Gradle gradle) {
         System.out.println("Build Started, updating build scripts...");
         settings.getBuildscript().getRepositories().add(settings.getBuildscript().getRepositories().mavenCentral());
@@ -100,7 +102,6 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
         }));
         System.out.println("Adding required dependencies..");
         this.addBndGradleDep(settings.getBuildscript().getDependencies());
-        this.addKarafFeatureDep(settings.getBuildscript().getDependencies());
         System.out.println("Applying BND TOOLS plugin..");
         settings.getPlugins().apply("biz.aQute.bnd.workspace");
     }
@@ -154,7 +155,6 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
             mavenArtifactRepository.setUrl("https://plugins.gradle.org/m2/");
         }));
         this.addBndGradleDep(project.getBuildscript().getDependencies());
-        this.addKarafFeatureDep(project.getBuildscript().getDependencies());
     }
 
     /**
@@ -169,8 +169,7 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
     public void projectsEvaluated(Gradle gradle) {
         Project project = gradle.getRootProject();
         addDepListTask(project);
-        addBuildHITTask(project);
-        return;
+        addKarafFeaturesTask(project, project);
     }
 
     @Override
@@ -184,14 +183,6 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
     private void addBndGradleDep(DependencyHandler dependecies) {
         String bndToolsVersion = versionsProperties.getProperty("bndToolVersion");
         dependecies.add("classpath", BND_TOOL_DEP_NAME + ":" + bndToolsVersion);
-    }
-
-    /**
-     * @param dependencies
-     */
-    private void addKarafFeatureDep(DependencyHandler dependencies) {
-        String gradleKarafPluginVersion = versionsProperties.getProperty("gradleKarafPluginVersion");
-        dependencies.add("classpath", KARAF_FEATURE_GRADLE_PLUGIN_DEP_NAME + ":" + gradleKarafPluginVersion);
     }
 
     /**
@@ -278,7 +269,8 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
                                 depJson.get(projectName).put("dependencies", new ArrayList<String>());
                                 depJson.get(projectName).put("path", p.getBuildFile().getPath().replace("/build.gradle", ""));
                             }
-                            p.getConfigurations().stream().forEach(conf -> {
+                            //avoiding cycles on test dependencies
+                            p.getConfigurations().stream().filter(conf -> !conf.getName().startsWith("test")).forEach(conf -> {
                                 conf.getDependencies().stream().forEach(it -> {
                                     List<String> depList = (List<String>) depJson.get(projectName).get("dependencies");
                                     depList.add(it.getGroup() + ":" + it.getName() + ":" + it.getVersion());
@@ -307,6 +299,49 @@ public class HyperIoTWorkspaceGradlePlugin implements Plugin<Settings>, BuildLis
             public void execute(Task task) {
                 rootProject.getGradle().getIncludedBuilds().forEach(build -> task.dependsOn(build.task(":buildHIT")));
             }
+        });
+    }
+
+    /**
+     * @param project
+     */
+    private void addKarafFeaturesTask(Project rootProject, Project project) {
+        File featuresSrcFile = new File(project.getProjectDir() + File.separator + FEATURES_SRC_FILE_PATH);
+        //adding task to current project
+        if (featuresSrcFile.exists()) {
+            if (!project.hasProperty("generateFeatures"))
+                addTaskToFeaturesProject(rootProject, project);
+        }
+        //search for children projects
+        if (project.getSubprojects() != null && project.getSubprojects().size() > 0) {
+            project.getSubprojects().forEach(subproject -> {
+                addKarafFeaturesTask(rootProject, subproject);
+            });
+        }
+    }
+
+    private void addTaskToFeaturesProject(Project rootProject, Project project) {
+        project.task("generateFeatures", task -> {
+            task.doLast(innerTask -> {
+                try {
+                    String featuresSrcPath = project.getProjectDir().getAbsolutePath() + File.separator + FEATURES_SRC_FILE_PATH;
+                    String featuresOutputPath = project.getProjectDir().getAbsolutePath() + File.separator + FEATURES_FILE_PATH;
+                    String inputFileContent = new String(Files.readAllBytes(Paths.get(featuresSrcPath)));
+                    String outputFileContent = inputFileContent;
+                    Iterator<String> it = project.getProperties().keySet().iterator();
+                    while (it.hasNext()) {
+                        String key = it.next();
+                        Object value = project.getProperties().get(key);
+                        String token = "\\$\\{project." + key + "\\}";
+                        if (value != null) {
+                            outputFileContent = outputFileContent.replaceAll(token, value.toString());
+                        }
+                    }
+                    Files.write(Paths.get(featuresOutputPath), outputFileContent.getBytes(StandardCharsets.UTF_8));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         });
     }
 

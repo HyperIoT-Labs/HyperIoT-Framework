@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTSharedEntityExample-features">
+  <feature name="hyperiot-sharedentityexample" version="2.2.4" description="All  HyperIoT HyperIoTSharedEntityExample modules">
+    <feature>hyperiot-base</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-actions/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-api/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-service/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-model/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-repository/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-service-rest/2.2.4</bundle>
+  </feature>
+  <feature name="hyperiot-sharedentityexample-basic" version="2.2.4" description="All  HyperIoT HyperIoTSharedEntityExample modules with NO rest services">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-actions/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-api/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-service/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-model/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity.example/HyperIoTSharedEntityExample-repository/2.2.4</bundle>
+  </feature>
+</features>

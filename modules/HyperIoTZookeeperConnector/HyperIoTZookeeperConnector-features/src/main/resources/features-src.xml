@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTZookeeperConnector-features">
+  <feature name="hyperiot-zookeeperconnector" version="${project.version}" description="All  HyperIoT HyperIoTZookeeperConnector modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:com.google.guava/failureaccess/1.0.1</bundle>
+    <bundle>mvn:com.google.guava/guava/27.1-jre</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-util/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-zkbundles/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service-rest/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-zookeeperconnector-websocket" version="${project.version}" description="All  HyperIoT HyperIoTZookeeperConnector modules with websocket support">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:com.google.guava/failureaccess/1.0.1</bundle>
+    <bundle>mvn:com.google.guava/guava/27.1-jre</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-util/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-zkbundles/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service-rest/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service-websocket/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-zookeeperconnector-basic" version="${project.version}" description="All  Hyperiot HyperIoTHDevice modules with NO rest services">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:com.google.guava/failureaccess/1.0.1</bundle>
+    <bundle>mvn:com.google.guava/guava/27.1-jre</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-util/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-zkbundles/${project.version}</bundle>
+  </feature>
+</features>

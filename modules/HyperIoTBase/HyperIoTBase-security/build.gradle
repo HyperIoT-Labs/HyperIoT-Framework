@@ -1,42 +1,32 @@
-
-
-
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //OSGi Basic Imports
+    implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    implementation group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
     //SLF4J
-    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
-	compileOnly group: 'org.apache.cxf.dosgi', name: 'cxf-dosgi-common', version: project.cxfDosgiVersion
-	compileOnly group: "org.apache.cxf" ,name: "cxf-rt-rs-security-jose",version: project.cxfVersion
-	compileOnly group: "org.apache.cxf" ,name: "cxf-rt-rs-security-jose-jaxrs",version: project.cxfVersion
-	//Compile dep so each module is not forced ti import bouncy castle dep
-	compile group: 'org.bouncycastle', name: 'bcmail-jdk15on', version: project.bouncyCastleVersion
-	compileOnly group: "javax.servlet",name:"javax.servlet-api",version:project.javaxServletVersion
-    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-api")
-	compileOnly project(":modules:HyperIoTBase:HyperIoTBase-model")
-	compileOnly project(":modules:HyperIoTBase:HyperIoTBase-util")
-    compileOnly project(":modules:HyperIoTBase:HyperIoTBase-actions")
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+    implementation group: 'org.apache.cxf.dosgi', name: 'cxf-dosgi-common', version: project.cxfDosgiVersion
+    implementation group: "org.apache.cxf", name: "cxf-rt-rs-security-jose", version: project.cxfVersion
+    implementation group: "org.apache.cxf", name: "cxf-rt-rs-security-jose-jaxrs", version: project.cxfVersion
+    //Compile dep so each module is not forced ti import bouncy castle dep
+    implementation group: 'org.bouncycastle', name: 'bcmail-jdk15on', version: project.bouncyCastleVersion
+    implementation group: "javax.servlet", name: "javax.servlet-api", version: project.javaxServletVersion
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-api")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-model")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-util")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-actions")
 }
 
 jar {
-	manifest {
-		attributes('dsannotations': '*')
-	}
+    manifest {
+        attributes('dsannotations': '*')
+    }
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-	tasks = ['publish']
-}
 
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

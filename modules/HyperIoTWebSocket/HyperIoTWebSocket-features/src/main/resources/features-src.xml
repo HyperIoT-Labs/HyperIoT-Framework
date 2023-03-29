@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTWebSocket-features">
+  <feature name="hyperiot-websocket" version="${project.version}" description="All  HyperIoT HyperIoTWebSocket modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-compression/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-encryption/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-policy/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-session/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-websocket-channel" version="${project.version}" description="All  HyperIoT HyperIoTWebSocket modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-compression/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-encryption/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-policy/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-session/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-channel/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-websocket-test" version="${project.version}" description="All  HyperIoT HyperIoTWebSocket modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-compression/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-encryption/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-policy/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-session/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-channel/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-test-websocket/${project.version}</bundle>
+    <bundle>mvn:org.awaitility/awaitility/4.2.0</bundle>
+    <bundle>mvn:org.hamcrest/hamcrest/2.1</bundle>
+    <bundle>mvn:org.json/json/20220320</bundle>
+  </feature>
+</features>

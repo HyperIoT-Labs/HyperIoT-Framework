@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 ACSoftware
+ * Copyright 2019-2023 HyperIoT
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ public class HyperIoTJobSchedulerConfiguration implements ConfigurationFactory {
         return new Option[]{
                 new KarafDistributionConfigurationFileExtendOption(
                         new ConfigurationPointer("etc/org.apache.karaf.features.cfg", "featuresRepositories"),
-                        ",mvn:it.acsoftware.hyperiot.jobscheduler/JobScheduler-features/" + HyperIoTTestConfigurationBuilder.getHyperIoTRuntimeVersion()
+                        ",mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-features/" + HyperIoTTestConfigurationBuilder.getHyperIoTRuntimeVersion()
                                 + "/xml/features"),
                 new KarafDistributionConfigurationFileExtendOption(
                         new ConfigurationPointer("etc/org.apache.karaf.features.cfg", "featuresRepositories"),

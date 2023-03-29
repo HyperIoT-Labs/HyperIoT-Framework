@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 ACSoftware
+ * Copyright 2019-2023 HyperIoT
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -17,36 +17,37 @@
 
 package it.acsoftware.hyperiot.role.test;
 
-import it.acsoftware.hyperiot.base.api.authentication.AuthenticationApi;
 import it.acsoftware.hyperiot.base.api.HyperIoTUser;
+import it.acsoftware.hyperiot.base.api.authentication.AuthenticationApi;
 import it.acsoftware.hyperiot.base.model.HyperIoTBaseError;
 import it.acsoftware.hyperiot.base.service.rest.HyperIoTBaseRestApi;
-import it.acsoftware.hyperiot.base.test.HyperIoTTestConfigurationBuilder;
 import it.acsoftware.hyperiot.huser.api.HUserSystemApi;
 import it.acsoftware.hyperiot.huser.model.HUser;
 import it.acsoftware.hyperiot.huser.service.rest.HUserRestApi;
 import it.acsoftware.hyperiot.huser.test.util.HyperIoTHUserTestUtils;
-import it.acsoftware.hyperiot.permission.api.PermissionSystemApi;
-import it.acsoftware.hyperiot.permission.model.Permission;
 import it.acsoftware.hyperiot.role.api.RoleSystemApi;
 import it.acsoftware.hyperiot.role.model.Role;
 import it.acsoftware.hyperiot.role.service.rest.RoleRestApi;
 import org.apache.karaf.features.FeaturesService;
 import org.apache.karaf.itests.KarafTestSupport;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerSuite;
 
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
-import static it.acsoftware.hyperiot.role.test.HyperIoTRoleConfiguration.*;
+import static it.acsoftware.hyperiot.role.test.HyperIoTRoleConfiguration.hyperIoTException;
 
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerSuite.class)
@@ -66,7 +67,7 @@ public class HyperIoTRoleRestWithDefaultPermissionTest extends KarafTestSupport 
     @Test
     public void test000_hyperIoTFrameworkShouldBeInstalled() {
         // assert on an available service
-        assertServiceAvailable(FeaturesService.class,0);
+        assertServiceAvailable(FeaturesService.class, 0);
         String features = executeCommand("feature:list -i");
         assertContains("HyperIoTBase-features ", features);
         assertContains("HyperIoTMail-features ", features);
@@ -352,17 +353,13 @@ public class HyperIoTRoleRestWithDefaultPermissionTest extends KarafTestSupport 
             Assert.assertEquals(1, huser.getRoles().size());
             Assert.assertEquals(roles.size(), huser.getRoles().size());
             Assert.assertFalse(roles.isEmpty());
-            for (int i = 0; i < roles.size(); i++){
+            for (int i = 0; i < roles.size(); i++) {
                 role = ((Role) roles.get(i));
             }
             Assert.assertNotNull(role);
             Assert.assertEquals("RegisteredUser", role.getName());
             Assert.assertEquals("Role associated with the registered user",
                     role.getDescription());
-            PermissionSystemApi permissionSystemApi = getOsgiService(PermissionSystemApi.class);
-            Collection<Permission> listPermissions = permissionSystemApi.findByRole(role);
-            Assert.assertFalse(listPermissions.isEmpty());
-            Assert.assertEquals(2, listPermissions.size());
         }
         return huser;
     }

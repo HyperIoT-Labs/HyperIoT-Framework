@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 ACSoftware
+ * Copyright 2019-2023 HyperIoT
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,8 @@
 
 package it.acsoftware.hyperiot.authentication.test;
 
-import it.acsoftware.hyperiot.base.api.authentication.AuthenticationSystemApi;
 import it.acsoftware.hyperiot.base.api.HyperIoTUser;
-import it.acsoftware.hyperiot.base.test.HyperIoTTestConfigurationBuilder;
-import it.acsoftware.hyperiot.huser.model.HUser;
+import it.acsoftware.hyperiot.base.api.authentication.AuthenticationSystemApi;
 import org.apache.karaf.features.FeaturesService;
 import org.apache.karaf.itests.KarafTestSupport;
 import org.junit.Assert;
@@ -28,7 +26,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
-import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
@@ -66,7 +63,7 @@ public class HyperIoTAuthenticationSystemServiceTest extends KarafTestSupport {
 	@Test
 	public void test01_loginSystemApiShouldSuccess() {
 		AuthenticationSystemApi authSystemService = getOsgiService(AuthenticationSystemApi.class);
-		HyperIoTUser loginUser = (HUser) authSystemService.login("hadmin", "admin");
+		HyperIoTUser loginUser = (HyperIoTUser) authSystemService.login("hadmin", "admin");
 		Assert.assertNotNull(authSystemService);
 		Assert.assertNotNull(loginUser);
 	}
@@ -74,7 +71,7 @@ public class HyperIoTAuthenticationSystemServiceTest extends KarafTestSupport {
 	@Test
 	public void test02_loginSystemApiShouldFailIfInsertingBadCredential() {
 		AuthenticationSystemApi authSystemService = getOsgiService(AuthenticationSystemApi.class);
-		HyperIoTUser loginUser = (HUser) authSystemService.login("wrongUsername", "wrongPassword");
+		HyperIoTUser loginUser = (HyperIoTUser) authSystemService.login("wrongUsername", "wrongPassword");
 		Assert.assertNotNull(authSystemService);
 		Assert.assertNull(loginUser);
 	}
@@ -82,7 +79,7 @@ public class HyperIoTAuthenticationSystemServiceTest extends KarafTestSupport {
 	@Test
 	public void test03_loginSystemApiShouldFailIfUserIsWrong() {
 		AuthenticationSystemApi authSystemService = getOsgiService(AuthenticationSystemApi.class);
-		HyperIoTUser loginUser = (HUser) authSystemService.login("wrongUsername", "admin");
+		HyperIoTUser loginUser = (HyperIoTUser) authSystemService.login("wrongUsername", "admin");
 		Assert.assertNotNull(authSystemService);
 		Assert.assertNull(loginUser);
 	}
@@ -90,7 +87,7 @@ public class HyperIoTAuthenticationSystemServiceTest extends KarafTestSupport {
 	@Test
 	public void test04_loginSystemApiShouldFailIfPasswordIsWrong() {
 		AuthenticationSystemApi authSystemService = getOsgiService(AuthenticationSystemApi.class);
-		HyperIoTUser loginUser = (HUser) authSystemService.login("hadmin", "wrongPassword");
+		HyperIoTUser loginUser = (HyperIoTUser) authSystemService.login("hadmin", "wrongPassword");
 		Assert.assertNotNull(authSystemService);
 		Assert.assertNull(loginUser);
 	}
@@ -98,7 +95,7 @@ public class HyperIoTAuthenticationSystemServiceTest extends KarafTestSupport {
 	@Test
 	public void test05_generateTokenSystemApiShouldSuccess() {
 		AuthenticationSystemApi authSystemService = getOsgiService(AuthenticationSystemApi.class);
-		HyperIoTUser loginUser = (HUser) authSystemService.login("hadmin", "admin");
+		HyperIoTUser loginUser = (HyperIoTUser) authSystemService.login("hadmin", "admin");
 		String token = authSystemService.generateToken(loginUser);
 		Assert.assertNotNull(authSystemService);
 		Assert.assertNotNull(loginUser);
@@ -108,7 +105,7 @@ public class HyperIoTAuthenticationSystemServiceTest extends KarafTestSupport {
 	@Test
 	public void test06_loginSystemApiShouldFailIfUserInsertingHashedPassword() {
 		AuthenticationSystemApi authSystemService = getOsgiService(AuthenticationSystemApi.class);
-		HyperIoTUser loginUser = (HUser) authSystemService.login("hadmin", "ISMvKXpXpadDiUoOSoAfww==");
+		HyperIoTUser loginUser = (HyperIoTUser) authSystemService.login("hadmin", "ISMvKXpXpadDiUoOSoAfww==");
 		Assert.assertNotNull(authSystemService);
 		Assert.assertNull(loginUser);
 	}
@@ -116,7 +113,7 @@ public class HyperIoTAuthenticationSystemServiceTest extends KarafTestSupport {
 	@Test
 	public void test07_loginSystemApiWithEmailShouldSuccess() {
 		AuthenticationSystemApi authSystemService = getOsgiService(AuthenticationSystemApi.class);
-		HyperIoTUser loginUser = (HUser) authSystemService.login("hadmin@hyperiot.com", "admin");
+		HyperIoTUser loginUser = (HyperIoTUser) authSystemService.login("hadmin@hyperiot.com", "admin");
 		Assert.assertNotNull(authSystemService);
 		Assert.assertNotNull(loginUser);
 	}
@@ -124,7 +121,7 @@ public class HyperIoTAuthenticationSystemServiceTest extends KarafTestSupport {
 	@Test
 	public void test08_loginSystemApiWithEmailShouldFailIfPasswordIsWrong() {
 		AuthenticationSystemApi authSystemService = getOsgiService(AuthenticationSystemApi.class);
-		HyperIoTUser loginUser = (HUser) authSystemService.login("hadmin@hyperiot.com", "wrong==");
+		HyperIoTUser loginUser = (HyperIoTUser) authSystemService.login("hadmin@hyperiot.com", "wrong==");
 		Assert.assertNotNull(authSystemService);
 		Assert.assertNull(loginUser);
 	}

@@ -1,38 +1,41 @@
+configurations {
+    includeInJar {
+        canBeResolved(true)
+        canBeConsumed(false)
+    }
+}
 
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-	compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
-	//SLF4J
-    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
-	compile group: 'org.testcontainers', name: 'testcontainers', version: project.testContainersVersion
-	compile group: 'com.github.docker-java', name: 'docker-java-api', version: project.dockerJavaApiVersion
-	compile group: 'com.github.docker-java', name: 'docker-java-transport-zerodep', version: project.dockerJavaApiVersion
-	compile group: 'net.java.dev.jna', name: 'jna', version: project.jnaVersion
-	compile group: 'org.yaml', name:'snakeyaml', version: 1.30
+    //OSGi Basic Imports
+    implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    implementation group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //SLF4J
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+    implementation group: 'org.testcontainers', name: 'testcontainers', version: project.testContainersVersion
+    includeInJar group: 'org.testcontainers', name: 'testcontainers', version: project.testContainersVersion
+    implementation group: 'com.github.docker-java', name: 'docker-java-api', version: project.dockerJavaApiVersion
+    includeInJar group: 'com.github.docker-java', name: 'docker-java-api', version: project.dockerJavaApiVersion
+    implementation group: 'net.java.dev.jna', name: 'jna', version: project.jnaVersion
+    includeInJar group: 'net.java.dev.jna', name: 'jna', version: project.jnaVersion
+    implementation group: 'org.yaml', name: 'snakeyaml', version: 1.30
+    includeInJar group: 'org.yaml', name: 'snakeyaml', version: 1.30
 
 }
 
 jar {
-	manifest {
-		attributes('dsannotations': '*')
-	}
-	zip64 true
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = duplicatesStrategy.INCLUDE
+    manifest {
+        attributes('dsannotations': '*')
+    }
+    zip64 true
+    from { configurations.includeInJar.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install','publish' ]
-}
 
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTJobScheduler-features">
+  <feature name="hyperiot-jobscheduler" version="${project.version}" description="All  HyperIoT HyperIoTJobScheduler modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-service/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-repository/${project.version}</bundle>
+  </feature>
+</features>

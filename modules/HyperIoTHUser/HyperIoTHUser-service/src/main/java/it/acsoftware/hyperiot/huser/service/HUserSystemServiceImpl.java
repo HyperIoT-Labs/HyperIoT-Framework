@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 ACSoftware
+ * Copyright 2019-2023 HyperIoT
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,10 @@ package it.acsoftware.hyperiot.huser.service;
 import it.acsoftware.hyperiot.base.api.HyperIoTContext;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTAuthenticable;
 import it.acsoftware.hyperiot.base.exception.HyperIoTEntityNotFound;
+import it.acsoftware.hyperiot.base.exception.HyperIoTUnauthorizedException;
 import it.acsoftware.hyperiot.base.exception.HyperIoTUserNotActivated;
 import it.acsoftware.hyperiot.base.service.entity.HyperIoTBaseEntitySystemServiceImpl;
+import it.acsoftware.hyperiot.base.util.HyperIoTConstants;
 import it.acsoftware.hyperiot.base.util.HyperIoTUtil;
 import it.acsoftware.hyperiot.huser.api.HUserRepository;
 import it.acsoftware.hyperiot.huser.api.HUserSystemApi;
@@ -133,6 +135,10 @@ public final class HUserSystemServiceImpl extends HyperIoTBaseEntitySystemServic
      */
     public void registerUser(HUser u, HyperIoTContext ctx) {
         getLog().debug( "invoking registerUser, User: {}", new Object[]{u, ctx});
+        if(!HyperIoTUtil.isAccountActivationEnabled()) {
+            getLog().warn("User activation is disabled by option : {}", HyperIoTConstants.HYPERIOT_PROPERTY_ACCOUNT_ACTIVATION_ENABLED);
+            throw new HyperIoTUnauthorizedException();
+        }
         this.save(u, ctx);
     }
 

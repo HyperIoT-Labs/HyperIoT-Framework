@@ -14,11 +14,11 @@ Import-Package: \
     javax.sql,\
     javax.validation;version='${range;[====,+)}',\
     org.apache.aries*,\
-    org.apache.curator.framework.recipes.leader,\
+    org.apache.curator.framework.recipes.leader;version='${range;[===,+)}',\
     org.hibernate.validator;version='${range;[=,+)}',\
     org.osgi.framework,\
     org.apache.zookeeper*,\
-    org.apache.curator
+    org.apache.curator;version='${range;[===,+)}'
 Export-Package: org.quartz*;version=2.3.2
 DynamicImport-Package: *
 

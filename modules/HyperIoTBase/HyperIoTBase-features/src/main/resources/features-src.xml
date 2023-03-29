@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTBase-features">
+  <repository>mvn:org.apache.cxf.dosgi/cxf-dosgi/${project.cxfDosgiVersion}/xml/features</repository>
+  <repository>mvn:org.apache.cxf.karaf/apache-cxf/${project.cxfVersion}/xml/features</repository>
+  <repository>mvn:org.hibernate.validator/hibernate-validator-osgi-karaf-features/${project.hibernateValidatorVersion}/xml/features</repository>
+  <feature name="hyperiot-base-karaf-features" version="${project.version}" description="All Hyperiot HyperIoTBase Modules">
+    <feature>jdbc</feature>
+    <feature>jndi</feature>
+    <feature>aries-blueprint</feature>
+    <feature>transaction</feature>
+    <feature>jpa</feature>
+    <feature version="[5,6)">hibernate</feature>
+    <feature version="[6.2,7)">hibernate-validator</feature>
+    <feature>pax-web-jetty-websockets</feature>
+    <feature>pax-web-whiteboard</feature>
+    <feature>pax-web-karaf</feature>
+    <feature>pax-jdbc</feature>
+    <feature>pax-jdbc-config</feature>
+    <feature>pax-jdbc-pool-dbcp2</feature>
+    <feature>scr</feature>
+    <feature version="[3.4,4)">cxf-rs-security-jose</feature>
+    <feature>cxf-dosgi-provider-rs</feature>
+    <feature version="[3.4,4)">cxf-rs-description-swagger2</feature>
+    <bundle start-level="79">mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service-hooks/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-base" version="${project.version}" description="All Hyperiot HyperIoTBase Modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service-rest-provider/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service-rest/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-base-test" version="${project.version}" description="All Hyperiot HyperIoTBase Modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service-rest-provider/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service-rest/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-test-containers/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-test-utils/${project.version}</bundle>
+  </feature>
+  <feature name="hyperiot-base-basic" version="${project.version}" description="Hyperiot HyperIoTBase Modules with NO rest services">
+    <feature>hyperiot-base-karaf-features</feature>
+    <bundle>mvn:org.passay/passay/1.4.0</bundle>
+    <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/${project.jacksonVersion}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${project.jacksonVersion}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/${project.jacksonVersion}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-core/${project.jacksonVersion}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/${project.jacksonVersion}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-csv/${project.jacksonVersion}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-xml/${project.jacksonVersion}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-properties/${project.jacksonVersion}</bundle>
+    <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/${project.jacksonVersion}</bundle>
+    <bundle>mvn:org.webjars/swagger-ui/${project.swaggerUIVersion}</bundle>
+    <bundle>mvn:javax.validation/validation-api/${project.javaxValidationVersion}</bundle>
+    <bundle>mvn:org.bouncycastle/bcprov-jdk15on/${project.bouncyCastleVersion}</bundle>
+    <bundle>mvn:org.bouncycastle/bcpkix-jdk15on/${project.bouncyCastleVersion}</bundle>
+    <bundle>mvn:org.bouncycastle/bcmail-jdk15on/${project.bouncyCastleVersion}</bundle>
+    <bundle>mvn:org.postgresql/postgresql/${project.postgresDriverVersion}</bundle>
+    <bundle start-level="79">mvn:it.acsoftware.hyperiot.base/HyperIoTBase-api/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-model/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-security/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-actions/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-command/${project.version}</bundle>
+    <bundle start-level="79">mvn:it.acsoftware.hyperiot.base/HyperIoTBase-util/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-validation/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-repository/${project.version}</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service/${project.version}</bundle>
+  </feature>
+</features>

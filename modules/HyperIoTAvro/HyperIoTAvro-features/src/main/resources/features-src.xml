@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTAvro-features">
+  <feature name="hyperiot-avro" version="${project.version}" description="All  HyperIoT HyperIoTAvro modules">
+    <bundle>mvn:it.acsoftware.hyperiot.avro/HyperIoTAvro-bundles/${project.version}</bundle>
+  </feature>
+</features>

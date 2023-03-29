@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTJackRabbit-features">
+  <feature name="hyperiot-jackrabbit" version="2.2.4" description="All  HyperIoT HyperIoTJackRabbit modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:org.apache.jackrabbit/jackrabbit-bundle/2.19.3</bundle>
+    <bundle>mvn:javax.jcr/jcr/2.0</bundle>
+    <bundle>wrap:mvn:logkit/logkit/2.0</bundle>
+  </feature>
+</features>
