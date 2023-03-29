@@ -1,34 +1,34 @@
+configurations {
+    includeInJar {
+        canBeResolved(true)
+        canBeConsumed(false)
+    }
+}
 
 dependencies {
-    compile group: "org.apache.storm", name:"storm-core", version: project.stormCoreVersion
-    compile group: "org.apache.storm", name:"storm-kafka-client", version: project.stormCoreVersion
-    compile group: "org.apache.storm", name:"storm-hdfs",version: project.stormCoreVersion
-    compile group: 'org.apache.storm', name:'storm-hbase', version: project.stormCoreVersion
-    compile group: 'org.apache.storm', name:'flux-core', version: project.stormCoreVersion
-    compile group: 'org.apache.storm', name:'flux-wrappers', version: project.stormCoreVersion
-    compile group: 'commons-lang', name:'commons-lang', version: '2.6'
+    includeInJar group: "org.apache.storm", name: "storm-core", version: project.stormCoreVersion
+    includeInJar group: "org.apache.storm", name: "storm-kafka-client", version: project.stormCoreVersion
+    includeInJar group: "org.apache.storm", name: "storm-hdfs", version: project.stormCoreVersion
+    includeInJar group: 'org.apache.storm', name: 'storm-hbase', version: project.stormCoreVersion
+    includeInJar group: 'org.apache.storm', name: 'flux-core', version: project.stormCoreVersion
+    includeInJar group: 'org.apache.storm', name: 'flux-wrappers', version: project.stormCoreVersion
+    includeInJar group: 'commons-lang', name: 'commons-lang', version: '2.6'
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     manifest {
         attributes('dsannotations': '*')
     }
     zip64 true
-    from { configurations.compile.findAll { !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
+    from { configurations.includeInJar.findAll { !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install','publish' ]
-}
 
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

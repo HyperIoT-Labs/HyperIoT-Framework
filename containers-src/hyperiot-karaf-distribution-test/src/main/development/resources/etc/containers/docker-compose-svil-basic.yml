@@ -14,8 +14,6 @@ services:
       - "2181:2181"
     environment:
       - ZOOKEEPER_SNAPSHOT_TRUST_EMPTY=true
-    volumes:
-      - ./data/zookeeper:/data/version-2/
     networks:
       hyperiotTestNetwork:
         aliases:
@@ -40,7 +38,6 @@ services:
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper-1.hyperiot.com:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./data/kafka:/kafka/kafka-logs
     networks:
       hyperiotTestNetwork:
         aliases:

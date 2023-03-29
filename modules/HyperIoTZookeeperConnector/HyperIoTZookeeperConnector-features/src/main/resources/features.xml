@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTZookeeperConnector-features">
+  <feature name="hyperiot-zookeeperconnector" version="2.2.4" description="All  HyperIoT HyperIoTZookeeperConnector modules">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:com.google.guava/failureaccess/1.0.1</bundle>
+    <bundle>mvn:com.google.guava/guava/27.1-jre</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-actions/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-api/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-model/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-util/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-zkbundles/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service-rest/2.2.4</bundle>
+  </feature>
+  <feature name="hyperiot-zookeeperconnector-websocket" version="2.2.4" description="All  HyperIoT HyperIoTZookeeperConnector modules with websocket support">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:com.google.guava/failureaccess/1.0.1</bundle>
+    <bundle>mvn:com.google.guava/guava/27.1-jre</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-actions/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-api/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-model/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-util/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-zkbundles/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service-rest/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service-websocket/2.2.4</bundle>
+  </feature>
+  <feature name="hyperiot-zookeeperconnector-basic" version="2.2.4" description="All  Hyperiot HyperIoTHDevice modules with NO rest services">
+    <feature>hyperiot-base-basic</feature>
+    <bundle>mvn:com.google.guava/failureaccess/1.0.1</bundle>
+    <bundle>mvn:com.google.guava/guava/27.1-jre</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-actions/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-api/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-service/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-model/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-util/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-zkbundles/2.2.4</bundle>
+  </feature>
+</features>

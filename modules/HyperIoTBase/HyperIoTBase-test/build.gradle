@@ -1,40 +1,39 @@
-
+configurations {
+    includeInJar {
+        canBeResolved(true)
+        canBeConsumed(false)
+    }
+}
 
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-    compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //OSGi Basic Imports
+    implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    implementation group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
     //SLF4J
-    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
 
-	compileOnly group: "org.apache.karaf.itests", name:"common", version:project.karafVersion
-	compileOnly group: "org.apache.karaf", name:"apache-karaf", version: project.karafVersion
-	compileOnly group: 'org.ops4j.pax.exam', name: 'pax-exam-container-karaf', version: project.paxExamVersion
+    implementation group: "org.apache.karaf.itests", name: "common", version: project.karafVersion
+    implementation group: "org.apache.karaf", name: "apache-karaf", version: project.karafVersion
+    implementation group: 'org.ops4j.pax.exam', name: 'pax-exam-container-karaf', version: project.paxExamVersion
 
-	compile 'org.reflections:reflections:0.9.12'
+    includeInJar 'org.reflections:reflections:0.9.12'
+    implementation 'org.reflections:reflections:0.9.12'
 
-	compileOnly project(":modules:HyperIoTBase:HyperIoTBase-api")
-	compileOnly project(":modules:HyperIoTBase:HyperIoTBase-actions")
-	compileOnly project(":modules:HyperIoTBase:HyperIoTBase-util")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-api")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-actions")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-util")
 }
 
 jar {
-	zip64 true
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    zip64 true
+    from { configurations.includeInJar.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-	tasks = ['publish']
-}
 
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

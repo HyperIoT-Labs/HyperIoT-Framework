@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTCore-features">
+  <repository>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.websocket/HyperIoTWebSocket-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.huser/HyperIoTHUser-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.authentication/HyperIoTAuthentication-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.asset.category/HyperIoTAssetCategory-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.zookeeper.connector/HyperIoTZookeeperConnector-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.storm/HyperIoTStorm-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.avro/HyperIoTAvro-features/2.2.4/xml/features</repository>
+  <repository>mvn:it.acsoftware.hyperiot.cloud.events/HyperIoTCloudEvents-features/2.2.4/xml/features</repository>
+  <feature name="hyperiot-core-basic" version="2.2.4" description="All  HyperIoT HyperIoTCore modules">
+    <feature>hyperiot-base-basic</feature>
+    <feature>hyperiot-mail-basic</feature>
+    <feature>hyperiot-authentication-basic</feature>
+    <feature>hyperiot-permission-basic</feature>
+    <feature>hyperiot-huser-basic</feature>
+    <feature>hyperiot-company-basic</feature>
+    <feature>hyperiot-assetcategory-basic</feature>
+    <feature>hyperiot-assettag-basic</feature>
+    <feature>hyperiot-sharedentity-basic</feature>
+  </feature>
+  <feature name="hyperiot-core-basic-clustered" version="2.2.4" description="All  HyperIoT HyperIoTCore modules">
+    <feature>hyperiot-core-basic</feature>
+    <feature>hyperiot-zookeeperconnector-basic</feature>
+  </feature>
+  <feature name="hyperiot-core" version="2.2.4" description="All  HyperIoT HyperIoTCore modules">
+    <feature>hyperiot-base</feature>
+    <feature>hyperiot-websocket</feature>
+    <feature>hyperiot-mail</feature>
+    <feature>hyperiot-authentication</feature>
+    <feature>hyperiot-permission</feature>
+    <feature>hyperiot-huser</feature>
+    <feature>hyperiot-company</feature>
+    <feature>hyperiot-assetcategory</feature>
+    <feature>hyperiot-assettag</feature>
+    <feature>hyperiot-sharedentity</feature>
+  </feature>
+  <feature name="hyperiot-core-test" version="2.2.4" description="All  HyperIoT HyperIoTCore modules">
+    <feature>hyperiot-base-test</feature>
+    <feature>hyperiot-mail</feature>
+    <feature>hyperiot-websocket-test</feature>
+    <feature>hyperiot-authentication</feature>
+    <feature>hyperiot-permission-test</feature>
+    <feature>hyperiot-huser-test</feature>
+    <feature>hyperiot-company</feature>
+    <feature>hyperiot-assetcategory</feature>
+    <feature>hyperiot-assettag</feature>
+    <feature>hyperiot-sharedentity</feature>
+  </feature>
+  <feature name="hyperiot-core-clustered" version="2.2.4" description="All  HyperIoT HyperIoTCore modules">
+    <feature>hyperiot-core</feature>
+    <feature>hyperiot-zookeeperconnector</feature>
+  </feature>
+</features>

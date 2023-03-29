@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 ACSoftware
+ * Copyright 2019-2023 HyperIoT
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ import it.acsoftware.hyperiot.base.security.rest.HyperIoTAuthenticationFilter;
 import it.acsoftware.hyperiot.base.security.util.HyperIoTSecurityUtil;
 import it.acsoftware.hyperiot.base.service.HyperIoTBaseSystemServiceImpl;
 import it.acsoftware.hyperiot.base.util.HyperIoTUtil;
-import it.acsoftware.hyperiot.huser.model.HUser;
 import org.apache.cxf.rs.security.jose.jws.JwsHeaders;
 import org.apache.cxf.rs.security.jose.jws.JwsSignatureProvider;
 import org.apache.cxf.rs.security.jose.jws.JwsUtils;
@@ -192,7 +191,7 @@ public final class AuthenticationSystemServiceImpl extends HyperIoTBaseSystemSer
         JwtClaims jwtClaims = new JwtClaims();
         jwtClaims.setSubject(user.getScreenName());
         //Enforcing only HUSers has the righe Isseuer, for rest services
-        if (user instanceof HUser)
+        if (user instanceof HyperIoTUser)
             jwtClaims.setIssuer(HyperIoTUser.class.getName());
         else
             jwtClaims.setIssuer(user.getClass().getName());
@@ -222,7 +221,7 @@ public final class AuthenticationSystemServiceImpl extends HyperIoTBaseSystemSer
         return tokenStr;
     }
 
-    private long configureJwtExpireDateClaim(Calendar c ){
+    private long configureJwtExpireDateClaim(Calendar c) {
         Properties jwtProperties = HyperIoTSecurityUtil.getJwtProperties(HyperIoTUtil.getBundleContext(this));
         int jwtExpireDateHourProperty = Integer.parseInt(jwtProperties.getProperty(JWT_EXPIRE_DATE_PROPERTY_NAME));
         c.add(Calendar.HOUR, jwtExpireDateHourProperty);

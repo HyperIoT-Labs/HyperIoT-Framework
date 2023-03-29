@@ -1,39 +1,29 @@
-
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-	compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
-	//SLF4J
-    compileOnly group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
-	//HyperIoTBase Dependencies
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version:project.hyperIoTVersion
+    //OSGi Basic Imports
+    implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    implementation group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //SLF4J
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
+    //HyperIoTBase Dependencies
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version: project.hyperIoTVersion
 
-	//Jackson
-	compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:project.jacksonVersion
-	compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:project.jacksonVersion
-	compileOnly group:"com.fasterxml.jackson.module", name:"jackson-module-jaxb-annotations", version:project.jacksonVersion
+    //Jackson
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: project.jacksonVersion
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: project.jacksonVersion
+    implementation group: "com.fasterxml.jackson.module", name: "jackson-module-jaxb-annotations", version: project.jacksonVersion
 
-	// https://mvnrepository.com/artifact/org.apache.storm/storm-core
-	compileOnly group: 'org.apache.storm', name: 'storm-core', version: project.stormCoreVersion
-	
-	
+    // https://mvnrepository.com/artifact/org.apache.storm/storm-core
+    implementation group: 'org.apache.storm', name: 'storm-core', version: project.stormCoreVersion
+
+
 }
-
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-		tasks = [ 'clean','build','install','publish' ]
-}
-
 
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

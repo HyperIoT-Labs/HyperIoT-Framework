@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 ACSoftware
+ * Copyright 2019-2023 HyperIoT
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -22,10 +22,14 @@ import it.acsoftware.hyperiot.base.api.HyperIoTAuthenticationProvider;
 import it.acsoftware.hyperiot.base.api.HyperIoTContext;
 import it.acsoftware.hyperiot.base.api.HyperIoTUser;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTAuthenticable;
-import it.acsoftware.hyperiot.base.exception.*;
+import it.acsoftware.hyperiot.base.exception.HyperIoTEntityNotFound;
+import it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException;
+import it.acsoftware.hyperiot.base.exception.HyperIoTUnauthorizedException;
+import it.acsoftware.hyperiot.base.exception.HyperIoTWrongUserPasswordResetCode;
 import it.acsoftware.hyperiot.base.security.annotations.AllowPermissions;
 import it.acsoftware.hyperiot.base.security.annotations.AllowPermissionsOnReturn;
 import it.acsoftware.hyperiot.base.service.entity.HyperIoTBaseEntityServiceImpl;
+import it.acsoftware.hyperiot.base.util.HyperIoTConstants;
 import it.acsoftware.hyperiot.base.util.HyperIoTUtil;
 import it.acsoftware.hyperiot.huser.api.HUserApi;
 import it.acsoftware.hyperiot.huser.api.HUserSystemApi;
@@ -50,7 +54,8 @@ import static it.acsoftware.hyperiot.base.util.HyperIoTConstants.OSGI_AUTH_PROVI
  * the system layer.
  */
 @Component(service = {HUserApi.class, HyperIoTAuthenticationProvider.class}, immediate = true, property = {
-    OSGI_AUTH_PROVIDER_RESOURCE + "=it.acsoftware.hyperiot.huser.model.HUser"
+        OSGI_AUTH_PROVIDER_RESOURCE + "=it.acsoftware.hyperiot.huser.model.HUser",
+        OSGI_AUTH_PROVIDER_RESOURCE + "=it.acsoftware.hyperiot.base.api.HyperIoTUser"
 })
 public final class HUserServiceImpl extends HyperIoTBaseEntityServiceImpl<HUser> implements HUserApi, HyperIoTAuthenticationProvider {
 
@@ -120,6 +125,10 @@ public final class HUserServiceImpl extends HyperIoTBaseEntityServiceImpl<HUser>
     @Override
     public void registerUser(HUser u, HyperIoTContext ctx) {
         getLog().debug("Invoking registerUser User {} Context: {}", new Object[]{u, ctx});
+        if (!HyperIoTUtil.isAccountActivationEnabled()) {
+            getLog().warn("User activation is disabled by option : {}", HyperIoTConstants.HYPERIOT_PROPERTY_ACCOUNT_ACTIVATION_ENABLED);
+            throw new HyperIoTUnauthorizedException();
+        }
         this.systemService.registerUser(u, ctx);
         // if ok sending mail
         List<String> recipients = new ArrayList<>();
@@ -131,7 +140,7 @@ public final class HUserServiceImpl extends HyperIoTBaseEntityServiceImpl<HUser>
         try {
             String mailBody = mailService.generateTextFromTemplate(MailConstants.MAIL_TEMPLATE_REGISTRATION, params);
             this.mailService.sendMail(MailUtil.getUsername(), recipients, null, null, "HyperIoT Account Activation!",
-                mailBody, null);
+                    mailBody, null);
         } catch (Exception e) {
             getLog().error(e.getMessage(), e);
         }
@@ -152,11 +161,11 @@ public final class HUserServiceImpl extends HyperIoTBaseEntityServiceImpl<HUser>
 
     @Override
     public void deleteAccountRequest(HyperIoTContext ctx) {
-        if (ctx == null || ctx.getLoggedEntityId() == 0 ){
+        if (ctx == null || ctx.getLoggedEntityId() == 0) {
             throw new HyperIoTUnauthorizedException();
         }
         String deletionCode = UUID.randomUUID().toString();
-        HUser user = this.systemService.changeDeletionCode(ctx, deletionCode );
+        HUser user = this.systemService.changeDeletionCode(ctx, deletionCode);
         List<String> recipients = new ArrayList<>();
         recipients.add(user.getEmail());
         HashMap<String, Object> params = new HashMap<>();
@@ -173,21 +182,21 @@ public final class HUserServiceImpl extends HyperIoTBaseEntityServiceImpl<HUser>
 
     @Override
     public void deleteAccount(HyperIoTContext ctx, long userId, String deletionCode) {
-        if (ctx == null || ctx.getLoggedEntityId() == 0 ){
+        if (ctx == null || ctx.getLoggedEntityId() == 0) {
             throw new HyperIoTUnauthorizedException();
         }
-        if (ctx.isAdmin() ){
-            if(ctx.getLoggedEntityId() == userId) {
+        if (ctx.isAdmin()) {
+            if (ctx.getLoggedEntityId() == userId) {
                 getLog().info("Delete account fail. Admin user with id {},  cannot delete himself", ctx.getLoggedEntityId());
                 throw new HyperIoTUnauthorizedException();
             }
-            HUser user ;
-            try{
+            HUser user;
+            try {
                 user = this.systemService.find(userId, ctx);
-            } catch (NoResultException e){
+            } catch (NoResultException e) {
                 throw new HyperIoTEntityNotFound();
             }
-            if(user.isAdmin()){
+            if (user.isAdmin()) {
                 getLog().info("Delete account fail. Admin user with id {}, cannot delete admin user with id {} ", ctx.getLoggedEntityId(), user.getId());
                 throw new HyperIoTUnauthorizedException();
             }
@@ -195,25 +204,25 @@ public final class HUserServiceImpl extends HyperIoTBaseEntityServiceImpl<HUser>
             this.systemService.remove(userId, ctx);
             getLog().info("Admin user with id {} , delete account of user with id {} ", ctx.getLoggedEntityId(), user.getId());
         } else {
-            if(deletionCode == null) {
+            if (deletionCode == null) {
                 getLog().info("Delete account fail. User with id {}, perform deletion without specifying deletion code", ctx.getLoggedEntityId());
                 throw new HyperIoTUnauthorizedException();
             }
-            if (ctx.getLoggedEntityId() != userId){
+            if (ctx.getLoggedEntityId() != userId) {
                 getLog().info("Delete account fail. User with id {},  cannot delete user with id {}", ctx.getLoggedEntityId(), userId);
                 throw new HyperIoTUnauthorizedException();
             }
-            HUser user ;
-            try{
+            HUser user;
+            try {
                 user = this.systemService.find(userId, ctx);
-            } catch (NoResultException e){
+            } catch (NoResultException e) {
                 throw new HyperIoTEntityNotFound();
             }
             if (user.deletionCode == null || user.deletionCode.isEmpty()) {
                 getLog().info("Delete account failed. User with id {}, perform deletion without requesting deletion code", ctx.getLoggedEntityId());
                 throw new HyperIoTUnauthorizedException();
             }
-            if(! HyperIoTUtil.matchesEncoding(deletionCode, user.getDeletionCode())) {
+            if (!HyperIoTUtil.matchesEncoding(deletionCode, user.getDeletionCode())) {
                 getLog().info("Delete account failed. User with id {} insert wrong deletion code", ctx.getLoggedEntityId());
                 throw new HyperIoTUnauthorizedException();
             }
@@ -284,7 +293,7 @@ public final class HUserServiceImpl extends HyperIoTBaseEntityServiceImpl<HUser>
             try {
                 String mailBody = mailService.generateTextFromTemplate(MailConstants.MAIL_TEMPLATE_PWD_RESET, params);
                 this.mailService.sendMail(MailUtil.getUsername(), recipients, null, null, "Reset Password", mailBody,
-                    null);
+                        null);
             } catch (Exception e) {
                 getLog().error(e.getMessage(), e);
             }
@@ -313,7 +322,7 @@ public final class HUserServiceImpl extends HyperIoTBaseEntityServiceImpl<HUser>
 
     private HUser doChangePassword(HUser u, String oldPassword, String password, String passwordConfirm, HyperIoTContext context) {
         if (oldPassword != null && password != null && passwordConfirm != null) {
-            if (HyperIoTUtil.passwordMatches(oldPassword,u.getPassword())) {
+            if (HyperIoTUtil.passwordMatches(oldPassword, u.getPassword())) {
                 return this.systemService.changePassword(u, password, passwordConfirm);
             } else {
                 throw new HyperIoTRuntimeException("it.acsoftware.hyperiot.error.password.not.match");
@@ -346,6 +355,6 @@ public final class HUserServiceImpl extends HyperIoTBaseEntityServiceImpl<HUser>
      */
     @Override
     public boolean screeNameAlreadyExists(HyperIoTAuthenticable hyperIoTAuthenticable) {
-       return this.systemService.screeNameAlreadyExists(hyperIoTAuthenticable);
+        return this.systemService.screeNameAlreadyExists(hyperIoTAuthenticable);
     }
 }

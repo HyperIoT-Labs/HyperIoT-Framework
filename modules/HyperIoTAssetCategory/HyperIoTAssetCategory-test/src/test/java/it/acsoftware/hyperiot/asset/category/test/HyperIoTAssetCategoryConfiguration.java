@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 ACSoftware
+ * Copyright 2019-2023 HyperIoT
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@ public class HyperIoTAssetCategoryConfiguration implements ConfigurationFactory 
     public Option[] createConfiguration() {
         return HyperIoTTestConfigurationBuilder.createStandardConfiguration()
                 .withCodeCoverage("it.acsoftware.hyperiot.asset.category.*")
+                .keepRuntime()
                 .build();
     }
 }

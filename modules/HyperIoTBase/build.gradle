@@ -1,9 +1,8 @@
-
 allprojects {
     group 'it.acsoftware.hyperiot.base'
     version = project.hyperIoTVersion
-    repositories{
-        mavenLocal{
+    repositories {
+        mavenLocal {
             content {
                 // Used only for test and development phase.
                 includeGroupByRegex "it\\.acsoftware.*"
@@ -12,7 +11,7 @@ allprojects {
         mavenCentral()
 
         maven {
-         url "https://plugins.gradle.org/m2/"
+            url "https://plugins.gradle.org/m2/"
         }
 
         maven {
@@ -21,11 +20,11 @@ allprojects {
         }
     }
 
-   apply plugin: 'maven'
-   apply plugin: 'biz.aQute.bnd.builder'
-   apply plugin: 'maven-publish'
 
-	publishing {
+    apply plugin: 'biz.aQute.bnd.builder'
+    apply plugin: 'maven-publish'
+
+    publishing {
         repositories {
             maven {
                 credentials {
@@ -37,21 +36,4 @@ allprojects {
             }
         }
     }
- 	//this task will be executed even on test module
- 	task testAndBuildHIT(type: GradleBuild) {
-		tasks = [ 'clean','build','install' ]
-	}
-
-	//this task will be executed even on test module
- 	task testAndPublishHIT(type: GradleBuild) {
-		tasks = ['publish']
-	}
-
-}
-task buildHIT {
-	dependsOn gradle.includedBuilds*.task(':buildHIT')
-}
-
-task publishHIT(type: GradleBuild) {
-	dependsOn gradle.includedBuilds*.task(':publishHIT')
 }

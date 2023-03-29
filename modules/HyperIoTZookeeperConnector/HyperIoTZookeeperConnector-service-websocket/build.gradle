@@ -1,50 +1,42 @@
-
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-	compileOnly group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
+    //OSGi Basic Imports
+    implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    implementation group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
 
-	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-security-jose", version: project.cxfVersion
-	compileOnly group: "org.apache.cxf", name: "cxf-rt-rs-security-jose-jaxrs", version: project.cxfVersion
+    implementation group: "org.apache.cxf", name: "cxf-rt-rs-security-jose", version: project.cxfVersion
+    implementation group: "org.apache.cxf", name: "cxf-rt-rs-security-jose-jaxrs", version: project.cxfVersion
 
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-security", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-util", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-security", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-service", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-security", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-util", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-security", version: project.hyperIoTVersion
 
-	compileOnly group: "it.acsoftware.hyperiot.websocket", name: "HyperIoTWebSocket-api", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.websocket", name: "HyperIoTWebSocket-model", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.websocket", name: "HyperIoTWebSocket-session", version: project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.websocket", name: "HyperIoTWebSocket-channel", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.websocket", name: "HyperIoTWebSocket-api", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.websocket", name: "HyperIoTWebSocket-model", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.websocket", name: "HyperIoTWebSocket-session", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.websocket", name: "HyperIoTWebSocket-channel", version: project.hyperIoTVersion
 
-	compileOnly group: 'org.apache.curator', name: 'curator-framework', version: '5.2.1'
-	compileOnly group: 'org.apache.curator', name: 'curator-client', version: '5.2.1'
-	compileOnly group: 'org.apache.curator', name: 'curator-recipes', version: '5.2.1'
+    implementation group: 'org.apache.curator', name: 'curator-framework', version: '5.2.1'
+    implementation group: 'org.apache.curator', name: 'curator-client', version: '5.2.1'
+    implementation group: 'org.apache.curator', name: 'curator-recipes', version: '5.2.1'
 
-	compileOnly project(":modules:HyperIoTZookeeperConnector:HyperIoTZookeeperConnector-api")
-	compileOnly project(":modules:HyperIoTZookeeperConnector:HyperIoTZookeeperConnector-model")
+    implementation project(":modules:HyperIoTZookeeperConnector:HyperIoTZookeeperConnector-api")
+    implementation project(":modules:HyperIoTZookeeperConnector:HyperIoTZookeeperConnector-model")
 }
 
 jar {
-	manifest {
-		attributes('dsannotations': '*')
-	}
+    manifest {
+        attributes('dsannotations': '*')
+    }
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install','publish' ]
-}
 
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

@@ -1,28 +1,17 @@
-
-
 dependencies {
-	//OSGi Basic Imports
-	compileOnly group: "org.osgi", name: "osgi.core", version: project.osgiVersion
-	//HyperIoTBase Dependencies
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version:project.hyperIoTVersion
-	compileOnly group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version:project.hyperIoTVersion
-	// Project dependencies
-	compileOnly group: 'org.apache.curator', name: 'curator-recipes', version: '5.2.1'
+    //OSGi Basic Imports
+    implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
+    //HyperIoTBase Dependencies
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
+    implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
+    // Project dependencies
+    implementation group: 'org.apache.curator', name: 'curator-recipes', version: '5.2.1'
 }
-
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-		tasks = [ 'clean','build','install','publish' ]
-}
-
 
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

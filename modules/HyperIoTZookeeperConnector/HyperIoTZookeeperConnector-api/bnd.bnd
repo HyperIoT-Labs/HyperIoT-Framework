@@ -1,7 +1,7 @@
 Export-Package: it.acsoftware.hyperiot.zookeeper.connector.api
 Import-Package: \
     org.slf4j.*,\
-    org.apache.curator.*,\
+    org.apache.curator.*;version='${range;[===,+)}',\,\
     org.apache.zookeeper.*,\
     it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}'

@@ -1,29 +1,30 @@
+configurations {
+    includeInJar {
+        canBeResolved(true)
+        canBeConsumed(false)
+    }
+}
+
 dependencies {
-	compile group: "org.apache.avro", name: "avro", version: project.apacheAvroVersion
-	compile group: 'org.tukaani', name: 'xz', version: project.orgTukaani
-	compile group: 'org.xerial.snappy',name:'snappy-java', version:project.orgXerialSnappy
+    includeInJar group: "org.apache.avro", name: "avro", version: project.apacheAvroVersion
+    includeInJar group: 'org.tukaani', name: 'xz', version: project.orgTukaani
+    includeInJar group: 'org.xerial.snappy', name: 'snappy-java', version: project.orgXerialSnappy
 }
 
 jar {
-	manifest {
-		attributes('dsannotations': '*')
-	}
-	zip64 true
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    manifest {
+        attributes('dsannotations': '*')
+    }
+    zip64 true
+    from { configurations.includeInJar.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
-task buildHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install' ]
-}
-
-task publishHIT(type: GradleBuild) {
-	tasks = [ 'clean','build','install','publish' ]
-}
 
 publishing {
-    	publications {
-        	hyperiot(MavenPublication) {
-            	from components.java
-        	}
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
     }
- }
+}

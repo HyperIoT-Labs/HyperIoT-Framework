@@ -5,7 +5,7 @@ Import-Package: \
     org.osgi.framework,\
     org.postgresql,\
     org.apache.aries.jpa.*,\
-    org.apache.commons.lang3;version='${range;[=,+)}',\
+    org.apache.commons.lang3,\
     it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.base.model;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}',\

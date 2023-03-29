@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 ACSoftware
+ * Copyright 2019-2023 HyperIoT
  *
  * Licensed under the Apache License, Version 2.0 (the "License")
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 package it.acsoftware.hyperiot.authentication.service.jaas;
 
 import it.acsoftware.hyperiot.base.api.HyperIoTRole;
+import it.acsoftware.hyperiot.base.api.HyperIoTUser;
 import it.acsoftware.hyperiot.base.api.authentication.AuthenticationSystemApi;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTAuthenticable;
 import it.acsoftware.hyperiot.base.model.authentication.principal.HyperIoTGroupPrincipal;
@@ -25,7 +26,6 @@ import it.acsoftware.hyperiot.base.model.authentication.principal.HyperIoTPrinci
 import it.acsoftware.hyperiot.base.model.authentication.principal.HyperIoTRolePrincipal;
 import it.acsoftware.hyperiot.base.util.HyperIoTConstants;
 import it.acsoftware.hyperiot.base.util.HyperIoTUtil;
-import it.acsoftware.hyperiot.huser.model.HUser;
 import it.acsoftware.hyperiot.osgi.util.filter.OSGiFilterBuilder;
 import org.apache.karaf.jaas.boot.principal.GroupPrincipal;
 import org.apache.karaf.jaas.boot.principal.RolePrincipal;
@@ -198,7 +198,7 @@ public class HyperIoTJaaSAuthenticationModule implements LoginModule {
 
 
     protected String getAuthenticationProviderFilter() {
-        String osgiFilter = OSGiFilterBuilder.createFilter(HyperIoTConstants.OSGI_AUTH_PROVIDER_RESOURCE, HUser.class.getName()).getFilter();
+        String osgiFilter = OSGiFilterBuilder.createFilter(HyperIoTConstants.OSGI_AUTH_PROVIDER_RESOURCE, HyperIoTUser.class.getName()).getFilter();
         return osgiFilter;
     }
 
