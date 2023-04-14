@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTCompany-features">
-  <feature name="hyperiot-company" version="2.2.4" description="All  HyperIoT HyperIoTCompany modules">
+  <feature name="hyperiot-company" version="2.3.0" description="All  HyperIoT HyperIoTCompany modules">
     <feature>hyperiot-base</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-actions/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-api/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-service/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-model/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-repository/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-service-rest/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-actions/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-api/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-model/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-repository/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-service-rest/2.3.0</bundle>
   </feature>
-  <feature name="hyperiot-company-basic" version="2.2.4" description="All  HyperIoT HyperIoTCompany modules with NO rest services">
+  <feature name="hyperiot-company-basic" version="2.3.0" description="All  HyperIoT HyperIoTCompany modules with NO rest services">
     <feature>hyperiot-base-basic</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-actions/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-api/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-service/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-model/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-repository/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-actions/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-api/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-model/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.company/HyperIoTCompany-repository/2.3.0</bundle>
   </feature>
 </features>

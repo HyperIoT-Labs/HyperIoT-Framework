@@ -19,14 +19,12 @@ allprojects {
         }
     }
 
-
     apply plugin: 'biz.aQute.bnd.builder'
     apply plugin: 'maven-publish'
 
     configurations {
         testImplementation.extendsFrom implementation
     }
-
 
     publishing {
         repositories {
@@ -42,5 +40,5 @@ allprojects {
     }
 }
 
-
+project.ext.set("hadoopClientVersion", "2.7.4")
 

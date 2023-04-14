@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTHadoopManager-features">
-  <feature name="hyperiot-hadoopmanager" version="2.2.4" description="All  HyperIoT HyperIoTHadoopManager modules">
+  <feature name="hyperiot-hadoopmanager" version="2.3.0" description="All  HyperIoT HyperIoTHadoopManager modules">
     <feature>hyperiot-base-basic</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-actions/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-api/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-model/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-service/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-util/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-actions/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-api/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-model/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.hadoopmanager/HyperIoTHadoopManager-util/2.3.0</bundle>
   </feature>
 </features>

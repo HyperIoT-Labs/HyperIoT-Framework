@@ -17,7 +17,6 @@
 
 package it.acsoftware.hyperiot.hbase.connector.service;
 
-import com.google.protobuf.ServiceException;
 import it.acsoftware.hyperiot.base.action.util.HyperIoTActionsUtil;
 import it.acsoftware.hyperiot.base.api.HyperIoTAction;
 import it.acsoftware.hyperiot.base.exception.HyperIoTUnauthorizedException;
@@ -29,14 +28,10 @@ import it.acsoftware.hyperiot.hbase.connector.model.HBaseConnector;
 import it.acsoftware.hyperiot.permission.api.PermissionSystemApi;
 import it.acsoftware.hyperiot.role.util.HyperIoTRoleConstants;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.HColumnDescriptor;
-import org.apache.hadoop.hbase.HTableDescriptor;
-import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
-import org.apache.hadoop.hbase.client.coprocessor.AggregationClient;
-import org.apache.hadoop.hbase.client.coprocessor.LongColumnInterpreter;
 import org.apache.hadoop.hbase.filter.*;
+import org.apache.hadoop.hbase.security.provider.SimpleSaslAuthenticationProvider;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -49,6 +44,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * @author Aristide Cittadino Implementation class of the HBaseConnectorSystemApi
@@ -108,8 +106,7 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
     }
 
     private void initHBaseThreadPool() {
-        this.hbaseThreadPool = new ThreadPoolExecutor(hBaseConnectorUtil.getCorePoolSize(), hBaseConnectorUtil.getMaximumPoolSize(),
-                hBaseConnectorUtil.getKeepAliveTime(), TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        this.hbaseThreadPool = new ThreadPoolExecutor(hBaseConnectorUtil.getCorePoolSize(), hBaseConnectorUtil.getMaximumPoolSize(), hBaseConnectorUtil.getKeepAliveTime(), TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
     }
 
     public void executeTask(Runnable runnableTask) {
@@ -117,8 +114,8 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
     }
 
     @Override
-    public void checkConnection() throws IOException, ServiceException {
-        HBaseAdmin.checkHBaseAvailable(configuration);
+    public void checkConnection() throws IOException {
+        HBaseAdmin.available(configuration);
     }
 
     private void checkRegisteredUserRoleExists() {
@@ -128,8 +125,7 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
         actions.add(HyperIoTActionsUtil.getHyperIoTAction(resourceName, HBaseConnectorAction.DISABLE_TABLE));
         actions.add(HyperIoTActionsUtil.getHyperIoTAction(resourceName, HBaseConnectorAction.DROP_TABLE));
         actions.add(HyperIoTActionsUtil.getHyperIoTAction(resourceName, HBaseConnectorAction.READ_DATA));
-        this.permissionSystemApi
-                .checkOrCreateRoleWithPermissions(HyperIoTRoleConstants.ROLE_NAME_REGISTERED_USER, actions);
+        this.permissionSystemApi.checkOrCreateRoleWithPermissions(HyperIoTRoleConstants.ROLE_NAME_REGISTERED_USER, actions);
     }
 
     @Override
@@ -154,8 +150,7 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
     }
 
     @Override
-    public void deleteData(String tableName, String rowKey)
-            throws IOException {
+    public void deleteData(String tableName, String rowKey) throws IOException {
         Table table = connection.getTable(TableName.valueOf(tableName));
         Delete delete = new Delete(Bytes.toBytes(rowKey));
         table.delete(delete);
@@ -233,8 +228,7 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
     }
 
     @Override
-    public void insertData(String tableName, String rowKey, String columnFamily, String column, String cellValue)
-            throws IOException {
+    public void insertData(String tableName, String rowKey, String columnFamily, String column, String cellValue) throws IOException {
         Table table = connection.getTable(TableName.valueOf(tableName));
         Put put = new Put(rowKey.getBytes());
         put.addImmutable(columnFamily.getBytes(), column.getBytes(), cellValue.getBytes());
@@ -254,34 +248,20 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
         this.executeTask(runnableTask);
     }
 
-    private List<Filter> getExtraFilters(byte[] column) {
-        List<Filter> extraFilters = null;
-        if (column != null) {
-            Filter qualifierFilter = new QualifierFilter(CompareFilter.CompareOp.EQUAL, new BinaryComparator(column));
-            extraFilters = Collections.singletonList(qualifierFilter);
-        }
-        return extraFilters;
-    }
-
     @Override
-    public ResultScanner getScanner(String tableName, Map<byte[], List<byte[]>> columns,
-                                    byte[] rowKeyLowerBound, byte[] rowKeyUpperBound, int limit)
-            throws IOException {
+    @Deprecated
+    public ResultScanner getScanner(String tableName, Map<byte[], List<byte[]>> columns, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound, int limit) throws IOException {
         Table table = connection.getTable(TableName.valueOf(tableName));
         // get scan
         Scan scan = getScan(columns, rowKeyLowerBound, rowKeyUpperBound, limit, null);
         return table.getScanner(scan);
     }
 
-    private Scan getScan(Map<byte[], List<byte[]>> columns, byte[] rowKeyLowerBound,
-                         byte[] rowKeyUpperBound, int limit, List<Filter> extraFilters) {
-        Filter rowFilterLowerBound =
-                new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL, new BinaryComparator(rowKeyLowerBound));
-        Filter rowFilterUpperBound =
-                new RowFilter(CompareFilter.CompareOp.LESS_OR_EQUAL, new BinaryComparator(rowKeyUpperBound));
+    private Scan getScan(Map<byte[], List<byte[]>> columns, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound, int limit, List<Filter> extraFilters) {
+        Filter rowFilterLowerBound = new RowFilter(CompareOperator.GREATER_OR_EQUAL, new BinaryComparator(rowKeyLowerBound));
+        Filter rowFilterUpperBound = new RowFilter(CompareOperator.LESS_OR_EQUAL, new BinaryComparator(rowKeyUpperBound));
         List<Filter> rowFilterList;
-        if (limit < 0)
-            rowFilterList = new ArrayList<>(Arrays.asList(rowFilterLowerBound, rowFilterUpperBound));
+        if (limit < 0) rowFilterList = new ArrayList<>(Arrays.asList(rowFilterLowerBound, rowFilterUpperBound));
         else {
             // if limit is not equal to 0 and not greater than maxScanPageSize, set it
             PageFilter pageFilter = new PageFilter(limit > 0 && limit <= maxScanPageSize ? limit : maxScanPageSize);
@@ -289,11 +269,9 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
         }
         Scan scan = new Scan();
         for (byte[] columnFamily : columns.keySet()) {
-            if (columns.get(columnFamily) == null || columns.get(columnFamily).isEmpty())
-                scan.addFamily(columnFamily);
-            else
-                for (byte[] column : columns.get(columnFamily))
-                    scan.addColumn(columnFamily, column);
+            if (columns.get(columnFamily) == null || columns.get(columnFamily).isEmpty()) scan.addFamily(columnFamily);
+            else for (byte[] column : columns.get(columnFamily))
+                scan.addColumn(columnFamily, column);
         }
         if (extraFilters != null) {
             // add extra filters
@@ -304,67 +282,50 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
     }
 
     @Override
-    public long rowCount(String tableName, byte[] columnFamily, byte[] column, byte[] rowKeyLowerBound,
-                         byte[] rowKeyUpperBound) throws Throwable {
-        try (AggregationClient aggregationClient = new AggregationClient(configuration)) {
-            // specify column families and columns on which perform scan
-            Map<byte[], List<byte[]>> columns = new HashMap<>();
-            columns.put(columnFamily, new ArrayList<>());
-            if (column != null)
-                columns.get(columnFamily).add(column);
-            // get scan
-            List<Filter> extraFilters = getExtraFilters(column);
-            Scan scan = getScan(columns, rowKeyLowerBound, rowKeyUpperBound, -1, extraFilters);
-            return aggregationClient.rowCount(connection.getTable(TableName.valueOf(tableName)), new LongColumnInterpreter(), scan);
-        }
+    public long rowCount(String tableName, byte[] columnFamily, byte[] column, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound) throws Throwable {
+        Map<byte[], List<byte[]>> columns = new HashMap<>();
+        columns.put(columnFamily, new ArrayList<>());
+        if(column != null)
+            columns.get(columnFamily).add(column);
+        return rowCount(tableName, columns, rowKeyLowerBound, rowKeyUpperBound);
     }
 
     @Override
     public long rowCount(String tableName, Map<byte[], List<byte[]>> columns, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound) throws Throwable {
-        try (AggregationClient aggregationClient = new AggregationClient(configuration)) {
-            Scan scan = getScan(columns, rowKeyLowerBound, rowKeyUpperBound, -1, null);
-            return aggregationClient.rowCount(connection.getTable(TableName.valueOf(tableName)), new LongColumnInterpreter(), scan);
-        }
+        AtomicLong counter = new AtomicLong();
+        scanResults(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, -1, result -> {
+            counter.set(counter.addAndGet(result.listCells().size()));
+        });
+        return counter.longValue();
     }
 
     @Override
-    public List<byte[]> scan(String tableName, byte[] columnFamily, byte[] column,
-                             byte[] rowKeyLowerBound, byte[] rowKeyUpperBound)
-            throws IOException {
+    public List<byte[]> scan(String tableName, byte[] columnFamily, byte[] column, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound) throws IOException {
         // specify column families and columns on which perform scan
         Map<byte[], List<byte[]>> columns = new HashMap<>();
         columns.put(columnFamily, new ArrayList<>());
         columns.get(columnFamily).add(column);
-        // get scan
-        ResultScanner scanner =
-                getScanner(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, 0);
         // collect scan result
         List<byte[]> cells = new ArrayList<>();
-        for (Result result : scanner)
+        scanResults(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, 0, result -> {
             cells.add(result.getValue(columnFamily, column));
+        });
         return cells;
     }
 
     @Override
-    public List<Result> scanWithCompleteResult(String tableName, Map<byte[], List<byte[]>> columns,
-                                               byte[] rowKeyLowerBound, byte[] rowKeyUpperBound,int limit)
-            throws IOException {
-        // get scan
-        ResultScanner scanner =
-                getScanner(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, limit);
-        // collect scan result
-        List<Result> results = new ArrayList<>();
-        for (Result result : scanner)
+    public List<Result> scanWithCompleteResult(String tableName, Map<byte[], List<byte[]>> columns, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound, int limit) throws IOException {
+        final List<Result> results = new ArrayList<>();
+        scanResults(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, limit, result -> {
             results.add(result);
+        });
         return results;
     }
 
     @Override
-    public Map<byte[], Map<byte[], Map<byte[], byte[]>>> scan(String tableName, Map<byte[], List<byte[]>> columns, byte[] rowKeyLowerBound,
-                                                              byte[] rowKeyUpperBound, int limit) throws IOException {
-        Map<byte[], Map<byte[], Map<byte[], byte[]>>> output = new HashMap<>();
-        ResultScanner scanner = getScanner(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, limit);
-        for (Result result : scanner) {
+    public Map<byte[], Map<byte[], Map<byte[], byte[]>>> scan(String tableName, Map<byte[], List<byte[]>> columns, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound, int limit) throws IOException {
+        final Map<byte[], Map<byte[], Map<byte[], byte[]>>> output = new HashMap<>();
+        scanResults(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, limit, result -> {
             output.put(result.getRow(), new HashMap<>());
             for (byte[] columnFamily : columns.keySet()) {
                 output.get(result.getRow()).put(columnFamily, new HashMap<>());
@@ -374,7 +335,7 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
                         output.get(result.getRow()).get(columnFamily).put(column, result.getValue(columnFamily, column));
                 }
             }
-        }
+        });
         return output;
     }
 
@@ -382,19 +343,24 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
      * Initialization method: HBase client configuration
      */
     private void setHBaseConfiguration() {
-        configuration = HBaseConfiguration.create();
-        configuration.setBoolean("hbase.cluster.distributed", hBaseConnectorUtil.getClusterDistributed());
-        configuration.set("hbase.master", hBaseConnectorUtil.getMaster());
-        configuration.set("hbase.master.hostname", hBaseConnectorUtil.getMasterHostname());
-        configuration.setInt("hbase.master.info.port", hBaseConnectorUtil.getMasterInfoPort());
-        configuration.setInt("hbase.master.port", hBaseConnectorUtil.getMasterPort());
-        configuration.setInt("hbase.regionserver.info.port", hBaseConnectorUtil.getRegionserverInfoPort());
-        configuration.setInt("hbase.regionserver.port", hBaseConnectorUtil.getRegionserverPort());
-        configuration.set("hbase.rootdir", hBaseConnectorUtil.getRootdir());
-        configuration.set("hbase.zookeeper.quorum", hBaseConnectorUtil.getZookeeperQuorum());
-        configuration.set("hbase.coprocessor.user.region.classes", "org.apache.hadoop.hbase.coprocessor.AggreagateImplementation");
+        configuration = createHBaseNewBasicConf();
         maxScanPageSize = hBaseConnectorUtil.getMaxScanPageSize();
     }
+
+    private Configuration createHBaseNewBasicConf() {
+        Configuration c = HBaseConfiguration.create();
+        c.setBoolean("hbase.cluster.distributed", hBaseConnectorUtil.getClusterDistributed());
+        c.set("hbase.master", hBaseConnectorUtil.getMaster());
+        c.set("hbase.master.hostname", hBaseConnectorUtil.getMasterHostname());
+        c.setInt("hbase.master.info.port", hBaseConnectorUtil.getMasterInfoPort());
+        c.setInt("hbase.master.port", hBaseConnectorUtil.getMasterPort());
+        c.setInt("hbase.regionserver.info.port", hBaseConnectorUtil.getRegionserverInfoPort());
+        c.setInt("hbase.regionserver.port", hBaseConnectorUtil.getRegionserverPort());
+        c.set("hbase.rootdir", hBaseConnectorUtil.getRootdir());
+        c.set("hbase.zookeeper.quorum", hBaseConnectorUtil.getZookeeperQuorum());
+        return c;
+    }
+
 
     @Override
     public boolean tableExists(String tableName) throws IOException {
@@ -409,6 +375,43 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
     @Reference
     public void setPermissionSystemApi(PermissionSystemApi permissionSystemApi) {
         this.permissionSystemApi = permissionSystemApi;
+    }
+
+    @Override
+    public void scanResults(String tableName, Map<byte[], List<byte[]>> columns, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound, int limit, Consumer<Result> consumerFunction) {
+        ClassLoader karafClassLoader = Thread.currentThread().getContextClassLoader();
+        ClassLoader thisClassLoader = SimpleSaslAuthenticationProvider.class.getClassLoader();
+        Thread.currentThread().setContextClassLoader(thisClassLoader);
+        try {
+            ResultScanner scanner = getScanner(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, limit);
+            for (Result result : scanner) {
+                consumerFunction.accept(result);
+            }
+        } catch (Throwable t) {
+            getLog().error(t.getMessage(), t);
+        } finally {
+            Thread.currentThread().setContextClassLoader(karafClassLoader);
+        }
+    }
+
+    @Override
+    public void iterateOverResults(String tableName, Map<byte[], List<byte[]>> columns, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound, int limit, BiConsumer<Result, Boolean> consumerFunction) {
+        ClassLoader karafClassLoader = Thread.currentThread().getContextClassLoader();
+        ClassLoader thisClassLoader = SimpleSaslAuthenticationProvider.class.getClassLoader();
+        Thread.currentThread().setContextClassLoader(thisClassLoader);
+        try {
+            ResultScanner scanner = getScanner(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, limit);
+            Iterator<Result> it = scanner.iterator();
+            while (it.hasNext()) {
+                Result r = it.next();
+                boolean hasMoreElements = it.hasNext();
+                consumerFunction.accept(r, hasMoreElements);
+            }
+        } catch (Throwable t) {
+            getLog().error(t.getMessage(), t);
+        } finally {
+            Thread.currentThread().setContextClassLoader(karafClassLoader);
+        }
     }
 
 }

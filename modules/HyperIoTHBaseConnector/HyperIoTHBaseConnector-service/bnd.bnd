@@ -1,5 +1,5 @@
 Import-Package: \
-    org.slf4j.*,\
+    org.slf4j,\
     com.google.protobuf;version='${range;[===,=+)}',\
     javax.persistence;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.base.action;version='${range;[===,+)}',\
@@ -18,20 +18,30 @@ Import-Package: \
     it.acsoftware.hyperiot.hbase.connector.util;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.permission.api;version='${range;[===,+)}',\
     org.apache.avro*;version='${range;[===,+)}',\
-    org.apache.hadoop.conf,\
-    org.apache.hadoop.hbase;version='${range;[===,+)}',\
-    org.apache.hadoop.hbase.client;version='${range;[===,+)}',\
-    org.apache.hadoop.hbase.client.coprocessor;version='${range;[===,+)}',\
-    org.apache.hadoop.hbase.coprocessor;version='${range;[===,+)}',\
-    org.apache.hadoop.hbase.filter;version='${range;[===,+)}',\
-    org.apache.hadoop.hbase.util;version='${range;[===,+)}',\
     org.w3c.dom;version=0.0.0,\
     org.xml.sax;version=0.0.0,\
     javax.naming;version=0.0.0,\
     javax.naming.directory;version=0.0.0,\
     javax.xml.parsers;version=0.0.0,\
     javax.xml.transform;version=0.0.0,\
+    javax.xml.stream,\
+    javax.xml.stream.util,\
+    javax.xml.stream.events,\
     javax.security*,\
     javax.management*,\
-    javax.net*
+    javax.net*,\
+    javax.xml.namespace,\
+    org.ietf.jgss
+
+Export-Package: \
+    org.apache.hadoop.hbase;version=2.5.3,\
+    org.apache.hadoop.hbase.filter;version=2.5.3,\
+    org.apache.hadoop.hbase.util;version=2.5.3,\
+    org.apache.hadoop.hbase.client;version=2.5.3,\
+    org.apache.hadoop.hbase.client.coprocessor;version=2.5.3,\
+    org.apache.hadoop.hbase.coprocessor;version=2.5.3,\
+    org.apache.hadoop.hbase.security.*;version=2.5.3,\
+    org.apache.hadoop.conf
+
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=warning
 
