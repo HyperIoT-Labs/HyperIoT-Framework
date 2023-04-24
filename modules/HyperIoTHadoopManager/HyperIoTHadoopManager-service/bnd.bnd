@@ -15,7 +15,15 @@ Import-Package: \
     javax.persistence;version='${range;[===,+)}',\
     javax.validation;version='${range;[====,+)}',\
     javax.security*,\
+    javax.xml.*,\
+    javax.naming.*,\
+    org.w3c.dom.*,\
+    org.ietf.jgss,\
     org.hibernate.validator;version='${range;[=,+)}'
+
 Export-Package: \
         org.apache.hadoop.hdfs
+
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=warning,\
+                "The default package '.' is not permitted by the Import-Package syntax."; restrict:=error; is:=warning
 

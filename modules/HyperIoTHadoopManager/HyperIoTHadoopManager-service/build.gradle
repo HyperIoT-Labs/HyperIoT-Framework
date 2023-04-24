@@ -31,9 +31,11 @@ dependencies {
     implementation project(":modules:HyperIoTHadoopManager:HyperIoTHadoopManager-model")
     // Hadoop dependencies
     implementation group: 'org.apache.hadoop', name: 'hadoop-client', version: project.hadoopClientVersion
-    includeInJar group: 'org.apache.hadoop', name: 'hadoop-client', version: project.hadoopClientVersion
-    implementation group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: project.hadoopClientVersion
-    includeInJar group: 'org.apache.hadoop', name: 'hadoop-minicluster', version: project.hadoopClientVersion
+    includeInJar group: 'org.apache.hadoop', name: 'hadoop-hdfs-client', version: project.hadoopClientVersion
+    includeInJar (group: 'org.apache.hadoop', name: 'hadoop-common', version: project.hadoopClientVersion) {
+        exclude group:'org.slf4j', module: 'slf4j-api'
+        exclude group:'org.slf4j', module: 'slf4j-reload4j'
+    }
 }
 
 jar {

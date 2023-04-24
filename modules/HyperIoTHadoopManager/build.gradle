@@ -43,4 +43,4 @@ allprojects {
 }
 
 
-project.ext.set("hadoopClientVersion", "2.7.4")
+project.ext.set("hadoopClientVersion", "3.3.5")
