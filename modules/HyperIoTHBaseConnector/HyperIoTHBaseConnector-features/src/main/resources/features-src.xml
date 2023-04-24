@@ -12,5 +12,6 @@
     <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-api/${project.version}</bundle>
     <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-model/${project.version}</bundle>
     <bundle>mvn:it.acsoftware.hyperiot.hbase.connector/HyperIoTHBaseConnector-service/${project.version}</bundle>
+    <bundle>mvn:com.google.protobuf/protobuf-java/${project.googleProtobufVersion}</bundle>
   </feature>
 </features>

@@ -20,7 +20,6 @@ dependencies {
     implementation group: "org.hibernate", name: "hibernate-validator", version: project.hibernateValidatorVersion
     // HBase dependency
     implementation group: "org.apache.avro", name: "avro", version: project.apacheAvroVersion
-    implementation group: "com.google.protobuf", name: "protobuf-java", version: project.googleProtobufVersion
     //HyperIoTBase Dependencies
     implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
     implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-security", version: project.hyperIoTVersion
@@ -36,6 +35,7 @@ dependencies {
     implementation project(":modules:HyperIoTHBaseConnector:HyperIoTHBaseConnector-actions")
     implementation project(":modules:HyperIoTHBaseConnector:HyperIoTHBaseConnector-util")
 
+    implementation group: "com.google.protobuf", name: "protobuf-java", version: project.googleProtobufVersion
     includeInJar group: 'org.apache.hbase', name: 'hbase-shaded-client', version: project.hbaseVersion
     implementation group: 'org.apache.hbase', name: 'hbase-shaded-client', version: project.hbaseVersion
 }
