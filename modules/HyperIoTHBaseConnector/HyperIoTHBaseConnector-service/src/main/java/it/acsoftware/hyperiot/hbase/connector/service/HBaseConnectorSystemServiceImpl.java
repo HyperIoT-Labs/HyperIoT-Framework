@@ -19,7 +19,6 @@ package it.acsoftware.hyperiot.hbase.connector.service;
 
 import it.acsoftware.hyperiot.base.action.util.HyperIoTActionsUtil;
 import it.acsoftware.hyperiot.base.api.HyperIoTAction;
-import it.acsoftware.hyperiot.base.exception.HyperIoTUnauthorizedException;
 import it.acsoftware.hyperiot.base.service.HyperIoTBaseSystemServiceImpl;
 import it.acsoftware.hyperiot.hbase.connector.actions.HBaseConnectorAction;
 import it.acsoftware.hyperiot.hbase.connector.api.HBaseConnectorSystemApi;
@@ -44,6 +43,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -65,21 +65,18 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
     private ExecutorService hbaseThreadPool;
 
     @Activate
-    public void activate() throws IOException {
+    public void activate() {
         initHBaseThreadPool();
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // set HBase configurations
-                    setHBaseConfiguration();
-                    // create a connection to the database
-                    connection = ConnectionFactory.createConnection(configuration);
-                    // get admin object, which manipulate database structure
-                    admin = connection.getAdmin();
-                } catch (IOException e) {
-                    getLog().error(e.getMessage(), e);
-                }
+        Thread t = new Thread(() -> {
+            try {
+                // set HBase configurations
+                setHBaseConfiguration();
+                // create a connection to the database
+                connection = ConnectionFactory.createConnection(configuration);
+                // get admin object, which manipulate database structure
+                admin = connection.getAdmin();
+            } catch (IOException e) {
+                getLog().error(e.getMessage(), e);
             }
         });
         t.start();
@@ -129,72 +126,69 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
     }
 
     @Override
-    public void createTable(String tableName, List<String> columnFamilies) throws IOException {
-        TableName table = TableName.valueOf(tableName);
-        HTableDescriptor descriptor = new HTableDescriptor(table);
-        // add column families to table descriptor
-        columnFamilies.forEach((columnFamily) -> descriptor.addFamily(new HColumnDescriptor(columnFamily)));
-        admin.createTable(descriptor);
+    public void createTable(String tableName, List<String> columnFamilies) {
+        Runnable r = () -> {
+            TableName table = TableName.valueOf(tableName);
+            HTableDescriptor descriptor = new HTableDescriptor(table);
+            // add column families to table descriptor
+            columnFamilies.forEach((columnFamily) -> descriptor.addFamily(new HColumnDescriptor(columnFamily)));
+            try {
+                admin.createTable(descriptor);
+            } catch (IOException e) {
+                HBaseConnectorSystemServiceImpl.this.getLog().error(e.getMessage(), e);
+            }
+        };
+        //executing with karaf class loader switch
+        wrapInsideHBaseConnectorClassLoader(r);
     }
 
     @Override
     public void createTableAsync(String tableName, List<String> columnFamilies) {
-        Runnable runnableTask = () -> {
+        this.executeTask(() -> this.createTable(tableName, columnFamilies));
+    }
+
+    @Override
+    public void deleteData(String tableName, String rowKey) {
+        Runnable r = () -> {
             try {
-                this.createTable(tableName, columnFamilies);
+                Table table = connection.getTable(TableName.valueOf(tableName));
+                Delete delete = new Delete(Bytes.toBytes(rowKey));
+                table.delete(delete);
+                table.close();
             } catch (IOException e) {
                 HBaseConnectorSystemServiceImpl.this.getLog().error(e.getMessage(), e);
             }
         };
-        this.executeTask(runnableTask);
-    }
-
-    @Override
-    public void deleteData(String tableName, String rowKey) throws IOException {
-        Table table = connection.getTable(TableName.valueOf(tableName));
-        Delete delete = new Delete(Bytes.toBytes(rowKey));
-        table.delete(delete);
-        table.close();
+        //executing with karaf class loader switch
+        wrapInsideHBaseConnectorClassLoader(r);
     }
 
     @Override
     public void deleteDataAsync(String tableName, String rowKey) {
-        Runnable runnableTask = () -> {
+        this.executeTask(() -> this.deleteData(tableName, rowKey));
+    }
+
+    @Override
+    public void disableTable(String tableName) {
+        Runnable r = () -> {
             try {
-                this.deleteData(tableName, rowKey);
+                admin.disableTable(TableName.valueOf(tableName));
             } catch (IOException e) {
                 HBaseConnectorSystemServiceImpl.this.getLog().error(e.getMessage(), e);
             }
         };
-        this.executeTask(runnableTask);
-    }
-
-    @Override
-    public void disableTable(String tableName) throws IOException {
-        admin.disableTable(TableName.valueOf(tableName));
+        //executing with karaf class loader switch
+        wrapInsideHBaseConnectorClassLoader(r);
     }
 
     @Override
     public void disableTableAsync(String tableName) {
-        Runnable runnableTask = () -> {
-            try {
-                this.disableTable(tableName);
-            } catch (IOException e) {
-                HBaseConnectorSystemServiceImpl.this.getLog().error(e.getMessage(), e);
-            }
-        };
-        this.executeTask(runnableTask);
+        this.executeTask(() -> disableTable(tableName));
     }
 
     @Override
-    public void disableAndDropTable(String tableName) throws IOException, HyperIoTUnauthorizedException {
-        admin.disableTable(TableName.valueOf(tableName));
-        admin.deleteTable(TableName.valueOf(tableName));
-    }
-
-    @Override
-    public void disableAndDropTableAsync(String tableName) {
-        Runnable runnableTask = () -> {
+    public void disableAndDropTable(String tableName) {
+        Runnable r = () -> {
             try {
                 admin.disableTable(TableName.valueOf(tableName));
                 admin.deleteTable(TableName.valueOf(tableName));
@@ -202,50 +196,62 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
                 HBaseConnectorSystemServiceImpl.this.getLog().error(e.getMessage(), e);
             }
         };
-        this.executeTask(runnableTask);
+        wrapInsideHBaseConnectorClassLoader(r);
     }
 
     @Override
-    public void dropTable(String tableName) throws IOException {
-        admin.deleteTable(TableName.valueOf(tableName));
+    public void disableAndDropTableAsync(String tableName) {
+        this.executeTask(() -> disableAndDropTable(tableName));
     }
 
     @Override
-    public void dropTableAsync(String tableName) {
-        Runnable runnableTask = () -> {
+    public void dropTable(String tableName) {
+        Runnable r = () -> {
             try {
                 admin.deleteTable(TableName.valueOf(tableName));
             } catch (IOException e) {
                 HBaseConnectorSystemServiceImpl.this.getLog().error(e.getMessage(), e);
             }
         };
-        this.executeTask(runnableTask);
+        wrapInsideHBaseConnectorClassLoader(r);
     }
 
     @Override
-    public void enableTable(String tableName) throws IOException {
-        admin.enableTable(TableName.valueOf(tableName));
+    public void dropTableAsync(String tableName) {
+        this.executeTask(() -> dropTable(tableName));
     }
 
     @Override
-    public void insertData(String tableName, String rowKey, String columnFamily, String column, String cellValue) throws IOException {
-        Table table = connection.getTable(TableName.valueOf(tableName));
-        Put put = new Put(rowKey.getBytes());
-        put.addImmutable(columnFamily.getBytes(), column.getBytes(), cellValue.getBytes());
-        table.put(put);
-        table.close();
-    }
-
-    @Override
-    public void insertDataAsync(String tableName, String rowKey, String columnFamily, String column, String cellValue) {
-        Runnable runnableTask = () -> {
+    public void enableTable(String tableName) {
+        Runnable r = () -> {
             try {
-                insertData(tableName, rowKey, columnFamily, column, cellValue);
+                admin.enableTable(TableName.valueOf(tableName));
             } catch (IOException e) {
                 HBaseConnectorSystemServiceImpl.this.getLog().error(e.getMessage(), e);
             }
         };
-        this.executeTask(runnableTask);
+        wrapInsideHBaseConnectorClassLoader(r);
+    }
+
+    @Override
+    public void insertData(String tableName, String rowKey, String columnFamily, String column, String cellValue) {
+        Runnable r = () -> {
+            try {
+                Table table = connection.getTable(TableName.valueOf(tableName));
+                Put put = new Put(rowKey.getBytes());
+                put.addImmutable(columnFamily.getBytes(), column.getBytes(), cellValue.getBytes());
+                table.put(put);
+                table.close();
+            } catch (IOException e) {
+                HBaseConnectorSystemServiceImpl.this.getLog().error(e.getMessage(), e);
+            }
+        };
+        wrapInsideHBaseConnectorClassLoader(r);
+    }
+
+    @Override
+    public void insertDataAsync(String tableName, String rowKey, String columnFamily, String column, String cellValue) {
+        this.executeTask(() -> insertData(tableName, rowKey, columnFamily, column, cellValue));
     }
 
     @Override
@@ -285,8 +291,7 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
     public long rowCount(String tableName, byte[] columnFamily, byte[] column, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound) throws Throwable {
         Map<byte[], List<byte[]>> columns = new HashMap<>();
         columns.put(columnFamily, new ArrayList<>());
-        if(column != null)
-            columns.get(columnFamily).add(column);
+        if (column != null) columns.get(columnFamily).add(column);
         return rowCount(tableName, columns, rowKeyLowerBound, rowKeyUpperBound);
     }
 
@@ -364,7 +369,16 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
 
     @Override
     public boolean tableExists(String tableName) throws IOException {
-        return admin.tableExists(TableName.valueOf(tableName));
+        AtomicBoolean exists = new AtomicBoolean(false);
+        Runnable r = () -> {
+            try {
+                exists.set(admin.tableExists(TableName.valueOf(tableName)));
+            } catch (IOException e) {
+                HBaseConnectorSystemServiceImpl.this.getLog().error(e.getMessage(), e);
+            }
+        };
+        wrapInsideHBaseConnectorClassLoader(r);
+        return exists.get();
     }
 
     @Reference
@@ -409,6 +423,19 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
             }
         } catch (Throwable t) {
             getLog().error(t.getMessage(), t);
+        } finally {
+            Thread.currentThread().setContextClassLoader(karafClassLoader);
+        }
+    }
+
+    private void wrapInsideHBaseConnectorClassLoader(Runnable r) {
+        ClassLoader karafClassLoader = Thread.currentThread().getContextClassLoader();
+        ClassLoader thisClassLoader = SimpleSaslAuthenticationProvider.class.getClassLoader();
+        Thread.currentThread().setContextClassLoader(thisClassLoader);
+        try {
+            r.run();
+        } catch (Exception e) {
+            getLog().error(e.getMessage(), e);
         } finally {
             Thread.currentThread().setContextClassLoader(karafClassLoader);
         }
