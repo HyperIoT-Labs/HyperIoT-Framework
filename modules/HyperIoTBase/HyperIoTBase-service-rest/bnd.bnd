@@ -3,6 +3,7 @@ Export-Package: \
 Import-Package: \
     javax.persistence.*,\
     org.osgi.framework,\
+    it.acsoftware.hyperiot.base.service.rest.provider;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.base.model;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.base.model.authentication;version='${range;[===,+)}',\
