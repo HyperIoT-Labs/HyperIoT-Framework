@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTMail-features">
-  <feature name="hyperiot-mail" version="2.2.4" description="All  Hyperiot HyperIoTMail modules">
+  <feature name="hyperiot-mail" version="2.3.0" description="All  Hyperiot HyperIoTMail modules">
     <feature>hyperiot-base</feature>
     <bundle>mvn:org.freemarker/freemarker/2.3.28</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-actions/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-api/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-service/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-model/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-repository/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-util/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-service-rest/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-actions/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-api/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-model/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-repository/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-util/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-service-rest/2.3.0</bundle>
   </feature>
-  <feature name="hyperiot-mail-basic" version="2.2.4" description="All  Hyperiot HyperIoTMail modules with NO rest services">
+  <feature name="hyperiot-mail-basic" version="2.3.0" description="All  Hyperiot HyperIoTMail modules with NO rest services">
     <feature>hyperiot-base-basic</feature>
     <bundle>mvn:org.freemarker/freemarker/2.3.28</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-actions/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-api/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-service/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-model/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-repository/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-util/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-actions/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-api/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-model/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-repository/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.mail/HyperIoTMail-util/2.3.0</bundle>
   </feature>
 </features>

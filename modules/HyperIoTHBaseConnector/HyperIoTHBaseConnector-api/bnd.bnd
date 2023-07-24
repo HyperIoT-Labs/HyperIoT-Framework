@@ -1,13 +1,12 @@
 Export-Package: it.acsoftware.hyperiot.hbase.connector.api
 Import-Package: \
-    com.google.protobuf,\
+    com.google.protobuf;version='${range;[===,+)}',\
     org.slf4j.*,\
     it.acsoftware.hyperiot.base.api;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.base.api.entity;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.hbase.connector.model;version='${range;[===,+)}',\
     org.apache.hadoop.conf,\
-    org.apache.hadoop.hbase.client;version='${range;[===,+)}',\
-    org.apache.hadoop.hbase.client.coprocessor;version='${range;[===,+)}'
+    org.apache.hadoop.hbase.client
 
 

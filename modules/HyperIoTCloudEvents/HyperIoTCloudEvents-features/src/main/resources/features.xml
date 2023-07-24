@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTCloudEvents-features">
-  <feature name="hyperiot-cloudevents" version="2.2.4" description="All  HyperIoT HyperIoTCloudEvents modules">
+  <feature name="hyperiot-cloudevents" version="2.3.0" description="All  HyperIoT HyperIoTCloudEvents modules">
     <feature>hyperiot-base-basic</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.cloud.events/HyperIoTCloudEvents-bundles/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.cloud.events/HyperIoTCloudEvents-bundles/2.3.0</bundle>
   </feature>
 </features>

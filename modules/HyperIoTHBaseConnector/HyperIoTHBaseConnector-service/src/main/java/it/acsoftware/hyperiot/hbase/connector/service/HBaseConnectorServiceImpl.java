@@ -17,7 +17,6 @@
 
 package it.acsoftware.hyperiot.hbase.connector.service;
 
-import com.google.protobuf.ServiceException;
 import it.acsoftware.hyperiot.base.api.HyperIoTContext;
 import it.acsoftware.hyperiot.base.exception.HyperIoTUnauthorizedException;
 import it.acsoftware.hyperiot.base.security.annotations.AllowGenericPermissions;
@@ -31,7 +30,6 @@ import org.osgi.service.component.annotations.Reference;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-
 
 
 /**
@@ -50,7 +48,7 @@ public final class HBaseConnectorServiceImpl extends HyperIoTBaseServiceImpl imp
      * @return The current HBaseConnectorSystemApi
      */
     protected HBaseConnectorSystemApi getSystemService() {
-        getLog().debug( "invoking getSystemService, returning: " + this.systemService);
+        getLog().debug("invoking getSystemService, returning: " + this.systemService);
         return systemService;
     }
 
@@ -59,13 +57,13 @@ public final class HBaseConnectorServiceImpl extends HyperIoTBaseServiceImpl imp
      */
     @Reference
     protected void setSystemService(HBaseConnectorSystemApi hBaseConnectorSystemService) {
-        getLog().debug( "invoking setSystemService, setting: " + systemService);
+        getLog().debug("invoking setSystemService, setting: " + systemService);
         this.systemService = hBaseConnectorSystemService;
     }
 
     @Override
     @AllowGenericPermissions(actions = HBaseConnectorAction.Names.CHECK_CONNECTION, resourceName = HBASE_CONNECTOR_RESOURCE_NAME)
-    public void checkConnection(HyperIoTContext context) throws IOException, HyperIoTUnauthorizedException, ServiceException {
+    public void checkConnection(HyperIoTContext context) throws IOException, HyperIoTUnauthorizedException {
         systemService.checkConnection();
     }
 
@@ -78,7 +76,7 @@ public final class HBaseConnectorServiceImpl extends HyperIoTBaseServiceImpl imp
     @Override
     @AllowGenericPermissions(actions = HBaseConnectorAction.Names.DELETE_DATA, resourceName = HBASE_CONNECTOR_RESOURCE_NAME)
     public void deleteData(HyperIoTContext context, String tableName, String rowKey)
-        throws IOException, HyperIoTUnauthorizedException {
+            throws IOException, HyperIoTUnauthorizedException {
         systemService.deleteData(tableName, rowKey);
     }
 
@@ -103,7 +101,7 @@ public final class HBaseConnectorServiceImpl extends HyperIoTBaseServiceImpl imp
     @Override
     @AllowGenericPermissions(actions = HBaseConnectorAction.Names.INSERT_DATA, resourceName = HBASE_CONNECTOR_RESOURCE_NAME)
     public void insertData(HyperIoTContext context, String tableName, String rowKey, String columnFamily, String column, String cellValue)
-        throws IOException, HyperIoTUnauthorizedException {
+            throws IOException, HyperIoTUnauthorizedException {
         systemService.insertData(tableName, rowKey, columnFamily, column, cellValue);
     }
 
@@ -111,7 +109,7 @@ public final class HBaseConnectorServiceImpl extends HyperIoTBaseServiceImpl imp
     @AllowGenericPermissions(actions = HBaseConnectorAction.Names.READ_DATA, resourceName = HBASE_CONNECTOR_RESOURCE_NAME)
     public Map<byte[], Map<byte[], Map<byte[], byte[]>>> scan(HyperIoTContext context, String tableName, Map<byte[], List<byte[]>> columns,
                                                               byte[] rowKeyLowerBound, byte[] rowKeyUpperBound, int limit)
-        throws IOException {
+            throws IOException {
         return systemService.scan(tableName, columns, rowKeyLowerBound, rowKeyUpperBound, limit);
     }
 

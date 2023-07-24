@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTJobScheduler-features">
-  <feature name="hyperiot-jobscheduler" version="2.2.4" description="All  HyperIoT HyperIoTJobScheduler modules">
+  <feature name="hyperiot-jobscheduler" version="2.3.0" description="All  HyperIoT HyperIoTJobScheduler modules">
     <feature>hyperiot-base-basic</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-actions/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-api/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-model/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-service/2.2.4</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-repository/2.2.4</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-actions/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-api/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-model/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.jobscheduler/HyperIoTJobScheduler-repository/2.3.0</bundle>
   </feature>
 </features>

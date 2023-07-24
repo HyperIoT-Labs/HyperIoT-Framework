@@ -71,7 +71,6 @@ public class HyperIoTHBaseConnectorTestConfiguration implements ConfigurationFac
         return HyperIoTTestConfigurationBuilder.createStandardConfiguration()
                 .append(customOptions)
                 .withCodeCoverage("it.acsoftware.hyperiot.hbase.connector.*")
-                .keepRuntime()
                 .build();
     }
 }

@@ -4,12 +4,10 @@ dependencies {
     //HyperIoTBase Dependencies
     implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
     implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
-    //HBase dependencies
-    implementation group: "org.apache.hbase", name: "hbase-client", version: project.hbaseVersion
     //Project dependencies
-    implementation project(":modules:HyperIoTHBaseConnector:HyperIoTHBaseConnector-hbaseBundles")
     implementation project(":modules:HyperIoTHBaseConnector:HyperIoTHBaseConnector-model")
-
+    implementation group: 'org.apache.hbase', name: 'hbase-client', version: project.hbaseVersion
+    implementation group: "com.google.protobuf", name: "protobuf-java", version: project.googleProtobufVersion
 }
 
 publishing {
