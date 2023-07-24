@@ -27,17 +27,15 @@ import it.acsoftware.hyperiot.huser.api.HUserSystemApi;
 import it.acsoftware.hyperiot.huser.model.HUser;
 import it.acsoftware.hyperiot.permission.api.PermissionSystemApi;
 import it.acsoftware.hyperiot.permission.model.Permission;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.NoResultException;
 import java.util.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author Aristide Cittadino Implementation class of HyperIoTPermissionManager
@@ -45,8 +43,8 @@ import org.slf4j.LoggerFactory;
  * user has permissions through every actions of the HyperIoTAction.
  */
 @Component(service = HyperIoTPermissionManager.class, property = {
-    HyperIoTConstants.OSGI_PERMISSION_MANAGER_IMPLEMENTATION
-        + "=default"}, immediate = true, servicefactory = false)
+        HyperIoTConstants.OSGI_PERMISSION_MANAGER_IMPLEMENTATION
+                + "=default"}, immediate = true, servicefactory = false)
 public class PermissionManagerDefault implements HyperIoTPermissionManager {
     private Logger log = LoggerFactory.getLogger(PermissionManagerDefault.class.getName());
     /**
@@ -96,7 +94,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
         if (!HyperIoTPermissionManager.isProtectedEntity(entity.getResourceName()))
             return true;
         log.debug(
-            "invoking checkPermission User {} Entity Resource Name: {}", new Object[]{username, entity.getResourceName(), action.getResourceName(), action.getActionId()});
+                "invoking checkPermission User {} Entity Resource Name: {}", new Object[]{username, entity.getResourceName(), action.getResourceName(), action.getActionId()});
         if (!HyperIoTPermissionManager.isProtectedEntity(entity))
             return true;
 
@@ -123,7 +121,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
         if (!HyperIoTPermissionManager.isProtectedEntity(resourceName))
             return true;
         log.debug(
-            "invoking checkPermission User {} Entity Resource Name: {} Action Name: {}  actionId: {}", new Object[]{username, resourceName, action.getResourceName(), action.getActionId()});
+                "invoking checkPermission User {} Entity Resource Name: {} Action Name: {}  actionId: {}", new Object[]{username, resourceName, action.getResourceName(), action.getActionId()});
         if (username == null || resourceName == null || action == null)
             return false;
 
@@ -146,7 +144,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
         if (!HyperIoTPermissionManager.isProtectedEntity(resource.getName()))
             return true;
         log.debug(
-            "invoking checkPermission User {} Entity Resource Name: {} Action Name: {}  actionId: {}", new Object[]{username, resource.getName(), action.getResourceName(), action.getActionId()});
+                "invoking checkPermission User {} Entity Resource Name: {} Action Name: {}  actionId: {}", new Object[]{username, resource.getName(), action.getResourceName(), action.getActionId()});
         if (username == null || resource == null || action == null)
             return false;
 
@@ -203,7 +201,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
      * @return The current PermissionSystemService
      */
     public PermissionSystemApi getSystemService() {
-        log.debug( "invoking getSystemService, returning: {}", this.systemService);
+        log.debug("invoking getSystemService, returning: {}", this.systemService);
         return systemService;
     }
 
@@ -212,7 +210,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
      */
     @Reference
     protected void setSystemService(PermissionSystemApi systemService) {
-        log.debug( "invoking setSystemService, setting: {}", systemService);
+        log.debug("invoking setSystemService, setting: {}", systemService);
         this.systemService = systemService;
     }
 
@@ -220,7 +218,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
      * @return The current HUserSystemService
      */
     public HUserSystemApi getHuserSystemService() {
-        log.debug( "invoking getSystemService, returning: {}", this.huserSystemService);
+        log.debug("invoking getSystemService, returning: {}", this.huserSystemService);
         return huserSystemService;
     }
 
@@ -229,7 +227,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
      */
     @Reference
     public void setHuserSystemService(HUserSystemApi huserSystemService) {
-        log.debug( "invoking setHUserSystemService, setting: {}", huserSystemService);
+        log.debug("invoking setHUserSystemService, setting: {}", huserSystemService);
         this.huserSystemService = huserSystemService;
     }
 
@@ -238,7 +236,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
      */
     @Reference
     public void setSharedEntitySystemService(HyperIoTSharingEntityService sharedEntitySystemService) {
-        log.debug( "invoking setSharedEntitySystemService, setting: {}", sharedEntitySystemService);
+        log.debug("invoking setSharedEntitySystemService, setting: {}", sharedEntitySystemService);
         this.sharedEntityService = sharedEntitySystemService;
     }
 
@@ -268,7 +266,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
             HyperIoTRole r = it.next();
             Permission permission = systemService.findByRoleAndResourceName(r, resourceName);
             if (permission != null
-                && hasPermission(permission.getActionIds(), action.getActionId()))
+                    && hasPermission(permission.getActionIds(), action.getActionId()))
                 return true;
         }
         return false;
@@ -300,38 +298,38 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
             try {
                 permission = systemService.findByRoleAndResourceName(r, entity.getResourceName());
             } catch (NoResultException e) {
-                log.warn( "No permission found for: {}  on resource {}"
-                    , new Object[]{r.getName(), entity.getResourceName()});
+                log.warn("No permission found for: {}  on resource {}"
+                        , new Object[]{r.getName(), entity.getResourceName()});
             }
 
             Permission permissionSpecific = null;
             try {
                 permissionSpecific = systemService.findByRoleAndResourceNameAndResourceId(r,
-                    entity.getResourceName(), entity.getId());
+                        entity.getResourceName(), entity.getId());
             } catch (NoResultException e) {
-                log.warn( "No specific permission found for: {}  on resource {}"
-                    , new Object[]{r.getName(), entity.getResourceName()});
+                log.warn("No specific permission found for: {}  on resource {}"
+                        , new Object[]{r.getName(), entity.getResourceName()});
             }
             Permission permissionImpersonation = null;
             try {
                 permissionImpersonation = systemService.findByRoleAndResourceName(r,
-                    HUser.class.getName());
+                        HUser.class.getName());
             } catch (NoResultException e) {
-                log.warn( "No impersonification permission found for: {}  on resource {}"
-                    , new Object[]{r.getName(), entity.getResourceName()});
+                log.warn("No impersonification permission found for: {}  on resource {}"
+                        , new Object[]{r.getName(), entity.getResourceName()});
             }
             // it initialize the value with the general value based on resource name
             boolean hasGeneralPermission = permission != null
-                && hasPermission(permission.getActionIds(), action.getActionId());
+                    && hasPermission(permission.getActionIds(), action.getActionId());
             boolean hasEntityPermission = (permissionSpecific != null
-                && hasPermission(permissionSpecific.getActionIds(), action.getActionId()));
+                    && hasPermission(permissionSpecific.getActionIds(), action.getActionId()));
             boolean existPermissionSpecificToEntity = this.systemService.existPermissionSpecificToEntity(entity.getResourceName(), entity.getId());
             HyperIoTAction impersonateAction = HyperIoTActionsUtil
-                .getHyperIoTAction(HUser.class.getName(), HyperIoTHUserAction.IMPERSONATE);
+                    .getHyperIoTAction(HUser.class.getName(), HyperIoTHUserAction.IMPERSONATE);
             boolean userOwnsResource = checkUserOwnsResource(user, entity);
             boolean userSharesResource = checkUserSharesResource(user, entity);
             boolean hasImpersonationPermission = permissionImpersonation != null && hasPermission(
-                permissionImpersonation.getActionIds(), impersonateAction.getActionId());
+                    permissionImpersonation.getActionIds(), impersonateAction.getActionId());
             // The value is true only if the entity permission exists and contains the
             // actionId, or if
             // the entity permission doesn't exists then the rule follow the
@@ -339,8 +337,8 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
             // AND if the resource is an owned resource is accessed by the right user or the
             // accessing user has the impersonation permission
             if ((hasEntityPermission || (permissionSpecific == null && hasGeneralPermission))
-                && (userOwnsResource ||
-                    ((userSharesResource && !existPermissionSpecificToEntity && hasGeneralPermission) || ( userSharesResource && permissionSpecific != null && hasEntityPermission)) ||
+                    && (userOwnsResource ||
+                    ((userSharesResource && !existPermissionSpecificToEntity && hasGeneralPermission) || (userSharesResource && permissionSpecific != null && hasEntityPermission)) ||
                     hasImpersonationPermission))
                 return true;
         }
@@ -358,8 +356,8 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
     private boolean hasPermission(int permissionActionIds, int actionId) {
         boolean hasPermission = (permissionActionIds & actionId) == actionId;
         log.debug(
-            "invoking hasPermission permissionActionIds & actionId == actionId {}",
-            new Object[]{permissionActionIds, actionId, hasPermission});
+                "invoking hasPermission permissionActionIds & actionId == actionId {}",
+                new Object[]{permissionActionIds, actionId, hasPermission});
         return hasPermission;
     }
 
@@ -382,7 +380,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
             if (entity instanceof HyperIoTOwnedResource) {
                 resourceOwner = ((HyperIoTOwnedResource) entity).getUserOwner();
                 if (resourceOwner != null && resourceOwner.getId() != 0
-                    && user.getId() != resourceOwner.getId()) {
+                        && user.getId() != resourceOwner.getId()) {
                     return false;
                 } else
                     break;
@@ -399,9 +397,9 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
             // load the persisted entity
             BundleContext context = HyperIoTUtil.getBundleContext(this);
             ServiceReference serviceReference = context
-                .getServiceReference(entity.getSystemApiClassName());
+                    .getServiceReference(entity.getSystemApiClassName());
             HyperIoTBaseEntitySystemApi service = (HyperIoTBaseEntitySystemApi) context
-                .getService(serviceReference);
+                    .getService(serviceReference);
             HyperIoTBaseEntity persistedEntity = service.find(entity.getId(), null);
             // verify the owner
             if (persistedEntity instanceof HyperIoTOwnedResource) {
@@ -411,7 +409,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
                 if (persistedChildEntity != null && persistedChildEntity.getParent() != null) {
                     // retry with the parent resource
                     return (persistedChildEntity.getParent() == null || checkUserOwnsResource(user, persistedChildEntity.getParent()))
-                        && checkUserOwnsResource(user, persistedChildEntity.getParent());
+                            && checkUserOwnsResource(user, persistedChildEntity.getParent());
                 }
             } else {
                 // resource is not owned so check can pass
@@ -420,7 +418,8 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
         } else {
             return true;
         }
-        return (user != null && resourceOwner != null && user.getId() == resourceOwner.getId());
+        boolean userSharesResource = checkUserSharesResource(user, entity);
+        return (user != null && resourceOwner != null && (user.getId() == resourceOwner.getId() || userSharesResource));
     }
 
     /**
@@ -460,9 +459,9 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
             // load the persisted entity
             BundleContext context = HyperIoTUtil.getBundleContext(this);
             ServiceReference serviceReference = context
-                .getServiceReference(entity.getSystemApiClassName());
+                    .getServiceReference(entity.getSystemApiClassName());
             HyperIoTBaseEntitySystemApi service = (HyperIoTBaseEntitySystemApi) context
-                .getService(serviceReference);
+                    .getService(serviceReference);
             HyperIoTBaseEntity persistedEntity = service.find(entity.getId(), null);
             // verify the owner
             if (persistedEntity instanceof HyperIoTSharedEntity) {
@@ -472,7 +471,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
                 if (persistedChildEntity != null && persistedChildEntity.getParent() != null) {
                     // retry with the parent resource
                     return (persistedChildEntity.getParent() == null || checkUserOwnsResource(user, persistedChildEntity.getParent()))
-                        && checkUserOwnsResource(user, persistedChildEntity.getParent());
+                            && checkUserOwnsResource(user, persistedChildEntity.getParent());
                 } else {
                     // resource is not shared so check can pass
                     return (persistedEntity != null);
