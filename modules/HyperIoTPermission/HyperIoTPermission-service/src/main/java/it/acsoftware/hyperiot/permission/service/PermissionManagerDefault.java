@@ -374,12 +374,14 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
 
         HyperIoTBaseEntity entity = (HyperIoTBaseEntity) resource;
         HyperIoTUser resourceOwner = null;
+        //used when user shares only child entities
+        boolean userSharesResource = checkUserSharesResource(user, entity);
         // looks up for a persisted entity in the hierarchy chain
         while (true) {
             // double check if the passed entity is consistent (must belong to `user`)
             if (entity instanceof HyperIoTOwnedResource) {
                 resourceOwner = ((HyperIoTOwnedResource) entity).getUserOwner();
-                if (resourceOwner != null && resourceOwner.getId() != 0
+                if (!userSharesResource && resourceOwner != null && resourceOwner.getId() != 0
                         && user.getId() != resourceOwner.getId()) {
                     return false;
                 } else
@@ -418,7 +420,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
         } else {
             return true;
         }
-        boolean userSharesResource = checkUserSharesResource(user, entity);
+
         return (user != null && resourceOwner != null && (user.getId() == resourceOwner.getId() || userSharesResource));
     }
 
