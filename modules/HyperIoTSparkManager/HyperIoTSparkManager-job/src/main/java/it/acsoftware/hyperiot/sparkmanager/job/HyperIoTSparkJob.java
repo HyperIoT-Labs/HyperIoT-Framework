@@ -103,13 +103,13 @@ public abstract class HyperIoTSparkJob implements Job {
      */
     private Map<String, String> getSparkProperties(String appName,
                                                    String sparkJarsProperty) {
-
+        String sparkMasterUrl = "spark://"+SparkManagerUtil.getSparkMasterHostname()+":"+SparkManagerUtil.getSparkMasterPort();
         Map<String, String> sparkProps = new HashMap<>();
         sparkProps.put("spark.jars", sparkJarsProperty);
         sparkProps.put("spark.driver.supervise", String.valueOf(SparkManagerUtil.getSparkDriverSupervise()));
         sparkProps.put("spark.app.name", appName); // This property is mandatory as the others, however if job define its name, the latter will override the former
         sparkProps.put("spark.submit.deployMode", SparkManagerUtil.getSparkSubmitDeployMode());
-        sparkProps.put("spark.master", SparkManagerUtil.getSparkRestApiUrl());
+        sparkProps.put("spark.master", sparkMasterUrl);
         sparkProps.put("spark.jars.packages", "org.apache.spark:spark-avro_2.11:2.4.5");    // HyperIoT Spark jobs need avro dependency to read data on which they do computation
         return sparkProps;
     }

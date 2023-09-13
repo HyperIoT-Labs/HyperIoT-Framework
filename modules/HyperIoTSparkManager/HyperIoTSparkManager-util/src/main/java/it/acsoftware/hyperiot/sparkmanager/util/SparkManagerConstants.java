@@ -28,8 +28,12 @@ public class SparkManagerConstants {
             "it.acsoftware.hyperiot.sparkmanager.spark.env.loaded";
     public static final String SPARKMANAGER_PROPERTY_SPARK_MASTER_HOSTNAME =
             "it.acsoftware.hyperiot.sparkmanager.spark.master.hostname";
+    public static final String SPARKMANAGER_PROPERTY_SPARK_MASTER_PORT=
+            "it.acsoftware.hyperiot.sparkmanager.spark.master.port";
     public static final String SPARKMANAGER_PROPERTY_SPARK_REST_API_PORT =
             "it.acsoftware.hyperiot.sparkmanager.spark.master.rest.api.port";
+    public static final String  SPARKMANAGER_PROPERTY_SPARK_REST_API_PROTOCOL =
+            "it.acsoftware.hyperiot.sparkmanager.spark.master.rest.api.protocol";
     public static final String SPARKMANAGER_PROPERTY_SPARK_SUBMIT_DEPLOY_MODE =
             "it.acsoftware.hyperiot.sparkmanager.spark.submit.deploy.mode";
 

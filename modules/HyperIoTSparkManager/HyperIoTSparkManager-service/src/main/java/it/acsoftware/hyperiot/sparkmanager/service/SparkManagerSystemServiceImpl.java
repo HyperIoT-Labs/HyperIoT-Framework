@@ -65,8 +65,7 @@ public final class SparkManagerSystemServiceImpl extends HyperIoTBaseSystemServi
                 sparkJobserverRestClient = HttpClients.custom().setConnectionManager(connectionManager).build();
                 SparkManagerSystemServiceImpl.this.objectMapper = new ObjectMapper();
                 SparkManagerSystemServiceImpl.this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-                sparkManagerUrl = SparkManagerUtil.getSparkMasterHostname() + ":"
-                        + SparkManagerUtil.getSparkRestApiPort();
+                sparkManagerUrl = SparkManagerUtil.getSparkRestApiUrl();
             }
         });
         t.start();
@@ -75,8 +74,6 @@ public final class SparkManagerSystemServiceImpl extends HyperIoTBaseSystemServi
     @Override
     public SparkRestApiResponse getStatus(String driverId) {
         try {
-            String sparkManagerUrl = SparkManagerUtil.getSparkMasterHostname() + ":"
-                    + SparkManagerUtil.getSparkRestApiPort();
             HttpGet httpGet = new HttpGet(sparkManagerUrl + "/v1/submissions/status/" + driverId);
             CloseableHttpResponse response = sparkJobserverRestClient.execute(httpGet);
             HttpEntity responseEntity = response.getEntity();
@@ -92,8 +89,6 @@ public final class SparkManagerSystemServiceImpl extends HyperIoTBaseSystemServi
     @Override
     public SparkRestApiResponse kill(String driverId) {
         try {
-            String sparkManagerUrl = SparkManagerUtil.getSparkMasterHostname() + ":"
-                    + SparkManagerUtil.getSparkRestApiPort();
             HttpPost httpPost = new HttpPost(sparkManagerUrl + "/v1/submissions/kill/" + driverId);
             CloseableHttpResponse response = sparkJobserverRestClient.execute(httpPost);
             HttpEntity responseEntity = response.getEntity();
