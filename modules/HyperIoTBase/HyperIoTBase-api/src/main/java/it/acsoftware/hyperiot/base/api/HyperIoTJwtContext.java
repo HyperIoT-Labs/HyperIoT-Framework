@@ -23,7 +23,7 @@ import org.apache.cxf.security.SecurityContext;
 public interface HyperIoTJwtContext extends HyperIoTContext, SecurityContext {
 
     /**
-     * Returns a string indicating the name of the authenticated current user.
+     * Returns jwt token
      */
     JwtToken getAuthenticationToken();
 
