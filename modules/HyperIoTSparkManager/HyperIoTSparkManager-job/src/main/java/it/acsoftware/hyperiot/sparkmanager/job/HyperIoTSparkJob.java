@@ -105,6 +105,10 @@ public abstract class HyperIoTSparkJob implements Job {
                                                    String sparkJarsProperty) {
         String sparkMasterUrl = "spark://"+SparkManagerUtil.getSparkMasterHostname()+":"+SparkManagerUtil.getSparkMasterPort();
         Map<String, String> sparkProps = new HashMap<>();
+
+        sparkProps.put("spark.executor.extraJavaOptions", "-Dsun.nio.ch.disableSystemWideOverlappingFileLockCheck=true --add-opens=java.base/sun.nio.ch=ALL-UNNAMED");
+        sparkProps.put("spark.driver.extraJavaOptions", "-Dsun.nio.ch.disableSystemWideOverlappingFileLockCheck=true --add-opens=java.base/sun.nio.ch=ALL-UNNAMED");
+
         sparkProps.put("spark.jars", sparkJarsProperty);
         //TODO: enable kerberos auth betwween spark and hbase
         sparkProps.put("spark.security.credentials.hbase.enabled","false");
