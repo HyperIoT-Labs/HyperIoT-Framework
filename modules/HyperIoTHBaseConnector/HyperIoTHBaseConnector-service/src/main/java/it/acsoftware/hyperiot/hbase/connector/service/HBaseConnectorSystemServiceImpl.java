@@ -267,13 +267,14 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
         Filter rowFilterLowerBound = new RowFilter(CompareOperator.GREATER_OR_EQUAL, new BinaryComparator(rowKeyLowerBound));
         Filter rowFilterUpperBound = new RowFilter(CompareOperator.LESS_OR_EQUAL, new BinaryComparator(rowKeyUpperBound));
         List<Filter> rowFilterList;
+        Scan scan = new Scan();
         if (limit < 0) rowFilterList = new ArrayList<>(Arrays.asList(rowFilterLowerBound, rowFilterUpperBound));
         else {
             // if limit is not equal to 0 and not greater than maxScanPageSize, set it
             PageFilter pageFilter = new PageFilter(limit > 0 && limit <= maxScanPageSize ? limit : maxScanPageSize);
             rowFilterList = new ArrayList<>(Arrays.asList(rowFilterLowerBound, rowFilterUpperBound, pageFilter));
+            scan.setLimit(limit);
         }
-        Scan scan = new Scan();
         for (byte[] columnFamily : columns.keySet()) {
             if (columns.get(columnFamily) == null || columns.get(columnFamily).isEmpty()) scan.addFamily(columnFamily);
             else for (byte[] column : columns.get(columnFamily))
