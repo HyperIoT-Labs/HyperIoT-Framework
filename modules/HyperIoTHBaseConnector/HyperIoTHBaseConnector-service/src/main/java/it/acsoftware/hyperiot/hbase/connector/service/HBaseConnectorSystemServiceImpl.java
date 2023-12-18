@@ -271,9 +271,10 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
         if (limit < 0) rowFilterList = new ArrayList<>(Arrays.asList(rowFilterLowerBound, rowFilterUpperBound));
         else {
             // if limit is not equal to 0 and not greater than maxScanPageSize, set it
-            PageFilter pageFilter = new PageFilter(limit > 0 && limit <= maxScanPageSize ? limit : maxScanPageSize);
+            int maxResults = limit > 0 && limit <= maxScanPageSize ? limit : maxScanPageSize;
+            PageFilter pageFilter = new PageFilter(maxResults);
             rowFilterList = new ArrayList<>(Arrays.asList(rowFilterLowerBound, rowFilterUpperBound, pageFilter));
-            scan.setLimit(limit);
+            scan.setLimit(maxResults);
         }
         for (byte[] columnFamily : columns.keySet()) {
             if (columns.get(columnFamily) == null || columns.get(columnFamily).isEmpty()) scan.addFamily(columnFamily);
