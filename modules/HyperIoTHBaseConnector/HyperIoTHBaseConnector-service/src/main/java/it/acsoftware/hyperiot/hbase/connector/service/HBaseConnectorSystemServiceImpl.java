@@ -40,7 +40,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.springframework.security.crypto.codec.Hex;
 
 import java.io.IOException;
 import java.util.*;
@@ -272,17 +271,16 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
 
         List<Filter> rowFilterList = new ArrayList<>();
         Scan scan = new Scan();
-        getLog().debug("HBase Filter data with Start row: {}, End Row: {}", Hex.encode(rowKeyLowerBound), Hex.encode(rowKeyUpperBound));
-        if(rowKeyLowerBound != null && rowKeyLowerBound.length > 0)
+        if (rowKeyLowerBound != null && rowKeyLowerBound.length > 0)
             scan.withStartRow(rowKeyLowerBound, true);
-        if(rowKeyUpperBound != null && rowKeyUpperBound.length > 0)
+        if (rowKeyUpperBound != null && rowKeyUpperBound.length > 0)
             scan.withStopRow(rowKeyUpperBound, true);
         getLog().debug("Querying HBase with limit : {}", limit);
         // if limit > 0 we set the lower value between limit and max scan page size
         // if limit = -1 it means no limit
-        int maxResults = limit > 0 && limit <= maxScanPageSize ? limit : (limit <= 0)?-1:maxScanPageSize;
+        int maxResults = limit > 0 && limit <= maxScanPageSize ? limit : (limit <= 0) ? -1 : maxScanPageSize;
         getLog().debug("HBase Scan Limit : {}", maxResults);
-        if(maxResults > 0)
+        if (maxResults > 0)
             scan.setLimit(maxResults);
         for (byte[] columnFamily : columns.keySet()) {
             if (columns.get(columnFamily) == null || columns.get(columnFamily).isEmpty()) scan.addFamily(columnFamily);
