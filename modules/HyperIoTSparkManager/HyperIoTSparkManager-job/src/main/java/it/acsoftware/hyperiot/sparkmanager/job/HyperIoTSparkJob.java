@@ -117,6 +117,7 @@ public abstract class HyperIoTSparkJob implements Job {
         sparkProps.put("spark.submit.deployMode", SparkManagerUtil.getSparkSubmitDeployMode());
         sparkProps.put("spark.master", sparkMasterUrl);
         sparkProps.put("spark.jars.packages", "org.apache.spark:spark-avro_2.11:2.4.5,org.apache.hbase:hbase-shaded-client:2.5.3");    // HyperIoT Spark jobs need avro dependency to read data on which they do computation
+        sparkProps.put("spark.driver.extraJavaOptions", "-XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"); // Required for compatibility between Spark and Java 17
         return sparkProps;
     }
 
