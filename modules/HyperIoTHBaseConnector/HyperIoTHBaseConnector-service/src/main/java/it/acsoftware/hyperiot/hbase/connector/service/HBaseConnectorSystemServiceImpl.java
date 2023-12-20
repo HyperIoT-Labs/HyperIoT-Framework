@@ -278,10 +278,12 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
         if(rowKeyUpperBound != null && rowKeyUpperBound.length > 0)
             scan.withStopRow(rowKeyUpperBound, true);
         getLog().debug("Querying HBase with limit : {}", limit);
-        // if limit is not equal to 0 and not greater than maxScanPageSize, set it
-        int maxResults = limit > 0 && limit <= maxScanPageSize ? limit : maxScanPageSize;
+        // if limit > 0 we set the lower value between limit and max scan page size
+        // if limit = -1 it means no limit
+        int maxResults = limit > 0 && limit <= maxScanPageSize ? limit : (limit <= 0)?-1:maxScanPageSize;
         getLog().debug("HBase Scan Limit : {}", maxResults);
-        scan.setLimit(maxResults);
+        if(maxResults > 0)
+            scan.setLimit(maxResults);
         for (byte[] columnFamily : columns.keySet()) {
             if (columns.get(columnFamily) == null || columns.get(columnFamily).isEmpty()) scan.addFamily(columnFamily);
             else for (byte[] column : columns.get(columnFamily))
