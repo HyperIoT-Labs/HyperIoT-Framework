@@ -27,9 +27,13 @@ import it.acsoftware.hyperiot.hbase.connector.model.HBaseConnector;
 import it.acsoftware.hyperiot.permission.api.PermissionSystemApi;
 import it.acsoftware.hyperiot.role.util.HyperIoTRoleConstants;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.*;
+import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
+import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
-import org.apache.hadoop.hbase.filter.*;
+import org.apache.hadoop.hbase.filter.Filter;
+import org.apache.hadoop.hbase.filter.FilterList;
 import org.apache.hadoop.hbase.security.provider.SimpleSaslAuthenticationProvider;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.osgi.service.component.annotations.Activate;
@@ -264,22 +268,16 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
     }
 
     private Scan getScan(Map<byte[], List<byte[]>> columns, byte[] rowKeyLowerBound, byte[] rowKeyUpperBound, int limit, List<Filter> extraFilters) {
-        Filter rowFilterLowerBound = new RowFilter(CompareOperator.GREATER_OR_EQUAL, new BinaryComparator(rowKeyLowerBound));
-        Filter rowFilterUpperBound = new RowFilter(CompareOperator.LESS_OR_EQUAL, new BinaryComparator(rowKeyUpperBound));
-        List<Filter> rowFilterList;
+
+        List<Filter> rowFilterList = new ArrayList<>();
         Scan scan = new Scan();
-        getLog().debug("Querying HBase with limit : {}",limit);
-        if (limit < 0) {
-            rowFilterList = new ArrayList<>(Arrays.asList(rowFilterLowerBound, rowFilterUpperBound));
-        }
-        else {
-            // if limit is not equal to 0 and not greater than maxScanPageSize, set it
-            int maxResults = limit > 0 && limit <= maxScanPageSize ? limit : maxScanPageSize;
-            PageFilter pageFilter = new PageFilter(maxResults);
-            rowFilterList = new ArrayList<>(Arrays.asList(rowFilterLowerBound, rowFilterUpperBound, pageFilter));
-            getLog().debug("HBase Scan Limit : {}",maxResults);
-            scan.setLimit(maxResults);
-        }
+        scan.withStartRow(rowKeyLowerBound, true);
+        scan.withStopRow(rowKeyUpperBound, true);
+        getLog().debug("Querying HBase with limit : {}", limit);
+        // if limit is not equal to 0 and not greater than maxScanPageSize, set it
+        int maxResults = limit > 0 && limit <= maxScanPageSize ? limit : maxScanPageSize;
+        getLog().debug("HBase Scan Limit : {}", maxResults);
+        scan.setLimit(maxResults);
 
         for (byte[] columnFamily : columns.keySet()) {
             if (columns.get(columnFamily) == null || columns.get(columnFamily).isEmpty()) scan.addFamily(columnFamily);
@@ -290,7 +288,9 @@ public final class HBaseConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
             // add extra filters
             rowFilterList.addAll(extraFilters);
         }
-        scan.setFilter(new FilterList(FilterList.Operator.MUST_PASS_ALL, rowFilterList));
+        if (!rowFilterList.isEmpty())
+            scan.setFilter(new FilterList(FilterList.Operator.MUST_PASS_ALL, rowFilterList));
+
         return scan;
     }
 
