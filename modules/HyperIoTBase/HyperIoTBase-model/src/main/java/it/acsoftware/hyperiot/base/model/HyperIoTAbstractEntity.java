@@ -20,9 +20,7 @@ package it.acsoftware.hyperiot.base.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-import it.acsoftware.hyperiot.base.api.HyperIoTOwnedResource;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTBaseEntity;
-import it.acsoftware.hyperiot.base.api.entity.HyperIoTProtectedEntity;
 import it.acsoftware.hyperiot.base.validation.NotNullOnPersist;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -71,7 +69,7 @@ public abstract class HyperIoTAbstractEntity extends HyperIoTAbstractResource
     @Id
     @GeneratedValue
     @NotNullOnPersist
-    @JsonView({HyperIoTJSONView.Public.class,HyperIoTJSONView.Compact.class,HyperIoTJSONView.Extended.class})
+    @JsonView({HyperIoTJSONView.Public.class, HyperIoTJSONView.Compact.class, HyperIoTJSONView.Extended.class})
     public long getId() {
         return id;
     }
@@ -124,7 +122,7 @@ public abstract class HyperIoTAbstractEntity extends HyperIoTAbstractResource
      */
     @Version
     @NotNull
-    @Column(name="entity_version",columnDefinition = "INTEGER default 1")
+    @Column(name = "entity_version", columnDefinition = "INTEGER default 1")
     @JsonView(HyperIoTJSONView.Public.class)
     public int getEntityVersion() {
         return entityVersion;
@@ -145,6 +143,9 @@ public abstract class HyperIoTAbstractEntity extends HyperIoTAbstractResource
      */
     @Transient
     @JsonView(HyperIoTJSONView.Public.class)
+    //category ids are only set by this field
+    //to retrieve them the client should use asset services
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public long[] getCategoryIds() {
         return categoryIds;
     }
@@ -164,6 +165,9 @@ public abstract class HyperIoTAbstractEntity extends HyperIoTAbstractResource
      */
     @Transient
     @JsonView(HyperIoTJSONView.Public.class)
+    //tag ids are only set by this field
+    //to retrieve them the client should use asset services
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public long[] getTagIds() {
         return tagIds;
     }
