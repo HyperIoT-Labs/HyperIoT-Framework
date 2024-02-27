@@ -102,7 +102,7 @@ public final class SharedEntityServiceImpl extends HyperIoTBaseEntityServiceImpl
 
     @Override
     public SharedEntity save(SharedEntity entity, HyperIoTContext ctx) {
-        Class<?> entityClass = (entity.getEntityResourceName() != null)?getEntityClass(entity.getEntityResourceName()):null;
+        Class<?> entityClass = (entity.getEntityResourceName() != null) ? getEntityClass(entity.getEntityResourceName()) : null;
         //Custom check on permission system
         //check if the user has the share permission for the entity identified by entityResourceName
         if (entityClass == null || !HyperIoTSecurityUtil.checkPermission(ctx, entityClass.getName(), HyperIoTActionsUtil.getHyperIoTAction(entityClass.getName(), HyperIoTShareAction.SHARE))) {
@@ -112,7 +112,7 @@ public final class SharedEntityServiceImpl extends HyperIoTBaseEntityServiceImpl
             throw new HyperIoTRuntimeException("Entity " + entity.getEntityResourceName() + " is not a HyperIoTSharedEntity");
         }
         HyperIoTBaseEntitySystemApi<? extends HyperIoTSharedEntity> systemService = getEntitySystemService(entityClass);
-        if(HyperIoTOwnedResource.class.isAssignableFrom(entityClass)) {
+        if (HyperIoTOwnedResource.class.isAssignableFrom(entityClass)) {
             HyperIoTResource resource;
             try {
                 resource = systemService.find(entity.getEntityId(), ctx);
@@ -148,6 +148,21 @@ public final class SharedEntityServiceImpl extends HyperIoTBaseEntityServiceImpl
         HyperIoTUser u = e.getUserOwner();
         if (u.getId() != ctx.getLoggedEntityId()) {
             throw new HyperIoTUnauthorizedException();
+        }
+        //If user id is not specified we try to load user by email field or username.
+        //if id nor  username nor  email are specified the service will raise an exception
+        if (entity.getUserId() <= 0) {
+            HUser foundUser = null;
+            if (entity.getUserEmail() != null && !entity.getUserEmail().isBlank()) {
+                foundUser = this.userSystemService.findUserByEmail(entity.getUserEmail());
+            } else if (entity.getUsername() != null && !entity.getUsername().isBlank()) {
+                foundUser = this.userSystemService.findUserByUsername(entity.getUsername());
+            }
+
+            if (foundUser != null)
+                entity.setUserId(foundUser.getId());
+            else
+                throw new HyperIoTEntityNotFound();
         }
         //do not check save permission for SharedEntity entities because if the share permission for an HyperIoTSharedEntity
         //implicitly has the permission to save a SharedEntity
