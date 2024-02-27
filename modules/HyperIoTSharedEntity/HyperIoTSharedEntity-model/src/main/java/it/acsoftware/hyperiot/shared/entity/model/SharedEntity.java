@@ -144,7 +144,7 @@ public class SharedEntity extends HyperIoTAbstractResource implements HyperIoTPr
     }
 
     @Transient
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getUserEmail() {
         return userEmail;
     }
@@ -154,7 +154,7 @@ public class SharedEntity extends HyperIoTAbstractResource implements HyperIoTPr
     }
 
     @Transient
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getUsername() {
         return username;
     }

@@ -21,10 +21,7 @@ package it.acsoftware.hyperiot.shared.entity.service;
 import it.acsoftware.hyperiot.base.action.util.HyperIoTActionsUtil;
 import it.acsoftware.hyperiot.base.action.util.HyperIoTCrudAction;
 import it.acsoftware.hyperiot.base.action.util.HyperIoTShareAction;
-import it.acsoftware.hyperiot.base.api.HyperIoTContext;
-import it.acsoftware.hyperiot.base.api.HyperIoTOwnedResource;
-import it.acsoftware.hyperiot.base.api.HyperIoTResource;
-import it.acsoftware.hyperiot.base.api.HyperIoTUser;
+import it.acsoftware.hyperiot.base.api.*;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTBaseEntitySystemApi;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTQuery;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTSharedEntity;
@@ -276,11 +273,20 @@ public final class SharedEntityServiceImpl extends HyperIoTBaseEntityServiceImpl
     }
 
     @Override
-    @AllowGenericPermissions(actions = HyperIoTCrudAction.Names.FIND)
     public List<HyperIoTUser> getSharingUsers(String entityResourceName, long entityId, HyperIoTContext context) {
         this.getLog().debug("Service getSharingUsers {} with entityResourceName {}, entityId {} with context: {}",
                 new Object[]{this.getEntityType().getSimpleName(), entityResourceName, entityId, context});
-        return this.getSystemService().getSharingUsers(entityResourceName, entityId, context);
+        HyperIoTBaseEntitySystemApi<?> systemApi = getEntitySystemService(getEntityClass(entityResourceName));
+        Object o = systemApi.find(entityId,null);
+        if(o instanceof HyperIoTSharedEntity){
+            HyperIoTSharedEntity sharedEntity = (HyperIoTSharedEntity)o;
+            //only owners can see with who they shared their entity with
+            if(sharedEntity.getUserOwner().getId() == context.getLoggedEntityId()) {
+                return this.getSystemService().getSharingUsers(entityResourceName, entityId, context);
+            } else
+                throw new HyperIoTUnauthorizedException();
+        }
+        throw new HyperIoTRuntimeException("Not shared entity!");
     }
 
     @Override
