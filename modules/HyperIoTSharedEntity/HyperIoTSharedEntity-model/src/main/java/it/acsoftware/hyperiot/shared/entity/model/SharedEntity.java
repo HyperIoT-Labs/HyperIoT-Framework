@@ -69,6 +69,7 @@ public class SharedEntity extends HyperIoTAbstractResource implements HyperIoTPr
 
     @Id
     @NotNullOnPersist
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public long getUserId() {
         return userId;
     }
