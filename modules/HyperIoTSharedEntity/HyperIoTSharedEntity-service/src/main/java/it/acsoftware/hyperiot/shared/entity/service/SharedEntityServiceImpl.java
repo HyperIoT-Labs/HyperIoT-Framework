@@ -21,14 +21,16 @@ package it.acsoftware.hyperiot.shared.entity.service;
 import it.acsoftware.hyperiot.base.action.util.HyperIoTActionsUtil;
 import it.acsoftware.hyperiot.base.action.util.HyperIoTCrudAction;
 import it.acsoftware.hyperiot.base.action.util.HyperIoTShareAction;
-import it.acsoftware.hyperiot.base.api.*;
+import it.acsoftware.hyperiot.base.api.HyperIoTContext;
+import it.acsoftware.hyperiot.base.api.HyperIoTOwnedResource;
+import it.acsoftware.hyperiot.base.api.HyperIoTResource;
+import it.acsoftware.hyperiot.base.api.HyperIoTUser;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTBaseEntitySystemApi;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTQuery;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTSharedEntity;
 import it.acsoftware.hyperiot.base.exception.HyperIoTEntityNotFound;
 import it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException;
 import it.acsoftware.hyperiot.base.exception.HyperIoTUnauthorizedException;
-import it.acsoftware.hyperiot.base.exception.HyperIoTValidationException;
 import it.acsoftware.hyperiot.base.security.annotations.AllowGenericPermissions;
 import it.acsoftware.hyperiot.base.security.annotations.AllowPermissionsOnReturn;
 import it.acsoftware.hyperiot.base.security.util.HyperIoTSecurityUtil;
@@ -44,7 +46,6 @@ import org.osgi.service.component.annotations.Reference;
 
 import javax.persistence.NoResultException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -135,8 +136,6 @@ public final class SharedEntityServiceImpl extends HyperIoTBaseEntityServiceImpl
         HyperIoTSharedEntity e;
         try {
             e = entitySystemService.find(entity.getEntityId(), ctx);
-            // find the user
-            this.userSystemService.find(entity.getUserId(), ctx);
         } catch (NoResultException ex) {
             throw new HyperIoTEntityNotFound();
         }
@@ -160,6 +159,13 @@ public final class SharedEntityServiceImpl extends HyperIoTBaseEntityServiceImpl
                 entity.setUserId(foundUser.getId());
             else
                 throw new HyperIoTEntityNotFound();
+        } else {
+            try {
+                // find the user
+                this.userSystemService.find(entity.getUserId(), ctx);
+            } catch (NoResultException ex) {
+                throw new HyperIoTRuntimeException("Impossible to share the specified resource");
+            }
         }
         //do not check save permission for SharedEntity entities because if the share permission for an HyperIoTSharedEntity
         //implicitly has the permission to save a SharedEntity
@@ -277,11 +283,11 @@ public final class SharedEntityServiceImpl extends HyperIoTBaseEntityServiceImpl
         this.getLog().debug("Service getSharingUsers {} with entityResourceName {}, entityId {} with context: {}",
                 new Object[]{this.getEntityType().getSimpleName(), entityResourceName, entityId, context});
         HyperIoTBaseEntitySystemApi<?> systemApi = getEntitySystemService(getEntityClass(entityResourceName));
-        Object o = systemApi.find(entityId,null);
-        if(o instanceof HyperIoTSharedEntity){
-            HyperIoTSharedEntity sharedEntity = (HyperIoTSharedEntity)o;
+        Object o = systemApi.find(entityId, null);
+        if (o instanceof HyperIoTSharedEntity) {
+            HyperIoTSharedEntity sharedEntity = (HyperIoTSharedEntity) o;
             //only owners can see with who they shared their entity with
-            if(sharedEntity.getUserOwner().getId() == context.getLoggedEntityId()) {
+            if (sharedEntity.getUserOwner().getId() == context.getLoggedEntityId()) {
                 return this.getSystemService().getSharingUsers(entityResourceName, entityId, context);
             } else
                 throw new HyperIoTUnauthorizedException();
