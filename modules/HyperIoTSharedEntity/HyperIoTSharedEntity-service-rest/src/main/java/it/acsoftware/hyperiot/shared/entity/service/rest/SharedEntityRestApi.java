@@ -172,15 +172,12 @@ public class SharedEntityRestApi extends HyperIoTBaseEntityRestApi<SharedEntity>
             @ApiParam(value = "The sharedentity which must be deleted", required = true) SharedEntity sharedEntity) {
         getLog().debug("In Rest Service DELETE /hyperiot/sharedentity/");
         try {
-            String entityResourceName = sharedEntity.getEntityResourceName();
-            long entityId = sharedEntity.getEntityId();
-            long userId = sharedEntity.getUserId();
 
             this.getLog().debug(
-                    "Invoking Remove entity from rest service for {} with primary key: (entityResourceName: {}, entityId: {}, userId: {})",
-                    new Object[]{this.getEntityService().getEntityType().getSimpleName(), entityResourceName, entityId, userId});
+                    "Invoking Remove entity from rest service for {} ",
+                    new Object[]{sharedEntity});
 
-            this.entityService.removeByPK(entityResourceName, entityId, userId, this.getHyperIoTContext());
+            this.entityService.removeByPK(sharedEntity, this.getHyperIoTContext());
             return Response.ok().build();
         } catch (Throwable var4) {
             return this.handleException(var4);
@@ -203,7 +200,8 @@ public class SharedEntityRestApi extends HyperIoTBaseEntityRestApi<SharedEntity>
             @ApiResponse(code = 403, message = "Not authorized"),
             @ApiResponse(code = 500, message = "Entity not found")})
     @JsonView(HyperIoTJSONView.Public.class)
-    public Response findByPK(@ApiParam(value = "SharedEntity entity which must find ", required = true) SharedEntity sharedEntity) {
+    public Response findByPK
+    (@ApiParam(value = "SharedEntity entity which must find ", required = true) SharedEntity sharedEntity) {
         getLog().debug("In Rest Service GET /hyperiot/sharedentity/findByPK {}", sharedEntity);
         try {
             String entityResourceName = sharedEntity.getEntityResourceName();
@@ -233,7 +231,8 @@ public class SharedEntityRestApi extends HyperIoTBaseEntityRestApi<SharedEntity>
             @ApiResponse(code = 403, message = "Not authorized"),
             @ApiResponse(code = 500, message = "Entity not found")})
     @JsonView(HyperIoTJSONView.Public.class)
-    public Response findByEntity(@QueryParam("entityResourceName") String entityResourceName, @QueryParam("entityId") long entityId) {
+    public Response findByEntity(@QueryParam("entityResourceName") String entityResourceName,
+                                 @QueryParam("entityId") long entityId) {
         getLog().debug("In Rest Service GET /hyperiot/sharedentity/findByEntity?entityResourceName={}&entityId={}",
                 new Object[]{entityResourceName, entityId});
         try {
@@ -285,7 +284,8 @@ public class SharedEntityRestApi extends HyperIoTBaseEntityRestApi<SharedEntity>
             @ApiResponse(code = 403, message = "Not authorized"),
             @ApiResponse(code = 500, message = "Entity not found")})
     @JsonView(HyperIoTJSONView.Public.class)
-    public Response getUsers(@QueryParam("entityResourceName") String entityResourceName, @QueryParam("entityId") long entityId) {
+    public Response getUsers(@QueryParam("entityResourceName") String entityResourceName,
+                             @QueryParam("entityId") long entityId) {
         getLog().debug(
                 "In Rest Service GET /hyperiot/sharedentity/getUsers?entityResourceName={}&entityId={}",
                 new Object[]{entityResourceName, entityId});
