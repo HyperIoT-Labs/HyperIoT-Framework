@@ -219,7 +219,7 @@ public final class SharedEntityServiceImpl extends HyperIoTBaseEntityServiceImpl
         }
 
         if (sharedEntity != null) {
-            getSystemService().removeByPK(sharedEntity.getResourceName(), sharedEntity.getEntityId(), sharedEntity.getUserId(), ctx);
+            getSystemService().removeByPK(sharedEntity.getEntityResourceName(), sharedEntity.getEntityId(), sharedEntity.getUserId(), ctx);
         } else {
             throw new HyperIoTEntityNotFound();
         }
