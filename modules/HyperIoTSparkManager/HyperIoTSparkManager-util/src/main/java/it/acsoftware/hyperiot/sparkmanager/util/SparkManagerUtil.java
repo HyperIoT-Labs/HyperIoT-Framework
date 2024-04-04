@@ -112,7 +112,10 @@ public class SparkManagerUtil {
 
     public static String getSparkRestApiUrl() {
         loadSparkManagerConfiguration();
-        return getSparkRestApiProtocol() + getSparkMasterHostname() + ":" + getSparkRestApiPort();
+        String sparkApiProtocol = getSparkRestApiProtocol().trim();
+        if (!sparkApiProtocol.endsWith("://"))
+            sparkApiProtocol += "://";
+        return sparkApiProtocol + getSparkMasterHostname() + ":" + getSparkRestApiPort();
     }
 
     public static String getSparkSubmitDeployMode() {
