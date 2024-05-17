@@ -382,7 +382,7 @@ public class HUserRestApi extends HyperIoTBaseEntityRestApi<HUser> {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful operation"),
         @ApiResponse(code = 403, message = "Not authorized"),
         @ApiResponse(code = 500, message = "Internal error")})
-    @JsonView(HyperIoTJSONView.Public.class)
+    @JsonView(value = HyperIoTJSONView.Public.class)
     public Response findAllHUser() {
         getLog().debug("In Rest Service GET /hyperiot/husers/ ");
         return this.findAll();

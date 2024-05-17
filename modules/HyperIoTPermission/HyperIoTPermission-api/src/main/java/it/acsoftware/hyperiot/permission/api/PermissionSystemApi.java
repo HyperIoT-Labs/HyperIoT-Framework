@@ -20,6 +20,7 @@ package it.acsoftware.hyperiot.permission.api;
 import it.acsoftware.hyperiot.base.api.HyperIoTAction;
 import it.acsoftware.hyperiot.base.api.HyperIoTResource;
 import it.acsoftware.hyperiot.base.api.HyperIoTRole;
+import it.acsoftware.hyperiot.base.api.HyperIoTUser;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTBaseEntitySystemApi;
 import it.acsoftware.hyperiot.permission.model.Permission;
 
@@ -33,13 +34,41 @@ import java.util.List;
 public interface PermissionSystemApi extends HyperIoTBaseEntitySystemApi<Permission> {
 
     /**
+     * Find a permission by a specific user and resource
+     *
+     * @param user     user parameter
+     * @param resource parameter required to find a resource
+     * @return Permission if found
+     */
+    Permission findByUserAndResource(HyperIoTUser user, HyperIoTResource resource);
+
+    /**
+     * Find a permission by a specific user and resource name
+     *
+     * @param user         user parameter
+     * @param resourceName parameter required to find a resource name
+     * @return Permission if found
+     */
+    Permission findByUserAndResourceName(HyperIoTUser user, String resourceName);
+
+    /**
+     * Find a permission by a specific user, resource name and resource id
+     *
+     * @param user         user parameter
+     * @param resourceName parameter required to find a resource name
+     * @param id           parameter required to find a resource id
+     * @return Permission if found
+     */
+    Permission findByUserAndResourceNameAndResourceId(HyperIoTUser user, String resourceName, long id);
+
+    /**
      * Find a permission by a specific role and resource
      *
      * @param role     parameter required to find role by roleId
      * @param resource parameter required to find a resource
      * @return Permission if found
      */
-    public Permission findByRoleAndResource(HyperIoTRole role, HyperIoTResource resource);
+    Permission findByRoleAndResource(HyperIoTRole role, HyperIoTResource resource);
 
     /**
      * Find a permission by a specific role and resource name
@@ -48,7 +77,7 @@ public interface PermissionSystemApi extends HyperIoTBaseEntitySystemApi<Permiss
      * @param resourceName parameter required to find a resource name
      * @return Permission if found
      */
-    public Permission findByRoleAndResourceName(HyperIoTRole role, String resourceName);
+    Permission findByRoleAndResourceName(HyperIoTRole role, String resourceName);
 
     /**
      * Find a permission by a specific role and resource name
@@ -56,7 +85,7 @@ public interface PermissionSystemApi extends HyperIoTBaseEntitySystemApi<Permiss
      * @param role parameter required to find role by roleId
      * @return Permission if found
      */
-    public Collection<Permission> findByRole(HyperIoTRole role);
+    Collection<Permission> findByRole(HyperIoTRole role);
 
     /**
      * Find a permission by a specific role, resource name and resource id
@@ -66,7 +95,7 @@ public interface PermissionSystemApi extends HyperIoTBaseEntitySystemApi<Permiss
      * @param id           parameter required to find a resource id
      * @return Permission if found
      */
-    public Permission findByRoleAndResourceNameAndResourceId(HyperIoTRole role, String resourceName, long id);
+    Permission findByRoleAndResourceNameAndResourceId(HyperIoTRole role, String resourceName, long id);
 
     /**
      * @param roleName
@@ -78,6 +107,7 @@ public interface PermissionSystemApi extends HyperIoTBaseEntitySystemApi<Permiss
 
     /**
      * Verify if exist a permission specific to entity
+     *
      * @param resourceName parameter required to find a resource name
      * @param resourceId   parameter required to find a resource id
      * @return true if exist a specific permission to this entity, false otherwise

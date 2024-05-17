@@ -20,6 +20,7 @@ package it.acsoftware.hyperiot.permission.api;
 import it.acsoftware.hyperiot.base.api.HyperIoTAction;
 import it.acsoftware.hyperiot.base.api.HyperIoTResource;
 import it.acsoftware.hyperiot.base.api.HyperIoTRole;
+import it.acsoftware.hyperiot.base.api.HyperIoTUser;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTBaseRepository;
 import it.acsoftware.hyperiot.permission.model.Permission;
 
@@ -32,6 +33,35 @@ import java.util.List;
  * layer.
  */
 public interface PermissionRepository extends HyperIoTBaseRepository<Permission> {
+    /**
+     * Find a permission by a specific user and resource
+     *
+     * @param user     user parameter
+     * @param resource parameter required to find a resource
+     * @return Permission if found
+     */
+    public Permission findByUserAndResource(HyperIoTUser user, HyperIoTResource resource);
+
+    /**
+     * Find a permission by a specific user and resource name via query
+     *
+     * @param user               user parameter
+     * @param entityResourceName parameter required to find a resource name
+     * @return Permission if found
+     */
+    Permission findByUserAndResourceName(HyperIoTUser user, String entityResourceName);
+
+    /**
+     * Find a permission by a specific role, resource name and resource id via query
+     *
+     * @param user               user parameter
+     * @param entityResourceName parameter required to find a resource name
+     * @param id                 parameter required to find a resource id
+     * @return Permission if found
+     */
+    Permission findByUserAndResourceNameAndResourceId(HyperIoTUser user,
+                                                      String entityResourceName, long id);
+
     /**
      * Find a permission by a specific role and resource
      *
@@ -79,6 +109,7 @@ public interface PermissionRepository extends HyperIoTBaseRepository<Permission>
 
     /**
      * Verify if exist a permission specific to entity
+     *
      * @param resourceName parameter required to find a resource name
      * @param resourceId   parameter required to find a resource id
      * @return true if exist a specific permission to this entity, false otherwise

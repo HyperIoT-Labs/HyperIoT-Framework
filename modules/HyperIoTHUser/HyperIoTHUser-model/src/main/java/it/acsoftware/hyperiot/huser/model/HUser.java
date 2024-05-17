@@ -17,7 +17,6 @@
 
 package it.acsoftware.hyperiot.huser.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -34,440 +33,434 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 
  * @author Aristide Cittadino Model class for HUser of HyperIoT platform. It is
- *         used to map HUser with the database.
- *
+ * used to map HUser with the database.
  */
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
-		@UniqueConstraint(columnNames = "email") })
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "email")})
 @PasswordMustMatch
 @ValidPassword
 public class HUser extends HyperIoTAbstractEntity implements HyperIoTProtectedEntity, HyperIoTUser {
-	/**
-	 * String name for HUser
-	 */
-	@JsonView(HyperIoTJSONView.Public.class)
-	private String name;
-	/**
-	 * String lastname for HUser
-	 */
-	@JsonView(HyperIoTJSONView.Public.class)
-	@ApiModelProperty(required = false)
-	private String lastname;
-	/**
-	 * String username for HUser
-	 */
-	@JsonView(HyperIoTJSONView.Public.class)
-	private String username;
-	/**
-	 * String password for HUser
-	 */
-	@JsonView(HyperIoTJSONView.Internal.class)
-	private String password;
-	/**
-	 * Boolean admin for HUser
-	 */
-	@JsonProperty(access = Access.READ_ONLY)
-	private boolean admin;
-	/**
-	 * String passwordConfirm for HUser
-	 */
-	@JsonView(HyperIoTJSONView.Internal.class)
-	private String passwordConfirm;
-	
-	/**
-	 * 
-	 */
-	@JsonView(HyperIoTJSONView.Public.class)
-	private String passwordResetCode;
-	
-	/**
-	 * String email for HUser
-	 */
-	@JsonView(HyperIoTJSONView.Public.class)
-	private String email;
-	/**
-	 * List of roles for HUser
-	 */
-	@JsonView(HyperIoTJSONView.Public.class)
-	private Set<Role> roles;
+    /**
+     * String name for HUser
+     */
+    @JsonView(HyperIoTJSONView.Public.class)
+    private String name;
+    /**
+     * String lastname for HUser
+     */
+    @JsonView(HyperIoTJSONView.Public.class)
+    @ApiModelProperty(required = false)
+    private String lastname;
+    /**
+     * String username for HUser
+     */
+    @JsonView(HyperIoTJSONView.Public.class)
+    private String username;
+    /**
+     * String password for HUser
+     */
+    @JsonView(HyperIoTJSONView.Internal.class)
+    private String password;
+    /**
+     * Boolean admin for HUser
+     */
+    @JsonProperty(access = Access.READ_ONLY)
+    private boolean admin;
+    /**
+     * String passwordConfirm for HUser
+     */
+    @JsonView(HyperIoTJSONView.Internal.class)
+    private String passwordConfirm;
 
-	/**
-	 * Boolean which indicate that the user is active or not
-	 */
-	@JsonView(HyperIoTJSONView.Internal.class)
-	private boolean active;
-	
-	/**
-	 * Code for activation
-	 */
-	@JsonView(HyperIoTJSONView.Internal.class)
-	private String activateCode;
+    /**
+     *
+     */
+    @JsonView(HyperIoTJSONView.Public.class)
+    private String passwordResetCode;
 
-	/**
-	 *  Code for deletion
-	 */
-	@JsonView(HyperIoTJSONView.Internal.class)
-	public String deletionCode;
+    /**
+     * String email for HUser
+     */
+    @JsonView(HyperIoTJSONView.Public.class)
+    private String email;
+    /**
+     * List of roles for HUser
+     */
+    @JsonView(HyperIoTJSONView.Public.class)
+    private Set<Role> roles;
 
-	/**
-	 * the image path of the user account
-	 */
-	private String imagePath;
+    /**
+     * Boolean which indicate that the user is active or not
+     */
+    @JsonView(HyperIoTJSONView.Internal.class)
+    private boolean active;
 
-	/**
-	 * Constructor for HUser. Provides information about HUser class
-	 *
-	 */
-	public HUser() {
-		this.roles = new HashSet<Role>();
-	}
+    /**
+     * Code for activation
+     */
+    @JsonView(HyperIoTJSONView.Internal.class)
+    private String activateCode;
 
-	/**
-	 * Gets the HUser name
-	 * 
-	 * @return a string that represents HUser name
-	 */
-	@Column
-	@NotNullOnPersist
-	@NotEmpty
-	@NoMalitiusCode
-	@Size(max = 255)
-	@ApiModelProperty(required = false)
-	public String getName() {
-		return name;
-	}
+    /**
+     * Code for deletion
+     */
+    @JsonView(HyperIoTJSONView.Internal.class)
+    public String deletionCode;
 
-	/**
-	 * Sets the HUser name
-	 * 
-	 * @param name contains the HUser name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * the image path of the user account
+     */
+    private String imagePath;
 
-	/**
-	 * Gets the HUser lastname
-	 * 
-	 * @return a string that represents HUser lastname
-	 */
-	@Column
-	@NotNullOnPersist
-	@NotEmpty
-	@NoMalitiusCode
-	@Size( max = 255)
-	@ApiModelProperty(required = false)
-	public String getLastname() {
-		return lastname;
-	}
+    /**
+     * Constructor for HUser. Provides information about HUser class
+     */
+    public HUser() {
+        this.roles = new HashSet<Role>();
+    }
 
-	/**
-	 * Sets the HUser lastname
-	 * 
-	 * @param lastname contains the HUser lastname
-	 */
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+    /**
+     * Gets the HUser name
+     *
+     * @return a string that represents HUser name
+     */
+    @Column
+    @NotNullOnPersist
+    @NotEmpty
+    @NoMalitiusCode
+    @Size(max = 255)
+    @ApiModelProperty(required = false)
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * Gets the HUser username given by a range of alphanumeric characters
-	 * 
-	 * @return a string that represents HUser username
-	 */
-	@Column
-	@NotNullOnPersist
-	@NotEmpty
-	@NoMalitiusCode
-	@Size( max = 255)
-	@Pattern(regexp = "^[A-Za-z0-9]+$",message = "Allowed characters are letters (lower and upper cases) and numbers")
-	@ApiModelProperty(required = false)
-	public String getUsername() {
-		return username;
-	}
+    /**
+     * Sets the HUser name
+     *
+     * @param name contains the HUser name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Sets the HUser username
-	 * 
-	 * @param username contains the HUser username
-	 */
-	@Override
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    /**
+     * Gets the HUser lastname
+     *
+     * @return a string that represents HUser lastname
+     */
+    @Column
+    @NotNullOnPersist
+    @NotEmpty
+    @NoMalitiusCode
+    @Size(max = 255)
+    @ApiModelProperty(required = false)
+    public String getLastname() {
+        return lastname;
+    }
 
-	/**
-	 * Gets the HUser password encrypted.
-	 * 
-	 * @return a string that represents HUser password encrypted
-	 * Password not null is checked by @ValidPassword on HUser Class
-	 */
-	@Column
-	@NotNullOnPersist
-	@NoMalitiusCode
-	@ApiModelProperty(required = false)
-	public String getPassword() {
-		return password;
-	}
+    /**
+     * Sets the HUser lastname
+     *
+     * @param lastname contains the HUser lastname
+     */
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 
-	/**
-	 * Sets the HUser password
-	 * 
-	 * @param password contains the HUser password
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     * Gets the HUser username given by a range of alphanumeric characters
+     *
+     * @return a string that represents HUser username
+     */
+    @Column
+    @NotNullOnPersist
+    @NotEmpty
+    @NoMalitiusCode
+    @Size(max = 255)
+    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "Allowed characters are letters (lower and upper cases) and numbers")
+    @ApiModelProperty(required = false)
+    public String getUsername() {
+        return username;
+    }
 
-	/**
-	 * Gets the HUser password confirmation.
-	 * 
-	 * @return a string that represents HUser password confirmation
-	 */
-	@Transient
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
+    /**
+     * Sets the HUser username
+     *
+     * @param username contains the HUser username
+     */
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	/**
-	 * Sets the HUser password confirmation
-	 * 
-	 * @param passwordConfirm contains the HUser password confirmation
-	 */
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
+    /**
+     * Gets the HUser password encrypted.
+     *
+     * @return a string that represents HUser password encrypted
+     * Password not null is checked by @ValidPassword on HUser Class
+     */
+    @Column
+    @NotNullOnPersist
+    @NoMalitiusCode
+    @ApiModelProperty(required = false)
+    public String getPassword() {
+        return password;
+    }
 
-	@JsonProperty(access = Access.WRITE_ONLY)
-	public String getPasswordResetCode() {
-		return passwordResetCode;
-	}
+    /**
+     * Sets the HUser password
+     *
+     * @param password contains the HUser password
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setPasswordResetCode(String passwordResetCode) {
-		this.passwordResetCode = passwordResetCode;
-	}
+    /**
+     * Gets the HUser password confirmation.
+     *
+     * @return a string that represents HUser password confirmation
+     */
+    @Transient
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
 
-	/**
-	 * Gets the HUser email
-	 * 
-	 * @return a string that represents HUser email
-	 */
-	@Column
-	@NotNullOnPersist
-	@NotEmpty
-	@NoMalitiusCode
-	@Email
-	@Size( max = 255)
-	@ApiModelProperty(required = false)
-	public String getEmail() {
-		return email;
-	}
+    /**
+     * Sets the HUser password confirmation
+     *
+     * @param passwordConfirm contains the HUser password confirmation
+     */
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
 
-	/**
-	 * Sets the HUser email
-	 * 
-	 * @param email contains the HUser email
-	 */
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @JsonProperty(access = Access.WRITE_ONLY)
+    public String getPasswordResetCode() {
+        return passwordResetCode;
+    }
 
-	/**
-	 * Gets if HUser is administrator
-	 * 
-	 * @return true if HUser is administrator
-	 */
-	@Column
-	public boolean isAdmin() {
-		return admin;
-	}
+    public void setPasswordResetCode(String passwordResetCode) {
+        this.passwordResetCode = passwordResetCode;
+    }
 
-	/**
-	 * Sets the HUser admin
-	 * 
-	 * @param admin contains the value if a HUser is admin
-	 */
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
+    /**
+     * Gets the HUser email
+     *
+     * @return a string that represents HUser email
+     */
+    @Column
+    @NotNullOnPersist
+    @NotEmpty
+    @NoMalitiusCode
+    @Email
+    @Size(max = 255)
+    @ApiModelProperty(required = false)
+    public String getEmail() {
+        return email;
+    }
 
-	/**
-	 * Gets image path of this user.
-	 * @return the user account image path
-	 */
-	@Length( max = 255)
-	@NoMalitiusCode
-	public String getImagePath() {
-		return imagePath;
-	}
+    /**
+     * Sets the HUser email
+     *
+     * @param email contains the HUser email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	/**
-	 * Sets image path of this area map.
-	 * @param imagePath user account image path.
-	 */
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
+    /**
+     * Gets if HUser is administrator
+     *
+     * @return true if HUser is administrator
+     */
+    @Column
+    public boolean isAdmin() {
+        return admin;
+    }
 
-	/**
-	 * 
-	 * @return true if the user is active
-	 */
-	@Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
-	@ApiModelProperty(required = false)
-	public boolean isActive() {
-		return active;
-	}
+    /**
+     * Sets the HUser admin
+     *
+     * @param admin contains the value if a HUser is admin
+     */
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 
-	/**
-	 * 
-	 * @param active
-	 */
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	
-	/**
-	 * 
-	 * @return Code generated for activation
-	 */
-	@ApiModelProperty(required = false)
-	public String getActivateCode() {
-		return activateCode;
-	}
+    /**
+     * Gets image path of this user.
+     *
+     * @return the user account image path
+     */
+    @Length(max = 255)
+    @NoMalitiusCode
+    public String getImagePath() {
+        return imagePath;
+    }
 
-	/**
-	 * 
-	 * @param activateCode
-	 */
-	public void setActivateCode(String activateCode) {
-		this.activateCode = activateCode;
-	}
+    /**
+     * Sets image path of this area map.
+     *
+     * @param imagePath user account image path.
+     */
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
-	/**
-	 * @return Code generated for account deletion
-	 */
-	@ApiModelProperty(required = false)
-	public String getDeletionCode() {
-		return deletionCode;
-	}
+    /**
+     * @return true if the user is active
+     */
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+    @ApiModelProperty(required = false)
+    public boolean isActive() {
+        return active;
+    }
 
-	public void setDeletionCode(String deletionCode) {
-		this.deletionCode = deletionCode;
-	}
+    /**
+     * @param active
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-	/**
-	 * Gets the user roles
-	 * 
-	 * @return a list that represents the user roles
-	 */
-	@ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
-	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-	public Set<Role> getRoles() {
-		return roles;
-	}
+    /**
+     * @return Code generated for activation
+     */
+    @ApiModelProperty(required = false)
+    public String getActivateCode() {
+        return activateCode;
+    }
 
-	/**
-	 * Sets the user roles
-	 * 
-	 * @param roles a list that contains the user roles
-	 */
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+    /**
+     * @param activateCode
+     */
+    public void setActivateCode(String activateCode) {
+        this.activateCode = activateCode;
+    }
 
-	@Override
-	public boolean addRole(HyperIoTRole role) {
-		if (role instanceof Role)
-			return roles.add((Role) role);
-		return false;
-	}
+    /**
+     * @return Code generated for account deletion
+     */
+    @ApiModelProperty(required = false)
+    public String getDeletionCode() {
+        return deletionCode;
+    }
 
-	@Override
-	public boolean hasRole(long id) {
-		return roles.stream().filter(role -> role.getId() == id).findAny().isPresent();
-	}
+    public void setDeletionCode(String deletionCode) {
+        this.deletionCode = deletionCode;
+    }
 
-	@Override
-	public boolean hasRole(String roleName) {
-		return roles.stream().filter(role -> role.getName().equalsIgnoreCase(roleName)).findAny()
-				.isPresent();
-	}
+    /**
+     * Gets the user roles
+     *
+     * @return a list that represents the user roles
+     */
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
-	@Override
-	public boolean hasRole(HyperIoTRole role) {
-		return this.roles.contains(role);
-	}
+    /**
+     * Sets the user roles
+     *
+     * @param roles a list that contains the user roles
+     */
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
-	@Override
-	public boolean removeRole(HyperIoTRole role) {
-		return this.roles.remove(role);
-	}
+    @Override
+    public boolean addRole(HyperIoTRole role) {
+        if (role instanceof Role)
+            return roles.add((Role) role);
+        return false;
+    }
 
-	@Override
-	@Transient
-	@ApiModelProperty(hidden = true)
-	@JsonView(HyperIoTJSONView.Internal.class)
-	public String getScreenName() {
-		return this.getUsername();
-	}
+    @Override
+    public boolean hasRole(long id) {
+        return roles.stream().filter(role -> role.getId() == id).findAny().isPresent();
+    }
 
-	@Transient
-	@ApiModelProperty(hidden = true)
-	@JsonView(HyperIoTJSONView.Internal.class)
-	@Override
-	public String getScreenNameFieldName() {
-		return "username";
-	}
+    @Override
+    public boolean hasRole(String roleName) {
+        return roles.stream().filter(role -> role.getName().equalsIgnoreCase(roleName)).findAny()
+                .isPresent();
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
+    @Override
+    public boolean hasRole(HyperIoTRole role) {
+        return this.roles.contains(role);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		HUser other = (HUser) obj;
-		if (this.getId() == 0 && other.getId() > 0 || this.getId() > 0 && other.getId() == 0) {
-			if (email == null) {
-				if (other.email != null)
-					return false;
-			} else if (!email.equals(other.email))
-				return false;
-			if (username == null) {
-				if (other.username != null)
-					return false;
-			} else if (!username.equals(other.username))
-				return false;
-			return true;
-		} else {
-			return this.getId() == other.getId();
-		}
-	}
+    @Override
+    public boolean removeRole(HyperIoTRole role) {
+        return this.roles.remove(role);
+    }
 
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("ID: ").append(this.getId()).append(" \n User:").append(username);
-		return sb.toString();
-	}
+    @Override
+    @Transient
+    @ApiModelProperty(hidden = true)
+    @JsonView(HyperIoTJSONView.Internal.class)
+    public String getScreenName() {
+        return this.getUsername();
+    }
+
+    @Transient
+    @ApiModelProperty(hidden = true)
+    @JsonView(HyperIoTJSONView.Internal.class)
+    @Override
+    public String getScreenNameFieldName() {
+        return "username";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
+        result = prime * result + ((username == null) ? 0 : username.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        HUser other = (HUser) obj;
+        if (this.getId() == 0 && other.getId() > 0 || this.getId() > 0 && other.getId() == 0) {
+            if (email == null) {
+                if (other.email != null)
+                    return false;
+            } else if (!email.equals(other.email))
+                return false;
+            if (username == null) {
+                if (other.username != null)
+                    return false;
+            } else if (!username.equals(other.username))
+                return false;
+            return true;
+        } else {
+            return this.getId() == other.getId();
+        }
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID: ").append(this.getId()).append(" \n User:").append(username);
+        return sb.toString();
+    }
 
 }

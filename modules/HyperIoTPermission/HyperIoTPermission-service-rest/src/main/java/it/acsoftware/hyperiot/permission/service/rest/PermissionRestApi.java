@@ -17,6 +17,7 @@
 
 package it.acsoftware.hyperiot.permission.service.rest;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.annotations.*;
 import io.swagger.annotations.ApiKeyAuthDefinition.ApiKeyLocation;
 import it.acsoftware.hyperiot.base.action.util.HyperIoTActionsUtil;
@@ -24,6 +25,7 @@ import it.acsoftware.hyperiot.base.api.HyperIoTAction;
 import it.acsoftware.hyperiot.base.api.HyperIoTContext;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTBaseEntityApi;
 import it.acsoftware.hyperiot.base.exception.HyperIoTUnauthorizedException;
+import it.acsoftware.hyperiot.base.model.HyperIoTJSONView;
 import it.acsoftware.hyperiot.base.security.rest.LoggedIn;
 import it.acsoftware.hyperiot.base.security.util.HyperIoTSecurityUtil;
 import it.acsoftware.hyperiot.base.service.rest.HyperIoTBaseEntityRestApi;
@@ -104,6 +106,7 @@ public class PermissionRestApi extends HyperIoTBaseEntityRestApi<Permission> {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful operation"),
             @ApiResponse(code = 403, message = "Not authorized"),
             @ApiResponse(code = 404, message = "Entity not found")})
+    @JsonView(HyperIoTJSONView.Compact.class)
     public Response findPermission(
             @ApiParam(value = "id from which permission object will retrieve", required = true) @PathParam("id") long id) {
         getLog().debug( "In Rest Service GET /hyperiot/permissions/{}", id);
@@ -124,6 +127,7 @@ public class PermissionRestApi extends HyperIoTBaseEntityRestApi<Permission> {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful operation"),
             @ApiResponse(code = 403, message = "Not authorized"), @ApiResponse(code = 422, message = "Not validated"),
             @ApiResponse(code = 500, message = "Internal error")})
+    @JsonView(HyperIoTJSONView.Public.class)
     public Response savePermission(
             @ApiParam(value = "Permission object to store in database", required = true) Permission p) {
         getLog().debug( "In Rest Service POST /hyperiot/permissions \n Body: {}", p);
@@ -143,6 +147,7 @@ public class PermissionRestApi extends HyperIoTBaseEntityRestApi<Permission> {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful operation"),
             @ApiResponse(code = 403, message = "Not authorized"), @ApiResponse(code = 422, message = "Not validated"),
             @ApiResponse(code = 500, message = "Invalid ID supplied")})
+    @JsonView(HyperIoTJSONView.Public.class)
     public Response updatePermission(
             @ApiParam(value = "Permission object to update in database", required = true) Permission p) {
         getLog().debug( "In Rest Service PUT /hyperiot/permissions \n Body: {}", p);
@@ -163,6 +168,7 @@ public class PermissionRestApi extends HyperIoTBaseEntityRestApi<Permission> {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful operation"),
             @ApiResponse(code = 403, message = "Not authorized"),
             @ApiResponse(code = 404, message = "Entity not found")})
+    @JsonView(HyperIoTJSONView.Public.class)
     public Response deletePermission(
             @ApiParam(value = "id from which permission object will deleted", required = true) @PathParam("id") long id) {
         getLog().debug( "In Rest Service DELETE /hyperiot/permissions/{}", id);
@@ -182,6 +188,7 @@ public class PermissionRestApi extends HyperIoTBaseEntityRestApi<Permission> {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful operation"),
             @ApiResponse(code = 403, message = "Not authorized"),
             @ApiResponse(code = 500, message = "Internal error")})
+    @JsonView(HyperIoTJSONView.Compact.class)
     public Response findAllPermission() {
         getLog().debug( "In Rest Service GET /hyperiot/permissions");
         return this.findAll();
@@ -199,6 +206,7 @@ public class PermissionRestApi extends HyperIoTBaseEntityRestApi<Permission> {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful operation"),
             @ApiResponse(code = 403, message = "Not authorized"),
             @ApiResponse(code = 500, message = "Internal error")})
+    @JsonView(HyperIoTJSONView.Compact.class)
     public Response findAllPermissionPaginated(@QueryParam("delta") Integer delta, @QueryParam("page") Integer page) {
         return this.findAll(delta, page);
     }
@@ -216,6 +224,7 @@ public class PermissionRestApi extends HyperIoTBaseEntityRestApi<Permission> {
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successful operation"),
             @ApiResponse(code = 403, message = "Not authorized"),
             @ApiResponse(code = 500, message = "Internal error")})
+    @JsonView(HyperIoTJSONView.Public.class)
     public Response findAllActions() {
         getLog().debug( "In Rest Service GET /hyperiot/permissions");
         List<HyperIoTAction> actions = HyperIoTActionsUtil.getHyperIoTActions();

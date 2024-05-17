@@ -284,7 +284,6 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
         if (user == null) {
             return false;
         }
-
         if (user.isAdmin())
             return true;
 
@@ -295,11 +294,20 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
         while (it.hasNext()) {
             HyperIoTRole r = it.next();
             Permission permission = null;
+
             try {
                 permission = systemService.findByRoleAndResourceName(r, entity.getResourceName());
             } catch (NoResultException e) {
                 log.warn("No permission found for: {}  on resource {}"
                         , new Object[]{r.getName(), entity.getResourceName()});
+            }
+
+            Permission userPermission = null;
+            try {
+                userPermission = systemService.findByUserAndResourceName(user, entity.getResourceName());
+            } catch (NoResultException e) {
+                log.warn("No permission found for: {}  on resource {}"
+                        , new Object[]{user.getUsername(), entity.getResourceName()});
             }
 
             Permission permissionSpecific = null;
@@ -310,6 +318,16 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
                 log.warn("No specific permission found for: {}  on resource {}"
                         , new Object[]{r.getName(), entity.getResourceName()});
             }
+
+            Permission userPermissionSpecific = null;
+            try {
+                userPermissionSpecific = systemService.findByUserAndResourceNameAndResourceId(user,
+                        entity.getResourceName(), entity.getId());
+            } catch (NoResultException e) {
+                log.warn("No specific permission found for: {}  on resource {}"
+                        , new Object[]{user.getUsername(), entity.getResourceName()});
+            }
+
             Permission permissionImpersonation = null;
             try {
                 permissionImpersonation = systemService.findByRoleAndResourceName(r,
@@ -319,11 +337,16 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
                         , new Object[]{r.getName(), entity.getResourceName()});
             }
             // it initialize the value with the general value based on resource name
-            boolean hasGeneralPermission = permission != null
-                    && hasPermission(permission.getActionIds(), action.getActionId());
+            // general permission is : permission based on the role or permission based on user
+            boolean hasGeneralPermission = (permission != null
+                    && hasPermission(permission.getActionIds(), action.getActionId())) || (userPermission != null && hasPermission(userPermission.getActionIds(), action.getActionId()));
+            // entity permission is specific if it is found on role or user
             boolean hasEntityPermission = (permissionSpecific != null
-                    && hasPermission(permissionSpecific.getActionIds(), action.getActionId()));
+                    && hasPermission(permissionSpecific.getActionIds(), action.getActionId())) || (userPermissionSpecific != null
+                    && hasPermission(userPermissionSpecific.getActionIds(), action.getActionId()));
+
             boolean existPermissionSpecificToEntity = this.systemService.existPermissionSpecificToEntity(entity.getResourceName(), entity.getId());
+
             HyperIoTAction impersonateAction = HyperIoTActionsUtil
                     .getHyperIoTAction(HUser.class.getName(), HyperIoTHUserAction.IMPERSONATE);
             boolean userOwnsResource = checkUserOwnsResource(user, entity);
@@ -336,9 +359,9 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
             // generalPermission
             // AND if the resource is an owned resource is accessed by the right user or the
             // accessing user has the impersonation permission
-            if ((hasEntityPermission || (permissionSpecific == null && hasGeneralPermission))
+            if ((((permissionSpecific != null || userPermissionSpecific != null) && hasEntityPermission) || (permissionSpecific == null && userPermissionSpecific == null && hasGeneralPermission))
                     && (userOwnsResource ||
-                    ((userSharesResource && !existPermissionSpecificToEntity && hasGeneralPermission) || (userSharesResource && permissionSpecific != null && hasEntityPermission)) ||
+                    ((userSharesResource && !existPermissionSpecificToEntity && hasGeneralPermission) || (userSharesResource && (permissionSpecific != null || userPermissionSpecific != null) && hasEntityPermission)) ||
                     hasImpersonationPermission))
                 return true;
         }
