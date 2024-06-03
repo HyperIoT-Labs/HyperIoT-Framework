@@ -29,6 +29,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.leader.LeaderLatch;
 import org.apache.curator.framework.recipes.leader.LeaderLatchListener;
+import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
@@ -57,10 +58,12 @@ public final class ZookeeperConnectorSystemServiceImpl extends HyperIoTBaseSyste
     private Properties zkProperties;
     private HashMap<String, LeaderLatch> leaderSelectorsMap;
     private ServiceTracker<HyperIoTLeadershipRegistrar, HyperIoTLeadershipRegistrar> leadershipRegistrarServiceTracker;
+    private Map<String, InterProcessMutex> interProcessMutex;
 
     public ZookeeperConnectorSystemServiceImpl() {
         getLog().debug("Creating service for ZookeeperConnectorSystemApi");
         leaderSelectorsMap = new HashMap<>();
+        interProcessMutex = new HashMap<>();
     }
 
     /**
@@ -227,6 +230,18 @@ public final class ZookeeperConnectorSystemServiceImpl extends HyperIoTBaseSyste
      * @throws Exception
      */
     @Override
+    public void createPersistent(String path, byte[] data, boolean createParentFolders) throws Exception {
+        CreateMode mode = CreateMode.PERSISTENT;
+        this.create(mode, path, data, createParentFolders);
+    }
+
+    /**
+     * @param path
+     * @param data
+     * @param createParentFolders
+     * @throws Exception
+     */
+    @Override
     public void create(String path, byte[] data, boolean createParentFolders) throws Exception {
         if (createParentFolders)
             this.client.create().creatingParentsIfNeeded().forPath(path, data);
@@ -249,10 +264,34 @@ public final class ZookeeperConnectorSystemServiceImpl extends HyperIoTBaseSyste
      * @throws Exception
      */
     @Override
-    public byte[] read(String path) throws Exception {
+    public byte[] read(String path) throws Exception {;
+        return read(path,false);
+    }
+
+    @Override
+    public byte[] read(String path,boolean lock) throws Exception {
         if (path.endsWith("/") || path.endsWith("\\"))
             path = path.substring(0, path.length() - 1);
-        return this.client.getData().forPath(path);
+        if(lock)
+            lock(path);
+        byte[] data = this.client.getData().forPath(path);
+        if(lock)
+            unlock(path);
+        return data;
+    }
+
+    /**
+     * @param path
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public void update(String path, byte[] data) throws Exception {
+        if (path.endsWith("/") || path.endsWith("\\"))
+            path = path.substring(0, path.length() - 1);
+        lock(path);
+        this.client.setData().forPath(path, data);
+        unlock(path);
     }
 
     @Override
@@ -288,6 +327,17 @@ public final class ZookeeperConnectorSystemServiceImpl extends HyperIoTBaseSyste
     }
 
     /**
+     * @param mutexPath MutexPath
+     * @throws Exception Exception
+     */
+    public void closeLeaderLatch(String mutexPath) throws Exception {
+        if (leaderSelectorsMap.containsKey(mutexPath)) {
+            LeaderLatch ll = leaderSelectorsMap.remove(mutexPath);
+            ll.close();
+        }
+    }
+
+    /**
      * @param mutexPath
      * @throws Exception
      */
@@ -311,15 +361,13 @@ public final class ZookeeperConnectorSystemServiceImpl extends HyperIoTBaseSyste
         return ll;
     }
 
-    /**
-     * @param mutexPath MutexPath
-     * @throws Exception Exception
-     */
-    public void closeLeaderLatch(String mutexPath) throws Exception {
-        if (leaderSelectorsMap.containsKey(mutexPath)) {
-            LeaderLatch ll = leaderSelectorsMap.remove(mutexPath);
-            ll.close();
-        }
+    private void lock(String path) throws Exception {
+        interProcessMutex.computeIfAbsent(path, key -> new InterProcessMutex(client, path));
+        interProcessMutex.get(path).acquire();
     }
 
+    private void unlock(String path) throws Exception {
+        interProcessMutex.computeIfAbsent(path, key -> new InterProcessMutex(client, path));
+        interProcessMutex.get(path).release();
+    }
 }
