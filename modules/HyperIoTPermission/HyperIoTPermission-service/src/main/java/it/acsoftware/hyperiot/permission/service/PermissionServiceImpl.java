@@ -18,6 +18,9 @@
 package it.acsoftware.hyperiot.permission.service;
 
 import it.acsoftware.hyperiot.base.api.HyperIoTAction;
+import it.acsoftware.hyperiot.base.api.HyperIoTContext;
+import it.acsoftware.hyperiot.base.api.HyperIoTPermissionManager;
+import it.acsoftware.hyperiot.base.exception.HyperIoTUnauthorizedException;
 import it.acsoftware.hyperiot.base.service.entity.HyperIoTBaseEntityServiceImpl;
 import it.acsoftware.hyperiot.permission.api.PermissionApi;
 import it.acsoftware.hyperiot.permission.api.PermissionSystemApi;
@@ -27,6 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -42,6 +46,7 @@ public class PermissionServiceImpl extends HyperIoTBaseEntityServiceImpl<Permiss
      * interface
      */
     private PermissionSystemApi systemService;
+    private HyperIoTPermissionManager permissionManager;
 
     /**
      * Constructor for a PermissionServiceImpl
@@ -54,7 +59,7 @@ public class PermissionServiceImpl extends HyperIoTBaseEntityServiceImpl<Permiss
      * @return The current PermissionSystemService
      */
     public PermissionSystemApi getSystemService() {
-        getLog().debug( "invoking getSystemService, returning: {}" , this.systemService);
+        getLog().debug("invoking getSystemService, returning: {}", this.systemService);
         return systemService;
     }
 
@@ -63,17 +68,21 @@ public class PermissionServiceImpl extends HyperIoTBaseEntityServiceImpl<Permiss
      */
     @Reference
     protected void setSystemService(PermissionSystemApi systemService) {
-        getLog().debug( "invoking setSystemService, setting: {}" , systemService);
+        getLog().debug("invoking setSystemService, setting: {}", systemService);
         this.systemService = systemService;
     }
 
-    /**
-     * This method finds a list of all available permissions for HyperIoT platform
-     */
+    @Reference
+    public void setPermissionManager(HyperIoTPermissionManager permissionManager) {
+        this.permissionManager = permissionManager;
+    }
+
+
     @Override
-    public HashMap<String, List<HyperIoTAction>> getAvailablePermissions() {
-        getLog().debug( "invoking getAvailablePermissions ");
-        return null;
+    public Map<String, Map<String, Map<String, Boolean>>> entityPermissionMap(HyperIoTContext context, Map<String, List<Long>> entityPks) {
+        if (context == null || context.getLoggedUsername() == null || context.getLoggedUsername().isBlank())
+            throw new HyperIoTUnauthorizedException();
+        return permissionManager.entityPermissionMap(context.getLoggedUsername(), entityPks);
     }
 
 }

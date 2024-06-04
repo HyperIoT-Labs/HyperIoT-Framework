@@ -17,12 +17,12 @@
 
 package it.acsoftware.hyperiot.permission.api;
 
-import java.util.HashMap;
-import java.util.List;
-
-import it.acsoftware.hyperiot.base.api.HyperIoTAction;
+import it.acsoftware.hyperiot.base.api.HyperIoTContext;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTBaseEntityApi;
 import it.acsoftware.hyperiot.permission.model.Permission;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Aristide Cittadino Interface component for PermissionApi. This
@@ -31,7 +31,11 @@ import it.acsoftware.hyperiot.permission.model.Permission;
 public interface PermissionApi extends HyperIoTBaseEntityApi<Permission> {
 
     /**
-     * This method finds a list of all available permissions for HyperIoT platform
+     * Returns the user permission map
+     *
+     * @param context
+     * @param entityPks
+     * @return
      */
-    public HashMap<String, List<HyperIoTAction>> getAvailablePermissions();
+    Map<String, Map<String, Map<String, Boolean>>> entityPermissionMap(HyperIoTContext context, Map<String, List<Long>> entityPks);
 }

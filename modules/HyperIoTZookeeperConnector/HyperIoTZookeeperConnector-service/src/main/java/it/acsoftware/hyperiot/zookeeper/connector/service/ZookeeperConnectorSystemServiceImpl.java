@@ -18,6 +18,7 @@
 package it.acsoftware.hyperiot.zookeeper.connector.service;
 
 import it.acsoftware.hyperiot.base.api.HyperIoTLeadershipRegistrar;
+import it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException;
 import it.acsoftware.hyperiot.base.service.HyperIoTBaseSystemServiceImpl;
 import it.acsoftware.hyperiot.base.util.HyperIoTConstants;
 import it.acsoftware.hyperiot.base.util.HyperIoTUtil;

@@ -152,6 +152,41 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
     }
 
     /**
+     * Returns a map containing all actiona available for every resource
+     *
+     * @param username
+     * @param entityPks
+     * @return
+     */
+    @Override
+    public Map<String, Map<String, Map<String, Boolean>>> entityPermissionMap(String username, Map<String, List<Long>> entityPks) {
+        Map<String, Map<String, Map<String, Boolean>>> userPermissionMap = new HashMap<>();
+        entityPks.keySet().forEach(apiClass -> {
+            userPermissionMap.computeIfAbsent(apiClass, key -> new HashMap<>());
+            HyperIoTBaseEntitySystemApi<?> baseEntitySystemApi = HyperIoTUtil.findEntitySystemApi(apiClass);
+            if (baseEntitySystemApi != null) {
+                entityPks.get(apiClass).forEach(entityId -> {
+                    String entityIdsSts = String.valueOf(entityId);
+                    userPermissionMap.get(apiClass).computeIfAbsent(entityIdsSts, key -> new HashMap<>());
+                    try {
+                        HyperIoTBaseEntity entity = baseEntitySystemApi.find(entityId, null);
+                        if (entity != null) {
+                            List<HyperIoTAction> actions = HyperIoTActionsUtil.getHyperIoTActions(apiClass);
+                            actions.forEach(action -> {
+                                boolean hasPermission = checkPermission(username, entity, action);
+                                userPermissionMap.get(apiClass).get(entityIdsSts).put(action.getActionName(), hasPermission);
+                            });
+                        }
+                    } catch (Exception e) {
+                        log.error(e.getMessage(), e);
+                    }
+                });
+            }
+        });
+        return userPermissionMap;
+    }
+
+    /**
      * @param username     parameter that indicates the username of entity
      * @param resourceName parameter that indicates the resource name of action
      * @param action       interaction of the user with HyperIoT platform
@@ -196,6 +231,7 @@ public class PermissionManagerDefault implements HyperIoTPermissionManager {
         }
         return hasPermission;
     }
+
 
     /**
      * @return The current PermissionSystemService
