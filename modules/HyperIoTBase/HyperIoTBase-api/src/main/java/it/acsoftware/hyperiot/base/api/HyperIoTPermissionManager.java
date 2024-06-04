@@ -20,6 +20,9 @@ package it.acsoftware.hyperiot.base.api;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTProtectedEntity;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Aristide Cittadino Generic Interface Component for
  * HyperIoTPermissionManager. This interface define all methods able to
@@ -66,6 +69,30 @@ public interface HyperIoTPermissionManager {
      * @param action       interaction of the user with HyperIoT platform
      */
     boolean checkPermission(String username, String resourceName, HyperIoTAction action);
+
+    /**
+     * Returns a permission map of actions available for a specific user on specific resources
+     * ex.
+     * {
+     *   "resourceA":{
+     *        "38":{
+     *          "save":true,
+     *          "update":true,
+     *          "find":true
+     *       },
+     *       "54":{
+     *           "save":false,
+     *           "update":true,
+     *           "find":true
+     *       }
+     *   }
+     * }
+     * Each entry is the action name value.
+     * @param username
+     * @param entityPks map with key the entity class and a list of ids
+     * @return
+     */
+    Map<String, Map<String, Map<String, Boolean>>> entityPermissionMap(String username, Map<String, List<Long>> entityPks);
 
     /**
      * @param username     parameter that indicates the username of entity

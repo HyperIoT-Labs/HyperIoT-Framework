@@ -23,6 +23,7 @@ package it.acsoftware.hyperiot.base.util;
  * constant of HyperIoT platform.
  */
 public class HyperIoTConstants {
+    public static final String OSGI_SERVICE_PROXY = "it.acsoftware.hyperiot.base.service.proxy";
     public static final String OSGI_ACTION_RESOURCE_NAME = "it.acsoftware.hyperiot.action.resource";
     public static final String OSGI_ACTION_RESOURCE_CATEGORY = "it.acsoftware.hyperiot.action.category";
     public static final String OSGI_ACTION_NAME = "it.acsoftware.hyperiot.action.name";

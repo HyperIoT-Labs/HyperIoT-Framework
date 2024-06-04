@@ -18,6 +18,7 @@
 package it.acsoftware.hyperiot.base.service.hooks.proxy;
 
 import it.acsoftware.hyperiot.base.api.HyperIoTService;
+import it.acsoftware.hyperiot.base.util.HyperIoTConstants;
 import org.osgi.framework.*;
 import org.osgi.framework.hooks.service.EventListenerHook;
 import org.osgi.framework.hooks.service.FindHook;
@@ -38,9 +39,7 @@ import static org.osgi.framework.ServiceEvent.*;
  */
 public class HyperIoTServiceHooks implements EventListenerHook, FindHook {
     private static Logger log = LoggerFactory.getLogger(HyperIoTServiceHooks.class.getName());
-
     private BundleContext bc;
-    private static final String PROXY = "it.acsoftware.hyperiot.base.service.proxy";
 
     public HyperIoTServiceHooks(BundleContext bc) {
         this.bc = bc;
@@ -159,7 +158,7 @@ public class HyperIoTServiceHooks implements EventListenerHook, FindHook {
     private boolean isHyperIoTService(ServiceReference sr) {
         String[] interfaces = (String[]) sr.getProperty(
                 "objectClass");
-        boolean isProxy = sr.getProperty(PROXY) != null;
+        boolean isProxy = sr.getProperty(HyperIoTConstants.OSGI_SERVICE_PROXY) != null;
         for (String clazz : interfaces) {
             try {
                 Class<?> c = Class.forName(clazz);
@@ -244,7 +243,7 @@ public class HyperIoTServiceHooks implements EventListenerHook, FindHook {
             String[] interfaces = (String[]) serviceReference.getProperty(
                     "objectClass");
             Class<?>[] toClass = toClass(interfaces, bundleSource);
-            prop.put(PROXY, true);
+            prop.put(HyperIoTConstants.OSGI_SERVICE_PROXY, true);
             Object hyperIoTServiceProxy = Proxy.newProxyInstance(
                     cl, toClass,
                     proxy);
@@ -267,7 +266,7 @@ public class HyperIoTServiceHooks implements EventListenerHook, FindHook {
      */
     private <S extends ServiceReference> void unregisterProxyService(Bundle bundleSource, Class<S> serviceClass, Dictionary prop) {
         try {
-            Collection<ServiceReference<S>> references = bundleSource.getBundleContext().getServiceReferences(serviceClass, "(" + PROXY + "=true)");
+            Collection<ServiceReference<S>> references = bundleSource.getBundleContext().getServiceReferences(serviceClass, "(" + HyperIoTConstants.OSGI_SERVICE_PROXY + "=true)");
             references.stream().forEach(ref -> {
                 HyperIoTServiceProxy proxy = (HyperIoTServiceProxy) bundleSource.getBundleContext().getService(ref);
                 proxy.getRegistration().unregister();
