@@ -20,3 +20,4 @@ out/*
 /modules/HyperIoTEthereumConnector/HyperIoTEthereumConnector-test/.gradle/nodejs/node-v17.7.1-darwin-arm64/
 /.gradle-wrapper/gradle-wrapper.jar
 /.gradle-wrapper/gradle-wrapper.properties
+/modules/HyperIoTEthereumConnector/HyperIoTEthereumConnector-test/.gradle/nodejs/node-v17.7.1-darwin-x64/
