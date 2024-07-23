@@ -1,5 +1,5 @@
 Import-Package: \
-   COM.jrockit.*;resolution:=optional
+   COM.*;resolution:=optional
 Export-package:\
     org.apache.storm.generated;version="2.4.0",\
     org.apache.storm;version="2.4.0",\
