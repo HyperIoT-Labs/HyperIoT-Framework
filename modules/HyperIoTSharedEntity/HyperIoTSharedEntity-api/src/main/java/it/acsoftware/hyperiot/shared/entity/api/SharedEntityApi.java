@@ -33,7 +33,7 @@ import java.util.List;
  */
 public interface SharedEntityApi extends HyperIoTBaseEntityApi<SharedEntity> {
     SharedEntity findByPK(String entityResourceName, long entityId, long userId, HashMap<String, Object> filter, HyperIoTContext context);
-    void removeByPK(String entityResourceName, long entityId, long userId, HyperIoTContext context);
+    void removeByPK(SharedEntity entity, HyperIoTContext context);
     List<SharedEntity> findByEntity(String entityResourceName, long entityId, HashMap<String, Object> filter, HyperIoTContext context);
     List<SharedEntity> findByUser(long userId, HashMap<String, Object> filter, HyperIoTContext context);
     List<HyperIoTUser> getSharingUsers(String entityResourceName, long entityId, HyperIoTContext context);

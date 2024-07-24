@@ -6,6 +6,7 @@ dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
 
     implementation project(":modules:HyperIoTBase:HyperIoTBase-api")
+    implementation project(":modules:HyperIoTBase:HyperIoTBase-util")
 
 }
 

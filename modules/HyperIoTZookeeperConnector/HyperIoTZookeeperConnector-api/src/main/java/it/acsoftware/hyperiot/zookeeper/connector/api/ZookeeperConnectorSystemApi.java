@@ -73,13 +73,19 @@ public interface ZookeeperConnectorSystemApi extends HyperIoTBaseSystemApi {
     /**
      *
      * @param path
+     * @param data
+     * @param createParentFolders
+     * @throws Exception
+     */
+    void createPersistent(String path, byte[] data, boolean createParentFolders) throws Exception;
+
+    /**
+     *
+     * @param path
      * @throws Exception
      */
     void delete(String path) throws Exception;
 
-    /**
-     *
-     */
     /**
      * @param path
      * @return
@@ -87,6 +93,22 @@ public interface ZookeeperConnectorSystemApi extends HyperIoTBaseSystemApi {
      */
     byte[] read(String path) throws Exception;
 
+    /**
+     *
+     * @param path
+     * @param lock if path should be locked while reading
+     * @return
+     * @throws Exception
+     */
+    byte[] read(String path,boolean lock) throws Exception;
+
+    /**
+     *
+     * @param path path to update
+     * @param data data to update
+     * @throws Exception
+     */
+    void update(String path, byte[] data) throws Exception;
     /**
      *
      * @param path

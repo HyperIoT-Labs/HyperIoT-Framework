@@ -17,16 +17,16 @@
 
 package it.acsoftware.hyperiot.base.service.rest.provider;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.apache.cxf.dosgi.common.api.IntentsProvider;
 import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Author Aristide Cittadino.
@@ -40,6 +40,7 @@ public class HyperIoTJacksonIntentProvider implements IntentsProvider {
 
     public HyperIoTJacksonIntentProvider() {
         mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         this.jsonProvider = new JacksonJsonProvider(mapper);
         this.intentList = Arrays.asList(jsonProvider);
         log.info( "Register HyperIoT Provider Jackson Intent");

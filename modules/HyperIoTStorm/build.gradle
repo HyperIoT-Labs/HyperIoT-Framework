@@ -10,6 +10,14 @@ allprojects {
         }
 
         maven {
+            url "https://www.datanucleus.org/downloads/maven2/"
+        }
+
+        maven {
+            url "https://repo.clojars.org/"
+        }
+
+        maven {
             url "https://plugins.gradle.org/m2/"
         }
 

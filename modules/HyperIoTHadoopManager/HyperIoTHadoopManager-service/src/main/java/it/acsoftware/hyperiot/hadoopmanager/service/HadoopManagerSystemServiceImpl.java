@@ -17,6 +17,7 @@
 
 package it.acsoftware.hyperiot.hadoopmanager.service;
 
+import it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException;
 import it.acsoftware.hyperiot.base.service.HyperIoTBaseSystemServiceImpl;
 import it.acsoftware.hyperiot.hadoopmanager.api.HadoopManagerSystemApi;
 import it.acsoftware.hyperiot.hadoopmanager.api.HadoopManagerUtil;
@@ -28,6 +29,8 @@ import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.apache.hadoop.io.IOUtils;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
@@ -39,6 +42,7 @@ import java.io.*;
  */
 @Component(service = HadoopManagerSystemApi.class, immediate = true)
 public final class HadoopManagerSystemServiceImpl extends HyperIoTBaseSystemServiceImpl implements HadoopManagerSystemApi {
+    private static Logger logger = LoggerFactory.getLogger(HadoopManagerSystemServiceImpl.class);
 
     private Configuration configuration;
     private HadoopManagerUtil hadoopManagerUtil;
@@ -50,6 +54,25 @@ public final class HadoopManagerSystemServiceImpl extends HyperIoTBaseSystemServ
         OutputStream os = fileSystem.create(new Path(path));
         InputStream is = new BufferedInputStream(new FileInputStream(file));
         IOUtils.copyBytes(is, os, configuration); // copy content to file which has been created previously
+    }
+
+    public OutputStream appendToFile(String pathStr) throws IOException {
+        FileSystem fileSystem = getHadoopFileSystem();
+        Path path = new Path(pathStr);
+        if (!fileSystem.exists(path)) {
+            return fileSystem.create(path);
+        } else {
+            return fileSystem.append(path);
+        }
+    }
+
+    public InputStream readFile(String pathStr) throws IOException {
+        FileSystem fileSystem = getHadoopFileSystem();
+        Path path = new Path(pathStr);
+        if (fileSystem.exists(path)) {
+            return fileSystem.open(path);
+        }
+        throw new HyperIoTRuntimeException("File not found!");
     }
 
     @Override
@@ -87,10 +110,13 @@ public final class HadoopManagerSystemServiceImpl extends HyperIoTBaseSystemServ
                 configuration.set("fs.hdfs.impl", DistributedFileSystem.class.getName());
                 configuration.set("fs.file.impl", LocalFileSystem.class.getName());
                 configuration.set("fs.defaultFS", hadoopManagerUtil.getDefaultFS());
+                // Configurazione per usare gli hostname dei DataNode
+                configuration.set("dfs.client.use.datanode.hostname", "true");
+                configuration.set("hadoop.security.token.service.use_ip", "false");
             }
             return FileSystem.get(configuration);
         } catch (Throwable t) {
-            getLog().error( t.getMessage(), t);
+            getLog().error(t.getMessage(), t);
         } finally {
             Thread.currentThread().setContextClassLoader(karafClassLoader);
         }

@@ -17,11 +17,14 @@
 
 package it.acsoftware.hyperiot.permission.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import it.acsoftware.hyperiot.base.api.HyperIoTAction;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTProtectedEntity;
 import it.acsoftware.hyperiot.base.model.HyperIoTAbstractEntity;
+import it.acsoftware.hyperiot.base.model.HyperIoTJSONView;
 import it.acsoftware.hyperiot.base.validation.NoMalitiusCode;
 import it.acsoftware.hyperiot.base.validation.NotNullOnPersist;
+import it.acsoftware.hyperiot.huser.model.HUser;
 import it.acsoftware.hyperiot.role.model.Role;
 
 import javax.persistence.*;
@@ -35,31 +38,42 @@ import javax.validation.constraints.Size;
  * It is used to map Permission with the database.
  */
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"role_id", "entityResourceName", "resourceId"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"role_id","huser_id", "entityResourceName", "resourceId"}))
 public class Permission extends HyperIoTAbstractEntity implements HyperIoTProtectedEntity {
 
     /**
      * String name for Permission
      */
+    @JsonView({HyperIoTJSONView.Public.class,HyperIoTJSONView.Compact.class})
     private String name;
     /**
      * int actionIds for Permission
      */
+    @JsonView({HyperIoTJSONView.Public.class,HyperIoTJSONView.Compact.class})
     private int actionIds;
     /**
      * String entityResourceName for Permission
      */
+    @JsonView({HyperIoTJSONView.Public.class,HyperIoTJSONView.Compact.class})
     private String entityResourceName;
     /**
      * long resourceId for Permission
      */
-    private long resourceId;
+    @JsonView({HyperIoTJSONView.Public.class,HyperIoTJSONView.Compact.class})
+    private Long resourceId;
 
     /**
      * Role role for Permission. It is used to map the element in the @ManyToOne
      * association.
      */
+    @JsonView({HyperIoTJSONView.Public.class,HyperIoTJSONView.Compact.class})
     private Role role;
+
+    /**
+     * Permissions can be related to roles or directly to users
+     */
+    @JsonView({HyperIoTJSONView.Public.class,HyperIoTJSONView.Compact.class})
+    private HUser huser;
 
     /**
      * Gets the Permission name
@@ -150,7 +164,6 @@ public class Permission extends HyperIoTAbstractEntity implements HyperIoTProtec
      *
      * @return the value that represents the permission role
      */
-    @NotNullOnPersist
     @ManyToOne(targetEntity = Role.class)
     public Role getRole() {
         return role;
@@ -163,6 +176,19 @@ public class Permission extends HyperIoTAbstractEntity implements HyperIoTProtec
      */
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public void setResourceId(long resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    @ManyToOne
+    public HUser getHuser() {
+        return huser;
+    }
+
+    public void setHuser(HUser huser) {
+        this.huser = huser;
     }
 
     /**

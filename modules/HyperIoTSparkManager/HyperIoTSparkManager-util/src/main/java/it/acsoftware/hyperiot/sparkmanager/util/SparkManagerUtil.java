@@ -84,21 +84,38 @@ public class SparkManagerUtil {
 
     public static String getSparkMasterHostname() {
         loadSparkManagerConfiguration();
-        final String DEFAULT_SPARKMANAGER_PROPERTY_SPARK_MASTER_HOSTNAME = "http://spark-master";
+        final String DEFAULT_SPARKMANAGER_PROPERTY_SPARK_MASTER_HOSTNAME = "spark-master";
         return props.getProperty(SparkManagerConstants.SPARKMANAGER_PROPERTY_SPARK_MASTER_HOSTNAME,
                 DEFAULT_SPARKMANAGER_PROPERTY_SPARK_MASTER_HOSTNAME);
     }
 
-    public static int getSparkRestApiPort() {
+    public static String getSparkMasterPort() {
+        loadSparkManagerConfiguration();
+        final String DEFAULT_SPARKMANAGER_PROPERTY_SPARK_MASTER_PORT = "7077";
+        return props.getProperty(SparkManagerConstants.SPARKMANAGER_PROPERTY_SPARK_MASTER_PORT,
+                DEFAULT_SPARKMANAGER_PROPERTY_SPARK_MASTER_PORT);
+    }
+
+    public static String getSparkRestApiPort() {
         loadSparkManagerConfiguration();
         final String DEFAULT_SPARKMANAGER_PROPERTY_SPARK_REST_API_PORT = "6066";
-        return Integer.parseInt(props.getProperty(SparkManagerConstants.SPARKMANAGER_PROPERTY_SPARK_REST_API_PORT,
-                DEFAULT_SPARKMANAGER_PROPERTY_SPARK_REST_API_PORT));
+        return props.getProperty(SparkManagerConstants.SPARKMANAGER_PROPERTY_SPARK_REST_API_PORT,
+                DEFAULT_SPARKMANAGER_PROPERTY_SPARK_REST_API_PORT);
+    }
+
+    public static String getSparkRestApiProtocol() {
+        loadSparkManagerConfiguration();
+        final String DEFAULT_SPARKMANAGER_PROPERTY_SPARK_REST_API_PROTOCOL = "http://";
+        return props.getProperty(SparkManagerConstants.SPARKMANAGER_PROPERTY_SPARK_REST_API_PROTOCOL,
+                DEFAULT_SPARKMANAGER_PROPERTY_SPARK_REST_API_PROTOCOL);
     }
 
     public static String getSparkRestApiUrl() {
         loadSparkManagerConfiguration();
-        return getSparkMasterHostname() + ":" + getSparkRestApiPort();
+        String sparkApiProtocol = getSparkRestApiProtocol().trim();
+        if (!sparkApiProtocol.endsWith("://"))
+            sparkApiProtocol += "://";
+        return sparkApiProtocol + getSparkMasterHostname() + ":" + getSparkRestApiPort();
     }
 
     public static String getSparkSubmitDeployMode() {

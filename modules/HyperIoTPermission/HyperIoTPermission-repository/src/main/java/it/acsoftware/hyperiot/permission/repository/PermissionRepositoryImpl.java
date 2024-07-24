@@ -20,6 +20,7 @@ package it.acsoftware.hyperiot.permission.repository;
 import it.acsoftware.hyperiot.base.api.HyperIoTAction;
 import it.acsoftware.hyperiot.base.api.HyperIoTResource;
 import it.acsoftware.hyperiot.base.api.HyperIoTRole;
+import it.acsoftware.hyperiot.base.api.HyperIoTUser;
 import it.acsoftware.hyperiot.base.repository.HyperIoTBaseRepositoryImpl;
 import it.acsoftware.hyperiot.permission.api.PermissionRepository;
 import it.acsoftware.hyperiot.permission.model.Permission;
@@ -31,7 +32,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.persistence.NoResultException;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -94,6 +98,64 @@ public class PermissionRepositoryImpl extends HyperIoTBaseRepositoryImpl<Permiss
     }
 
     /**
+     * Find a permission by a specific user and resource
+     *
+     * @param user     user parameter
+     * @param resource parameter required to find a resource
+     * @return Permission if found
+     */
+    @Override
+    public Permission findByUserAndResource(HyperIoTUser user, HyperIoTResource resource) {
+        getLog().debug("invoking findByRoleAndResource User: {} Resource: {}", new Object[]{user, resource.getResourceName()});
+        return this.findByUserAndResourceName(user, resource.getResourceName());
+    }
+
+    /**
+     * Find a permission by a specific user and resource name via query
+     *
+     * @param user               user parameter
+     * @param entityResourceName parameter required to find a resource name
+     * @return Permission if found
+     */
+    @Override
+    public Permission findByUserAndResourceName(HyperIoTUser user, String entityResourceName) {
+        getLog().debug("invoking findByUserAndResourceName User: {} Resource: {}", new Object[]{user, entityResourceName});
+        return jpa.txExpr(TransactionType.Required, entityManager -> {
+            Permission p = null;
+            try {
+                p = entityManager.createQuery(
+                                "from Permission p where p.huser.id = :userId and p.role is null and p.entityResourceName = :entityResourceName and p.resourceId = 0",
+                                Permission.class).setParameter("userId", user.getId())
+                        .setParameter("entityResourceName", entityResourceName).getSingleResult();
+            } catch (NoResultException e) {
+                getLog().debug(e.getMessage(), e);
+            }
+            return p;
+        });
+    }
+
+    /**
+     * Find a permission by a specific user, resource name and resource id via query
+     *
+     * @param user               user parameter
+     * @param entityResourceName parameter required to find a resource name
+     * @param id                 parameter required to find a resource id
+     * @return Permission if found
+     */
+    @Override
+    public Permission findByUserAndResourceNameAndResourceId(HyperIoTUser user,
+                                                             String entityResourceName, long id) {
+        getLog().debug("invoking findByUserAndResourceNameAndResourceId User: {}", new Object[]{user, entityResourceName, id});
+        return jpa.txExpr(TransactionType.Required, entityManager -> {
+            return entityManager.createQuery(
+                            "from Permission p where p.huser.id = :userId and p.role is null and p.entityResourceName = :entityResourceName and p.resourceId = :id",
+                            Permission.class).setParameter("userId", user.getId())
+                    .setParameter("entityResourceName", entityResourceName).setParameter("id", id)
+                    .getSingleResult();
+        });
+    }
+
+    /**
      * Find a permission by a specific role and resource
      *
      * @param role     parameter required to find role by roleId
@@ -120,7 +182,7 @@ public class PermissionRepositoryImpl extends HyperIoTBaseRepositoryImpl<Permiss
             Permission p = null;
             try {
                 p = entityManager.createQuery(
-                                "from Permission p where p.role.id = :roleId and p.entityResourceName = :entityResourceName and p.resourceId = 0",
+                                "from Permission p where p.role.id = :roleId and p.huser is null and p.entityResourceName = :entityResourceName and p.resourceId = 0",
                                 Permission.class).setParameter("roleId", role.getId())
                         .setParameter("entityResourceName", entityResourceName).getSingleResult();
             } catch (NoResultException e) {
@@ -141,7 +203,7 @@ public class PermissionRepositoryImpl extends HyperIoTBaseRepositoryImpl<Permiss
         getLog().debug("invoking findByRoleAndResourceName Role: {}", role.getName());
         return jpa.txExpr(TransactionType.Required, entityManager -> {
             return entityManager
-                    .createQuery("from Permission p where p.role.id = :roleId",
+                    .createQuery("from Permission p where p.role.id = :roleId and p.huser is null",
                             Permission.class)
                     .setParameter("roleId", role.getId()).getResultList();
         });
@@ -162,7 +224,7 @@ public class PermissionRepositoryImpl extends HyperIoTBaseRepositoryImpl<Permiss
         getLog().debug("invoking findByRoleAndResourceNameAndResourceId Role: {}", new Object[]{role, entityResourceName, id});
         return jpa.txExpr(TransactionType.Required, entityManager -> {
             return entityManager.createQuery(
-                            "from Permission p where p.role.id = :roleId and p.entityResourceName = :entityResourceName and p.resourceId = :id",
+                            "from Permission p where p.role.id = :roleId and p.huser is null and p.entityResourceName = :entityResourceName and p.resourceId = :id",
                             Permission.class).setParameter("roleId", role.getId())
                     .setParameter("entityResourceName", entityResourceName).setParameter("id", id)
                     .getSingleResult();
@@ -194,15 +256,15 @@ public class PermissionRepositoryImpl extends HyperIoTBaseRepositoryImpl<Permiss
                 actionsIds.merge(action.getResourceName(), action.getActionId(), Integer::sum);
             }
 
-            checkOrCreatePermission(actionsIds,existingPermissions, r,0L);
+            checkOrCreatePermission(actionsIds, existingPermissions, r, 0L);
         });
     }
 
     /**
-        Check if role exist :
-                1)if not exist create role with permission to specific Entity
-                2)if exist search if role's permission must be updated
-     The permission associated is relative to a specific entity.
+     * Check if role exist :
+     * 1)if not exist create role with permission to specific Entity
+     * 2)if exist search if role's permission must be updated
+     * The permission associated is relative to a specific entity.
      */
     @Override
     public void checkOrCreateRoleWithPermissionsSpecificToEntity(String roleName, long entityId, List<HyperIoTAction> actions) {
@@ -218,21 +280,21 @@ public class PermissionRepositoryImpl extends HyperIoTBaseRepositoryImpl<Permiss
                 //Checks if permission already exists for that resource
                 Permission p = this.findByRoleAndResourceNameAndResourceIdInTransaction(r, action.getResourceName(), entityId);
                 if (p == null)
-                    getLog().debug("No permission found for resource: {} with id {} and role {}", new Object[]{action.getResourceName(),entityId, r.getName()});
+                    getLog().debug("No permission found for resource: {} with id {} and role {}", new Object[]{action.getResourceName(), entityId, r.getName()});
                 else
                     existingPermissions.put(action.getResourceName(), p);
 
                 // create pair <resourceName, actionId> if resourceName does not exist, sum actionId otherwise
                 actionsIds.merge(action.getResourceName(), action.getActionId(), Integer::sum);
             }
-            checkOrCreatePermission(actionsIds,existingPermissions, r,entityId );
+            checkOrCreatePermission(actionsIds, existingPermissions, r, entityId);
 
         });
     }
 
     @Override
     public boolean existPermissionSpecificToEntity(String resourceName, long resourceId) {
-        if (resourceId == 0){
+        if (resourceId == 0) {
             return false;
         }
         return this.jpa.txExpr(TransactionType.Required, entityManager -> {
@@ -247,25 +309,25 @@ public class PermissionRepositoryImpl extends HyperIoTBaseRepositoryImpl<Permiss
     }
 
     /**
-     This method works like findByRoleAndResourceNameAndResourceId but with the exception that
-     the NoResultException is catch internally to the transaction such that transaction's rollback doesn't happen.
-      Method is visibility is public such that the method is called in a transactional context.
-      This method is used only for internal execution.
-      This method isn't part of the OSGI service interface
+     * This method works like findByRoleAndResourceNameAndResourceId but with the exception that
+     * the NoResultException is catch internally to the transaction such that transaction's rollback doesn't happen.
+     * Method is visibility is public such that the method is called in a transactional context.
+     * This method is used only for internal execution.
+     * This method isn't part of the OSGI service interface
      */
     public Permission findByRoleAndResourceNameAndResourceIdInTransaction(HyperIoTRole role,
-                                                             String entityResourceName, long id) {
+                                                                          String entityResourceName, long id) {
         getLog().debug("invoking findByRoleAndResourceNameAndResourceIdInTransaction Role: {}," +
                 "entityResourceName {} , entityId {}", new Object[]{role, entityResourceName, id});
         return jpa.txExpr(TransactionType.Required, entityManager -> {
             Permission p = null;
-            try{
-                p=entityManager.createQuery(
+            try {
+                p = entityManager.createQuery(
                                 "from Permission p where p.role.id = :roleId and p.entityResourceName = :entityResourceName and p.resourceId = :id",
                                 Permission.class).setParameter("roleId", role.getId())
                         .setParameter("entityResourceName", entityResourceName).setParameter("id", id)
                         .getSingleResult();
-            }catch (NoResultException e){
+            } catch (NoResultException e) {
                 getLog().debug(e.getMessage(), e);
             }
             return p;
@@ -296,7 +358,7 @@ public class PermissionRepositoryImpl extends HyperIoTBaseRepositoryImpl<Permiss
                     getLog().error(t.getMessage(), t);
                 }
             }
-            return r ;
+            return r;
         });
     }
 
@@ -305,7 +367,7 @@ public class PermissionRepositoryImpl extends HyperIoTBaseRepositoryImpl<Permiss
      * This method is used only for internal execution.
      * This method isn't part of the OSGI service interface
      */
-    public void checkOrCreatePermission(HashMap<String, Integer> actionsIds,HashMap<String, Permission> existingPermissions, Role r,long entityId ){
+    public void checkOrCreatePermission(HashMap<String, Integer> actionsIds, HashMap<String, Permission> existingPermissions, Role r, long entityId) {
         jpa.tx(TransactionType.Required, entityManager -> {
             // Save only modified permissions
             Iterator<String> it = actionsIds.keySet().iterator();

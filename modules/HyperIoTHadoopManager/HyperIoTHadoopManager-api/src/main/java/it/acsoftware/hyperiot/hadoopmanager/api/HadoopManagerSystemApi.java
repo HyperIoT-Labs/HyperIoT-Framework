@@ -21,6 +21,8 @@ import it.acsoftware.hyperiot.base.api.HyperIoTBaseSystemApi;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * 
@@ -38,6 +40,22 @@ public interface HadoopManagerSystemApi extends HyperIoTBaseSystemApi {
      * @throws IOException IOException
      */
     void copyFile(File file, String path, boolean deleteSource) throws IOException;
+
+    /**
+     *
+     * @param pathStr
+     * @return
+     * @throws IOException
+     */
+    OutputStream appendToFile(String pathStr) throws IOException;
+
+    /**
+     *
+     * @param pathStr
+     * @return
+     * @throws IOException
+     */
+    InputStream readFile(String pathStr) throws IOException;
 
     /**
      * It deletes file

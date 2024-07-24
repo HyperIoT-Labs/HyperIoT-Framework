@@ -20,6 +20,7 @@ package it.acsoftware.hyperiot.base.util;
 import it.acsoftware.hyperiot.base.api.HyperIoTPostAction;
 import it.acsoftware.hyperiot.base.api.HyperIoTPreAction;
 import it.acsoftware.hyperiot.base.api.HyperIoTResource;
+import it.acsoftware.hyperiot.base.api.entity.HyperIoTBaseEntitySystemApi;
 import it.acsoftware.hyperiot.osgi.util.filter.OSGiFilter;
 import it.acsoftware.hyperiot.osgi.util.filter.OSGiFilterBuilder;
 import org.apache.commons.lang3.ClassUtils;
@@ -291,6 +292,29 @@ public final class HyperIoTUtil {
             log.error(e.getMessage(), e);
         }
         return new ServiceReference[]{};
+    }
+
+    public static <T extends HyperIoTBaseEntitySystemApi> T findEntitySystemApi(String entityClassName) {
+        try {
+            BundleContext ctx = getBundleContext(HyperIoTUtil.class);
+            ServiceReference[] services = ctx.getServiceReferences((String) null, "(" + HyperIoTConstants.OSGI_SERVICE_PROXY + "=true)");
+            Optional<?> serviceOpt = Arrays.stream(services).map(serviceRef -> ctx.getService(serviceRef)).filter(service -> {
+                Class<?>[] interfaces = service.getClass().getInterfaces();
+                return Arrays.stream(interfaces).anyMatch(curInterface -> {
+                    if (HyperIoTBaseEntitySystemApi.class.isAssignableFrom(curInterface)) {
+                        HyperIoTBaseEntitySystemApi baseEntitySystemApi = (HyperIoTBaseEntitySystemApi) service;
+                        return baseEntitySystemApi.getEntityType().getName().equals(entityClassName);
+                    }
+                    return false;
+                });
+            }).findAny();
+            if (serviceOpt.isPresent()) {
+                return (T) serviceOpt.get();
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return null;
     }
 
     /**

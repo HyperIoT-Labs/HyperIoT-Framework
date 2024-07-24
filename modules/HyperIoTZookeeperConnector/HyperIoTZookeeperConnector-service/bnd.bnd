@@ -8,9 +8,9 @@ Import-Package: \
     org.hibernate.validator;version='${range;[=,+)}',\
     org.apache.curator.framework;version='${range;[===,+)}',\,\
     org.apache.curator.framework.api;version='${range;[===,+)}',\,\
-    org.apache.curator.framework.recipes.leader;version='${range;[===,+)}',\,\
+    org.apache.curator.framework.recipes.*;version='${range;[===,+)}',\,\
     org.apache.curator;version='${range;[===,+)}',\,\
-    org.apache.curator.retry;version='${range;[===,+)}',\,\
+    org.apache.curator.retry;version='${range;[===,+)}',\
     org.osgi.service.components*,\
     org.apache.zookeeper*,\
     javax.persistence;version='${range;[===,+)}',\

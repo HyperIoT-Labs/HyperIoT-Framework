@@ -14,12 +14,11 @@ dependencies {
     implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
     implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version: project.hyperIoTVersion
     implementation group: "it.acsoftware.hyperiot.permission", name: "HyperIoTPermission-api", version: project.hyperIoTVersion
-
+    implementation group: 'it.acsoftware.hyperiot.storm', name: 'HyperIoTStorm-2.4-bundles', version: project.hyperIoTVersion
     //Validation
     implementation group: "javax.validation", name: "validation-api", version: project.javaxValidationVersion
 
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: project.jacksonVersion
-    implementation group: "it.acsoftware.hyperiot.storm", name: "HyperIoTStorm-bundles", version: project.hyperIoTVersion
     // Kafka client
     implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '2.3.1'
     //STORM DEPENDENCY
@@ -32,10 +31,6 @@ dependencies {
 
     //Project Dependencies
     implementation project(":modules:HyperIoTStorm:HyperIoTStorm-api")
-    implementation project(":modules:HyperIoTStorm:HyperIoTStorm-bundles")
-    implementation project(":modules:HyperIoTStorm:HyperIoTStorm-2.4-bundles")
-
-
 }
 
 jar {

@@ -20,6 +20,8 @@ package it.acsoftware.hyperiot.permission.service;
 import it.acsoftware.hyperiot.base.api.HyperIoTAction;
 import it.acsoftware.hyperiot.base.api.HyperIoTResource;
 import it.acsoftware.hyperiot.base.api.HyperIoTRole;
+import it.acsoftware.hyperiot.base.api.HyperIoTUser;
+import it.acsoftware.hyperiot.base.exception.HyperIoTRuntimeException;
 import it.acsoftware.hyperiot.base.service.entity.HyperIoTBaseEntitySystemServiceImpl;
 import it.acsoftware.hyperiot.permission.api.PermissionRepository;
 import it.acsoftware.hyperiot.permission.api.PermissionSystemApi;
@@ -53,11 +55,19 @@ public class PermissionSystemServiceImpl extends HyperIoTBaseEntitySystemService
         super(Permission.class);
     }
 
+    @Override
+    protected void validate(Permission entity) {
+        if (entity.getHuser() != null && entity.getRole() != null) {
+            throw new HyperIoTRuntimeException("Permission can be associated to users or roles not both!");
+        }
+        super.validate(entity);
+    }
+
     /**
      * Return the current repository
      */
     public PermissionRepository getRepository() {
-        getLog().debug( "invoking getRepository, returning: {}", this.repository);
+        getLog().debug("invoking getRepository, returning: {}", this.repository);
         return repository;
     }
 
@@ -66,8 +76,67 @@ public class PermissionSystemServiceImpl extends HyperIoTBaseEntitySystemService
      */
     @Reference
     protected void setRepository(PermissionRepository repository) {
-        getLog().debug( "invoking setRepository, setting: {}", repository);
+        getLog().debug("invoking setRepository, setting: {}", repository);
         this.repository = repository;
+    }
+
+    /**
+     * Find a permission by a specific user and resource
+     *
+     * @param user     user parameter
+     * @param resource parameter required to find a resource
+     * @return Permission if found
+     */
+    public Permission findByUserAndResource(HyperIoTUser user, HyperIoTResource resource) {
+        getLog().debug("invoking findByUserAndResource user: {} Resource: {}"
+                , new Object[]{user.getUsername(), resource.getResourceName()});
+        try {
+            return repository.findByUserAndResource(user, resource);
+        } catch (NoResultException e) {
+            getLog().debug("No result searching for permission for user: {} Resource: {}"
+                    , new Object[]{user.getUsername(), resource.getResourceName()});
+            return null;
+        }
+    }
+
+    /**
+     * Find a permission by a specific user and resource name
+     *
+     * @param user         parameter required to find role by roleId
+     * @param resourceName parameter required to find a resource name
+     * @return Permission if found
+     */
+    public Permission findByUserAndResourceName(HyperIoTUser user, String resourceName) {
+        getLog().debug("invoking findByUserAndResourceName user: {} Resource: {}"
+                , new Object[]{user.getUsername(), resourceName});
+        try {
+            return repository.findByUserAndResourceName(user, resourceName);
+        } catch (NoResultException e) {
+            getLog().debug("No result searching for permission for user " + user.getUsername()
+                    + " Resource: " + resourceName);
+            return null;
+        }
+    }
+
+    /**
+     * Find a permission by a specific user, resource name and resource id
+     *
+     * @param user         user parameter
+     * @param resourceName parameter required to find a resource name
+     * @param id           parameter required to find a resource id
+     * @return Permission if found
+     */
+    public Permission findByUserAndResourceNameAndResourceId(HyperIoTUser user, String resourceName,
+                                                             long id) {
+        getLog().debug("invoking findByRoleAndResourceNameAndResourceId user: {} Resource: {}"
+                , new Object[]{user.getUsername(), resourceName});
+        try {
+            return repository.findByUserAndResourceNameAndResourceId(user, resourceName, id);
+        } catch (NoResultException e) {
+            getLog().debug("No result searching for permission for user " + user.getUsername()
+                    + " Resource: " + resourceName + " with id: " + id);
+            return null;
+        }
     }
 
     /**
@@ -78,12 +147,12 @@ public class PermissionSystemServiceImpl extends HyperIoTBaseEntitySystemService
      * @return Permission if found
      */
     public Permission findByRoleAndResource(HyperIoTRole role, HyperIoTResource resource) {
-        getLog().debug( "invoking findByRoleAndResource role: {} Resource: {}"
+        getLog().debug("invoking findByRoleAndResource role: {} Resource: {}"
                 , new Object[]{role.getName(), resource.getResourceName()});
         try {
             return repository.findByRoleAndResource(role, resource);
         } catch (NoResultException e) {
-            getLog().debug( "No result searching for permission for role: {} Resource: {}"
+            getLog().debug("No result searching for permission for role: {} Resource: {}"
                     , new Object[]{role.getName(), resource.getResourceName()});
             return null;
         }
@@ -97,12 +166,12 @@ public class PermissionSystemServiceImpl extends HyperIoTBaseEntitySystemService
      * @return Permission if found
      */
     public Permission findByRoleAndResourceName(HyperIoTRole role, String resourceName) {
-        getLog().debug( "invoking findByRoleAndResourceName role: {} Resource: {}"
+        getLog().debug("invoking findByRoleAndResourceName role: {} Resource: {}"
                 , new Object[]{role.getName(), resourceName});
         try {
             return repository.findByRoleAndResourceName(role, resourceName);
         } catch (NoResultException e) {
-            getLog().debug( "No result searching for permission for role " + role.getName()
+            getLog().debug("No result searching for permission for role " + role.getName()
                     + " Resource: " + resourceName);
             return null;
         }
@@ -118,12 +187,12 @@ public class PermissionSystemServiceImpl extends HyperIoTBaseEntitySystemService
      */
     public Permission findByRoleAndResourceNameAndResourceId(HyperIoTRole role, String resourceName,
                                                              long id) {
-        getLog().debug( "invoking findByRoleAndResourceNameAndResourceId role: {} Resource: {}"
+        getLog().debug("invoking findByRoleAndResourceNameAndResourceId role: {} Resource: {}"
                 , new Object[]{role.getName(), resourceName});
         try {
             return repository.findByRoleAndResourceNameAndResourceId(role, resourceName, id);
         } catch (NoResultException e) {
-            getLog().debug( "No result searching for permission for role " + role.getName()
+            getLog().debug("No result searching for permission for role " + role.getName()
                     + " Resource: " + resourceName + " with id: " + id);
             return null;
         }
@@ -137,11 +206,11 @@ public class PermissionSystemServiceImpl extends HyperIoTBaseEntitySystemService
      */
     @Override
     public Collection<Permission> findByRole(HyperIoTRole role) {
-        getLog().debug( "invoking findByRoleAndResourceName role: {}", role.getName());
+        getLog().debug("invoking findByRoleAndResourceName role: {}", role.getName());
         try {
             return repository.findByRole(role);
         } catch (NoResultException e) {
-            getLog().debug( "No result searching for permission for role {}", role.getName());
+            getLog().debug("No result searching for permission for role {}", role.getName());
             return null;
         }
     }
@@ -157,11 +226,11 @@ public class PermissionSystemServiceImpl extends HyperIoTBaseEntitySystemService
 
     @Override
     public void checkOrCreateRoleWithPermissionsSpecificToEntity(String roleName, long entityId, List<HyperIoTAction> actions) {
-        this.repository.checkOrCreateRoleWithPermissionsSpecificToEntity(roleName,entityId,actions);
+        this.repository.checkOrCreateRoleWithPermissionsSpecificToEntity(roleName, entityId, actions);
     }
 
     @Override
     public boolean existPermissionSpecificToEntity(String resourceName, long resourceId) {
-        return this.repository.existPermissionSpecificToEntity(resourceName,resourceId);
+        return this.repository.existPermissionSpecificToEntity(resourceName, resourceId);
     }
 }

@@ -142,6 +142,10 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
                 HyperIoTUtil.invokePreActions(entity, HyperIoTPreUpdateAction.class);
                 invokePreUpdateDetailedAction(dbEntity, entity);
                 T updateEntity = entityManager.merge(entity);
+                //forcing updated entity to have tags and categories that have been set
+                //since merge method does not preserve this information
+                updateEntity.setCategoryIds(entity.getCategoryIds());
+                updateEntity.setTagIds(entity.getTagIds());
                 manageAssets(entity, AssetManagementOperation.UPDATE);
                 entityManager.flush();
                 log.debug("Entity merged: {}", entity);

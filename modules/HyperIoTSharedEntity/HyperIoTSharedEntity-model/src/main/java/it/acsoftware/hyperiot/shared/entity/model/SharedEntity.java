@@ -17,17 +17,15 @@
 
 package it.acsoftware.hyperiot.shared.entity.model;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.acsoftware.hyperiot.base.api.HyperIoTUser;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.acsoftware.hyperiot.base.api.entity.HyperIoTProtectedEntity;
-import it.acsoftware.hyperiot.base.api.entity.HyperIoTSharedEntity;
 import it.acsoftware.hyperiot.base.model.HyperIoTAbstractResource;
 import it.acsoftware.hyperiot.base.validation.NoMalitiusCode;
 import it.acsoftware.hyperiot.base.validation.NotNullOnPersist;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -44,6 +42,8 @@ public class SharedEntity extends HyperIoTAbstractResource implements HyperIoTPr
     private String entityResourceName;
     private long entityId;
     private long userId;
+    private String userEmail;
+    private String username;
 
     @Id
     @NotNullOnPersist
@@ -69,6 +69,7 @@ public class SharedEntity extends HyperIoTAbstractResource implements HyperIoTPr
 
     @Id
     @NotNullOnPersist
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public long getUserId() {
         return userId;
     }
@@ -141,6 +142,26 @@ public class SharedEntity extends HyperIoTAbstractResource implements HyperIoTPr
     public String getSystemApiClassName() {
         String className = this.getClass().getName();
         return className.replace(".model.", ".api.") + "SystemApi";
+    }
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public static class SharedEntityPK implements Serializable {
