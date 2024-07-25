@@ -123,7 +123,7 @@ public abstract class HyperIoTAbstractEntity extends HyperIoTAbstractResource
     @Version
     @NotNull
     @Column(name = "entity_version", columnDefinition = "INTEGER default 1")
-    @JsonView(HyperIoTJSONView.Public.class)
+    @JsonView({HyperIoTJSONView.Public.class, HyperIoTJSONView.Compact.class, HyperIoTJSONView.Extended.class})
     public int getEntityVersion() {
         return entityVersion;
     }
@@ -142,7 +142,7 @@ public abstract class HyperIoTAbstractEntity extends HyperIoTAbstractResource
      * @return categoryIds
      */
     @Transient
-    @JsonView(HyperIoTJSONView.Public.class)
+    @JsonView({HyperIoTJSONView.Public.class, HyperIoTJSONView.Extended.class})
     //category ids are only set by this field
     //to retrieve them the client should use asset services
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -164,7 +164,7 @@ public abstract class HyperIoTAbstractEntity extends HyperIoTAbstractResource
      * @return categoryIds
      */
     @Transient
-    @JsonView(HyperIoTJSONView.Public.class)
+    @JsonView({HyperIoTJSONView.Public.class, HyperIoTJSONView.Extended.class})
     //tag ids are only set by this field
     //to retrieve them the client should use asset services
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
