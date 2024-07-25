@@ -66,7 +66,7 @@ public class HUser extends HyperIoTAbstractEntity implements HyperIoTProtectedEn
     /**
      * String password for HUser
      */
-    @JsonView(HyperIoTJSONView.Internal.class)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     /**
      * Boolean admin for HUser
