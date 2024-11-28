@@ -184,7 +184,7 @@ public class HUser extends HyperIoTAbstractEntity implements HyperIoTProtectedEn
     @NotEmpty
     @NoMalitiusCode
     @Size(max = 255)
-    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "Allowed characters are letters (lower and upper cases) and numbers")
+    @Pattern(regexp = "^[A-Za-z0-9-_\\.]+$", message = "Allowed characters are letters (lower and upper cases), numbers and '-','_','.'")
     @ApiModelProperty(required = false)
     public String getUsername() {
         return username;
