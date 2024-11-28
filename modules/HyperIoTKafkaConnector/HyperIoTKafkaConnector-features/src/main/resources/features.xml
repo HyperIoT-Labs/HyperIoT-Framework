@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTKafkaConnector-features">
-  <feature name="hyperiot-kafkaconnector-test" version="2.3.0" description="All  HyperIoT HyperIoTKafkaConnector modules">
+  <feature name="hyperiot-kafkaconnector-test" version="2.4.0" description="All  HyperIoT HyperIoTKafkaConnector modules">
     <feature>hyperiot-base</feature>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/4.3.4</bundle>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/4.4.11</bundle>
@@ -8,14 +8,14 @@
     <bundle>mvn:org.reactivestreams/reactive-streams/1.0.2</bundle>
     <bundle>mvn:io.projectreactor/reactor-core/3.2.6.RELEASE</bundle>
     <bundle>wrap:mvn:io.projectreactor.kafka/reactor-kafka/1.1.0.RELEASE</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service-websocket/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service-rest/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service-websocket/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service-rest/2.4.0</bundle>
   </feature>
-  <feature name="hyperiot-kafkaconnector" version="2.3.0" description="All  HyperIoT HyperIoTKafkaConnector modules">
+  <feature name="hyperiot-kafkaconnector" version="2.4.0" description="All  HyperIoT HyperIoTKafkaConnector modules">
     <feature>hyperiot-base</feature>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/4.3.4</bundle>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/4.4.11</bundle>
@@ -23,14 +23,14 @@
     <bundle>mvn:org.reactivestreams/reactive-streams/1.0.2</bundle>
     <bundle>mvn:io.projectreactor/reactor-core/3.2.6.RELEASE</bundle>
     <bundle>wrap:mvn:io.projectreactor.kafka/reactor-kafka/1.1.0.RELEASE</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service-websocket/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service-rest/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service-websocket/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service-rest/2.4.0</bundle>
   </feature>
-  <feature name="hyperiot-kafkaconnector-basic" version="2.3.0" description="All  HyperIoT HyperIoTKafkaConnector modules with NO rest services">
+  <feature name="hyperiot-kafkaconnector-basic" version="2.4.0" description="All  HyperIoT HyperIoTKafkaConnector modules with NO rest services">
     <feature>hyperiot-base-basic</feature>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/4.3.4</bundle>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/4.4.11</bundle>
@@ -38,12 +38,12 @@
     <bundle>mvn:org.reactivestreams/reactive-streams/1.0.2</bundle>
     <bundle>mvn:io.projectreactor/reactor-core/3.2.6.RELEASE</bundle>
     <bundle>wrap:mvn:io.projectreactor.kafka/reactor-kafka/1.1.0.RELEASE</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service/2.4.0</bundle>
   </feature>
-  <feature name="hyperiot-kafkaconnector-basic-with-websocket" version="2.3.0" description="All  HyperIoT HyperIoTKafkaConnector modules">
+  <feature name="hyperiot-kafkaconnector-basic-with-websocket" version="2.4.0" description="All  HyperIoT HyperIoTKafkaConnector modules">
     <feature>hyperiot-base-basic</feature>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/4.3.4</bundle>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/4.4.11</bundle>
@@ -51,10 +51,10 @@
     <bundle>mvn:org.reactivestreams/reactive-streams/1.0.2</bundle>
     <bundle>mvn:io.projectreactor/reactor-core/3.2.6.RELEASE</bundle>
     <bundle>wrap:mvn:io.projectreactor.kafka/reactor-kafka/1.1.0.RELEASE</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service-websocket/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.kafka.connector/HyperIoTKafkaConnector-service-websocket/2.4.0</bundle>
   </feature>
 </features>

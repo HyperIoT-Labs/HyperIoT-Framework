@@ -17,21 +17,21 @@
   -->
 
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTAssetTag-features">
-    <feature name="hyperiot-assettag" version="2.3.0" description="All  Hyperiot HyperIoTAssetTag modules">
+    <feature name="hyperiot-assettag" version="2.4.0" description="All  Hyperiot HyperIoTAssetTag modules">
         <feature>hyperiot-base</feature>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-actions/2.3.0</bundle>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-api/2.3.0</bundle>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-service/2.3.0</bundle>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-model/2.3.0</bundle>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-repository/2.3.0</bundle>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-service-rest/2.3.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-actions/2.4.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-api/2.4.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-service/2.4.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-model/2.4.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-repository/2.4.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-service-rest/2.4.0</bundle>
     </feature>
-    <feature name="hyperiot-assettag-basic" version="2.3.0" description="All  Hyperiot HyperIoTAssetTag modules with NO rest services">
+    <feature name="hyperiot-assettag-basic" version="2.4.0" description="All  Hyperiot HyperIoTAssetTag modules with NO rest services">
         <feature>hyperiot-base-basic</feature>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-actions/2.3.0</bundle>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-api/2.3.0</bundle>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-service/2.3.0</bundle>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-model/2.3.0</bundle>
-        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-repository/2.3.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-actions/2.4.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-api/2.4.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-service/2.4.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-model/2.4.0</bundle>
+        <bundle>mvn:it.acsoftware.hyperiot.asset.tag/HyperIoTAssetTag-repository/2.4.0</bundle>
     </feature>
 </features>

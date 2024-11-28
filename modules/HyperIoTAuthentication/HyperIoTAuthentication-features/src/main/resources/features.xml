@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTAuthentication-features">
-  <feature name="hyperiot-authentication" version="2.3.0" description="All Hyperiot HyperIoTAuthentication modules with rest services">
+  <feature name="hyperiot-authentication" version="2.4.0" description="All Hyperiot HyperIoTAuthentication modules with rest services">
     <feature>hyperiot-base</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.authentication/HyperIoTAuthentication-service/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.authentication/HyperIoTAuthentication-service-rest/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.authentication/HyperIoTAuthentication-service/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.authentication/HyperIoTAuthentication-service-rest/2.4.0</bundle>
   </feature>
-  <feature name="hyperiot-authentication-basic" version="2.3.0" description="Hyperiot HyperIoTAuthentication basic modules with NO rest services exposed">
+  <feature name="hyperiot-authentication-basic" version="2.4.0" description="Hyperiot HyperIoTAuthentication basic modules with NO rest services exposed">
     <feature>hyperiot-base-basic</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.authentication/HyperIoTAuthentication-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.authentication/HyperIoTAuthentication-service/2.4.0</bundle>
   </feature>
 </features>

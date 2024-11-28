@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTPermission-features">
-  <feature name="hyperiot-permission" version="2.3.0" description="All Hyperiot Permission Modules">
+  <feature name="hyperiot-permission" version="2.4.0" description="All Hyperiot Permission Modules">
     <feature>hyperiot-base</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-repository/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-service/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-service-rest/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-test-utils/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-repository/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-service/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-service-rest/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-test-utils/2.4.0</bundle>
   </feature>
-  <feature name="hyperiot-permission-test" version="2.3.0" description="All Hyperiot Permission Modules">
+  <feature name="hyperiot-permission-test" version="2.4.0" description="All Hyperiot Permission Modules">
     <feature>hyperiot-base</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-repository/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-service/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-service-rest/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-test-utils/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-repository/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-service/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-service-rest/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-test-utils/2.4.0</bundle>
   </feature>
-  <feature name="hyperiot-permission-basic" version="2.3.0" description="All Hyperiot Permission Modules with NO rest services">
+  <feature name="hyperiot-permission-basic" version="2.4.0" description="All Hyperiot Permission Modules with NO rest services">
     <feature>hyperiot-base-basic</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-repository/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-repository/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.permission/HyperIoTPermission-service/2.4.0</bundle>
   </feature>
 </features>

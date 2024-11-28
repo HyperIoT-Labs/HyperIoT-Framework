@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTEthereumConnector-features">
-  <feature name="hyperiot-ethereum-connector" version="2.3.0" description="All  HyperIoT HyperIoTEthereumConnector modules">
+  <feature name="hyperiot-ethereum-connector" version="2.4.0" description="All  HyperIoT HyperIoTEthereumConnector modules">
     <feature>hyperiot-base</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-repository/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-web3j-client/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-util/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-repository/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-web3j-client/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-util/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-service/2.4.0</bundle>
     <bundle>mvn:io.reactivex.rxjava2/rxjava/2.2.1</bundle>
     <bundle>mvn:org.reactivestreams/reactive-streams/1.0.3</bundle>
   </feature>
-  <feature name="hyperiot-ethereum-connector-basic" version="2.3.0" description="All  HyperIoT HyperIoTEthereumConnector modules with NO rest services">
+  <feature name="hyperiot-ethereum-connector-basic" version="2.4.0" description="All  HyperIoT HyperIoTEthereumConnector modules with NO rest services">
     <feature>hyperiot-base-basic</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-repository/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-web3j-client/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-util/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-service/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-repository/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-web3j-client/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-util/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.blockchain.ethereum.connector/HyperIoTEthereumConnector-service/2.4.0</bundle>
     <bundle>mvn:io.reactivex.rxjava2/rxjava/2.2.1</bundle>
     <bundle>mvn:org.reactivestreams/reactive-streams/1.0.3</bundle>
   </feature>

@@ -14,7 +14,6 @@ dependencies {
     implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-model", version: project.hyperIoTVersion
     implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-actions", version: project.hyperIoTVersion
     implementation group: "it.acsoftware.hyperiot.permission", name: "HyperIoTPermission-api", version: project.hyperIoTVersion
-    implementation group: 'it.acsoftware.hyperiot.storm', name: 'HyperIoTStorm-2.4-bundles', version: project.hyperIoTVersion
     //Validation
     implementation group: "javax.validation", name: "validation-api", version: project.javaxValidationVersion
 
@@ -31,6 +30,7 @@ dependencies {
 
     //Project Dependencies
     implementation project(":modules:HyperIoTStorm:HyperIoTStorm-api")
+    implementation project(":modules:HyperIoTStorm:HyperIoTStorm-2.4-bundles")
 }
 
 jar {
