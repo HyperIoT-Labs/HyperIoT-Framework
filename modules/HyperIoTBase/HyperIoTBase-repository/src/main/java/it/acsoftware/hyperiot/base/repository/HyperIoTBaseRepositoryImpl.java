@@ -611,7 +611,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
                     try {
                         HyperIoTBaseEntity innerEntity = (HyperIoTBaseEntity) f.get(entity);
                         manageAssets(innerEntity, operation);
-                    } catch (IllegalAccessException e) {
+                    } catch (Exception e) {
                         getLog().error(e.getMessage(), e);
                     }
                 }
