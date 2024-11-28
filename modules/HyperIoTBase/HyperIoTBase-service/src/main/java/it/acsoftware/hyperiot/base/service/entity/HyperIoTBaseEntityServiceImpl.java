@@ -246,7 +246,7 @@ public abstract class HyperIoTBaseEntityServiceImpl<T extends HyperIoTBaseEntity
      * @param ctx
      * @return
      */
-    private HyperIoTQuery createConditionForOwnedOrSharedResource(HyperIoTQuery initialFilter, HyperIoTContext ctx) {
+    protected HyperIoTQuery createConditionForOwnedOrSharedResource(HyperIoTQuery initialFilter, HyperIoTContext ctx) {
         try {
             //admins can see everything
             if (!ctx.isAdmin() && HyperIoTOwnershipResourceService.class.isAssignableFrom(this.getClass())) {
