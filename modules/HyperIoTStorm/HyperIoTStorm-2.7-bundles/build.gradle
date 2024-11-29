@@ -6,12 +6,12 @@ configurations {
 }
 
 dependencies {
-    includeInJar group: "org.apache.storm", name: "storm-core", version: "2.7.1"
-    includeInJar group: "org.apache.storm", name: "storm-kafka-client", version: "2.7.1"
+    includeInJar group: "org.apache.storm", name: "storm-core", version: "2.7.0"
+    includeInJar group: "org.apache.storm", name: "storm-kafka-client", version: "2.7.0"
     includeInJar group: "org.apache.storm", name: "storm-hdfs", version: "2.7.0"
     includeInJar group: 'org.apache.storm', name: 'storm-hbase', version: "2.5.0"
-    includeInJar group: 'org.apache.storm', name: 'flux-core', version: "2.7.1"
-    includeInJar group: 'org.apache.storm', name: 'flux-wrappers', version: "2.7.1"
+    includeInJar group: 'org.apache.storm', name: 'flux-core', version: "2.7.0"
+    includeInJar group: 'org.apache.storm', name: 'flux-wrappers', version: "2.7.0"
     includeInJar group: 'commons-lang', name: 'commons-lang', version: '2.6'
 }
 
