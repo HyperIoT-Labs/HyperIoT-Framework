@@ -30,7 +30,7 @@ dependencies {
 
     //Project Dependencies
     implementation project(":modules:HyperIoTStorm:HyperIoTStorm-api")
-    implementation project(":modules:HyperIoTStorm:HyperIoTStorm-2.4-bundles")
+    implementation project(":modules:HyperIoTStorm:HyperIoTStorm-2.7-bundles")
 }
 
 jar {
