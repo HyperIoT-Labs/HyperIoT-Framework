@@ -6,7 +6,9 @@ configurations {
 }
 
 dependencies {
-    includeInJar group: "org.apache.storm", name: "storm-core", version: "2.7.0"
+    includeInJar ("org.apache.storm:storm-core:2.7.0"){
+        exclude(group: "org.apache.logging.log4j", module: 'log4j-core')
+    }
     includeInJar group: "org.apache.storm", name: "storm-kafka-client", version: "2.7.0"
     includeInJar group: "org.apache.storm", name: "storm-hdfs", version: "2.7.0"
     includeInJar group: 'org.apache.storm', name: 'storm-hbase', version: "2.5.0"
