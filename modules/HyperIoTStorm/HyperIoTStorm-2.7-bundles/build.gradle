@@ -7,13 +7,30 @@ configurations {
 
 dependencies {
     includeInJar ("org.apache.storm:storm-core:2.7.0"){
-        exclude(group: "org.apache.logging.log4j", module: 'log4j-core')
+        exclude(group: "org.apache.logging.log4j")
     }
-    includeInJar group: "org.apache.storm", name: "storm-kafka-client", version: "2.7.0"
-    includeInJar group: "org.apache.storm", name: "storm-hdfs", version: "2.7.0"
-    includeInJar group: 'org.apache.storm', name: 'storm-hbase', version: "2.5.0"
-    includeInJar group: 'org.apache.storm', name: 'flux-core', version: "2.7.0"
-    includeInJar group: 'org.apache.storm', name: 'flux-wrappers', version: "2.7.0"
+
+    includeInJar ("org.apache.storm:storm-kafka-client:2.7.0"){
+        exclude(group: "org.apache.logging.log4j")
+    }
+
+    includeInJar ("org.apache.storm:storm-hdfs:2.7.0"){
+        exclude(group: "org.apache.logging.log4j")
+        transitive = false
+    }
+
+    includeInJar ("org.apache.storm:storm-hbase:2.5.0"){
+        exclude(group: "org.apache.logging.log4j")
+    }
+
+    includeInJar ("org.apache.storm:flux-core:2.7.0"){
+        exclude(group: "org.apache.logging.log4j")
+    }
+
+    includeInJar ("org.apache.storm:flux-wrappers:2.7.0"){
+        exclude(group: "org.apache.logging.log4j")
+    }
+
     includeInJar group: 'commons-lang', name: 'commons-lang', version: '2.6'
 }
 
@@ -23,7 +40,13 @@ jar {
         attributes('dsannotations': '*')
     }
     zip64 true
-    from { configurations.includeInJar.findAll { !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
+    from {
+        configurations.includeInJar
+                .findAll { !it.name.endsWith('pom') }
+                .collect {
+                    it.isDirectory() ? it : zipTree(it)
+                }
+            }
 }
 
 
