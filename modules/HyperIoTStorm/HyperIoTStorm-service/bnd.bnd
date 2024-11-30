@@ -1,7 +1,7 @@
 Export-Package: \
     it.acsoftware.hyperiot.storm.service
 Import-Package: \
-    javax.script,\
+        javax.script,\
         javax.management,\
         javax.security.auth*,\
         javax.net.*,\
@@ -39,8 +39,8 @@ DynamicImport-Package: \
         org.apache.storm.kafka.trident;version=2.7.0,\
         org.apache.storm.kafka.bolt.selector;version=2.7.0,\
         org.apache.storm.kafka.bolt.mapper;version=2.7.0,\
-        org.apache.storm.hbase.bolt;version=2.7.0,\
-        org.apache.storm.hbase.bolt.mapper;version=2.7.0,\
-        org.apache.storm.hbase.common;version=2.7.0,\
-        org.apache.storm.hbase.state;version=1.2.2
+        org.apache.storm.hbase.bolt;version=2.5.0,\
+        org.apache.storm.hbase.bolt.mapper;version=2.5.0,\
+        org.apache.storm.hbase.common;version=2.5.0,\
+        org.apache.storm.hbase.state;version=2.5.0
 
