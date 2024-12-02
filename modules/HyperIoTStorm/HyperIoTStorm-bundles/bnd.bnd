@@ -1,5 +1,7 @@
 Import-Package: \
-   COM.*;resolution:=optional
+   COM.*;resolution:=optional,\
+   org.apache.storm.shade.*;version=2.7.1,\
+   org.apache.kafka.clients.admin
 Export-package:\
     !org.apache.storm.shade,\
     org.apache.storm.generated;version="2.7.1",\
@@ -41,5 +43,4 @@ Export-package:\
     org.apache.storm.flux.wrappers.spouts;version="2.7.1",\
     org.apache.storm.flux.api;version="2.7.1",\
     org.apache.commons.lang;version="2.6"
-Private-Package:
 DynamicImport-Package: *

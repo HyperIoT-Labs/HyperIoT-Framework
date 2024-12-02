@@ -38,6 +38,10 @@ dependencies {
     includeInJar (group: 'commons-lang', name: 'commons-lang', version: '2.6'){
         transitive = false
     }
+
+    // https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
+    implementation group: 'org.apache.kafka', name: 'kafka-clients', version: project.apacheKafkaVersion
+
 }
 
 

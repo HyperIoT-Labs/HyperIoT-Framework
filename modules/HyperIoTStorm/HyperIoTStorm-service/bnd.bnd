@@ -1,5 +1,6 @@
 Export-Package: \
     it.acsoftware.hyperiot.storm.service,\
+    org.apache.storm.shade.*;version=2.7.1,\
     org.apache.storm.thrift;version=2.7.1,\
     org.apache.storm.thrift.*;version=2.7.1
 Import-Package: \
@@ -20,6 +21,7 @@ Import-Package: \
         it.acsoftware.hyperiot.base.exception;version='${range;[===,+)}',\
         it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
         org.apache.kafka.*,\
+        org.apache.kafka.clients.admin,\
         org.slf4j.*
 DynamicImport-Package: \
         org.apache.storm;version=2.7.1,\
