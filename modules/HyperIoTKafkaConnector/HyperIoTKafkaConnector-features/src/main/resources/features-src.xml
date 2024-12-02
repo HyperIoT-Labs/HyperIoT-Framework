@@ -4,7 +4,7 @@
     <feature>hyperiot-base</feature>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/${project.apacheHttpComponentsClientVersion}</bundle>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/${project.apacheHttpComponentsCoreVersion}</bundle>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/2.3.1_1</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/3.8.0_1</bundle>
     <bundle>mvn:org.reactivestreams/reactive-streams/1.0.2</bundle>
     <bundle>mvn:io.projectreactor/reactor-core/3.2.6.RELEASE</bundle>
     <bundle>wrap:mvn:io.projectreactor.kafka/reactor-kafka/1.1.0.RELEASE</bundle>
@@ -19,7 +19,7 @@
     <feature>hyperiot-base</feature>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/${project.apacheHttpComponentsClientVersion}</bundle>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/${project.apacheHttpComponentsCoreVersion}</bundle>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/2.3.1_1</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/3.8.0_1</bundle>
     <bundle>mvn:org.reactivestreams/reactive-streams/1.0.2</bundle>
     <bundle>mvn:io.projectreactor/reactor-core/3.2.6.RELEASE</bundle>
     <bundle>wrap:mvn:io.projectreactor.kafka/reactor-kafka/1.1.0.RELEASE</bundle>
@@ -34,7 +34,7 @@
     <feature>hyperiot-base-basic</feature>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/${project.apacheHttpComponentsClientVersion}</bundle>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/${project.apacheHttpComponentsCoreVersion}</bundle>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/2.3.1_1</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/3.8.0_1</bundle>
     <bundle>mvn:org.reactivestreams/reactive-streams/1.0.2</bundle>
     <bundle>mvn:io.projectreactor/reactor-core/3.2.6.RELEASE</bundle>
     <bundle>wrap:mvn:io.projectreactor.kafka/reactor-kafka/1.1.0.RELEASE</bundle>
@@ -47,7 +47,7 @@
     <feature>hyperiot-base-basic</feature>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/${project.apacheHttpComponentsClientVersion}</bundle>
     <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/${project.apacheHttpComponentsCoreVersion}</bundle>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/2.3.1_1</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.kafka-clients/3.8.0_1</bundle>
     <bundle>mvn:org.reactivestreams/reactive-streams/1.0.2</bundle>
     <bundle>mvn:io.projectreactor/reactor-core/3.2.6.RELEASE</bundle>
     <bundle>wrap:mvn:io.projectreactor.kafka/reactor-kafka/1.1.0.RELEASE</bundle>

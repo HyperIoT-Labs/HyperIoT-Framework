@@ -196,7 +196,7 @@ public final class KafkaConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
             Runnable r = new Runnable() {
                 @Override
                 public void run() {
-                    adminClient.close(20, TimeUnit.SECONDS);
+                    adminClient.close(Duration.ofSeconds(20));
                 }
             };
             Thread t = new Thread(r);
