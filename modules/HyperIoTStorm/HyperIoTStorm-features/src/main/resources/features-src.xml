@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTStorm-features">
   <feature name="hyperiot-storm" version="${project.version}" description="All HyperIoT HyperIoTStorm modules">
+    <!-- needed for storm 2.7 -->
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-core/2.18.2</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-databind/2.18.2</bundle>
+    <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/2.18.2</bundle>
     <bundle>mvn:it.acsoftware.hyperiot.storm/HyperIoTStorm-bundles/${project.version}</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.storm/HyperIoTStorm-api/${project.version}</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.storm/HyperIoTStorm-service/${project.version}</bundle>
-  </feature>
-  <feature name="hyperiot-storm-2.7" version="${project.version}" description="All HyperIoT HyperIoTStorm modules">
-    <bundle>mvn:it.acsoftware.hyperiot.storm/HyperIoTStorm-2.7-bundles/${project.version}</bundle>
     <bundle>mvn:it.acsoftware.hyperiot.storm/HyperIoTStorm-api/${project.version}</bundle>
     <bundle>mvn:it.acsoftware.hyperiot.storm/HyperIoTStorm-service/${project.version}</bundle>
   </feature>

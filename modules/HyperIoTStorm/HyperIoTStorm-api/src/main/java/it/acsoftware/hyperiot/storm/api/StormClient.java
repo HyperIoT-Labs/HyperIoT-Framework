@@ -20,7 +20,6 @@ package it.acsoftware.hyperiot.storm.api;
 import org.apache.storm.generated.StormTopology;
 import org.apache.storm.generated.TopologyInfo;
 import org.apache.storm.generated.TopologySummary;
-import org.apache.storm.thrift.TException;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -34,58 +33,52 @@ import java.util.List;
  */
 public interface StormClient {
 
-    public List<TopologySummary> getTopologyList() throws TException;
+    public List<TopologySummary> getTopologyList();
 
     /**
      * Gets the topology instance object.
      *
      * @param topologyId Topology ID
      * @return StormTopology object
-     * @throws TException
      */
-    public StormTopology getTopology(String topologyId) throws TException;
+    public StormTopology getTopology(String topologyId);
 
     /**
      * Gets the topology configuration.
      *
      * @param topologyId Topology ID
      * @return The JSON serialized topology configuration
-     * @throws TException
      */
-    public String getTopologyConfig(String topologyId) throws TException;
+    public String getTopologyConfig(String topologyId);
 
     /**
      * Gets the topology info.
      *
      * @param topologyId Topology ID
      * @return TopologyInfo object
-     * @throws TException
      */
-    public TopologyInfo getTopologyInfo(String topologyId) throws TException;
+    public TopologyInfo getTopologyInfo(String topologyId);
 
     /**
      * Activates the topology with the given name.
      *
      * @param topologyName Topology name
-     * @throws TException
      */
-    public void activate(String topologyName) throws TException;
+    public void activate(String topologyName);
 
     /**
      * Deactivates the topology with the given name.
      *
      * @param topologyName Topology name
-     * @throws TException
      */
-    public void deactivate(String topologyName) throws TException;
+    public void deactivate(String topologyName);
 
     /**
      * Kills the topology with the given name.
      *
      * @param topologyName Topology name
-     * @throws TException
      */
-    public void killTopology(String topologyName) throws TException;
+    public void killTopology(String topologyName);
 
     /**
      * Returns the hashcode of the topology configuration.
@@ -114,6 +107,6 @@ public interface StormClient {
      * @throws org.apache.storm.generated.AlreadyAliveException
      */
     public String submitTopology(String topologyProperties, String topologyYaml,int topologyConfigHashCode)
-            throws IOException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException, NoSuchMethodException, ClassNotFoundException, TException;
+            throws IOException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException, NoSuchMethodException, ClassNotFoundException;
 
 }

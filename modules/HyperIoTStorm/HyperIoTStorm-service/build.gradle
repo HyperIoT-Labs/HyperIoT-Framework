@@ -1,3 +1,10 @@
+configurations {
+    includeInJar {
+        canBeResolved(true)
+        canBeConsumed(false)
+    }
+}
+
 dependencies {
     //OSGi Basic Imports
     implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
@@ -16,26 +23,28 @@ dependencies {
     implementation group: "it.acsoftware.hyperiot.permission", name: "HyperIoTPermission-api", version: project.hyperIoTVersion
     //Validation
     implementation group: "javax.validation", name: "validation-api", version: project.javaxValidationVersion
-
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: project.jacksonVersion
     // Kafka client
     implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '2.3.1'
-    //STORM DEPENDENCY
-    //Storm
-    implementation group: "org.apache.storm", name: "storm-kafka-client", version: project.stormCoreVersion
-    implementation group: "org.apache.storm", name: "flux-core", version: project.stormCoreVersion
-    implementation group: "org.apache.storm", name: "flux-wrappers", version: project.stormCoreVersion
-    implementation group: "org.apache.storm", name: "storm-core", version: project.stormCoreVersion
-    implementation group: 'org.apache.storm', name: 'storm-client', version: project.stormCoreVersion
-
     //Project Dependencies
     implementation project(":modules:HyperIoTStorm:HyperIoTStorm-api")
-    implementation project(":modules:HyperIoTStorm:HyperIoTStorm-2.7-bundles")
+    implementation project(":modules:HyperIoTStorm:HyperIoTStorm-bundles")
+    implementation ("org.apache.storm:storm-shaded-deps:"+project.stormVersion)
+    includeInJar ("org.apache.storm:storm-shaded-deps:"+project.stormVersion){
+        transitive false
+    }
 }
 
 jar {
-    manifest {
-        attributes('dsannotations': '*')
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    zip64 true
+    from {
+        configurations.includeInJar.findAll { !it.name.endsWith('pom') }
+                .collect {
+                    it.isDirectory() ? it : zipTree(it).matching {
+                        exclude '**/META-INF/**'
+                    }
+                }
     }
 }
 

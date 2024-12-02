@@ -152,9 +152,8 @@ public final class StormClientImpl  implements StormClient {
      * Gets the list of alive topologies.
      *
      * @return List of TopologySummary
-     * @throws TException
      */
-    public List<TopologySummary> getTopologyList() throws TException {
+    public List<TopologySummary> getTopologyList() {
         ClassLoader karafClassLoader = Thread.currentThread().getContextClassLoader();
         setClassLoader();
         String errorMessage = null;
@@ -168,7 +167,7 @@ public final class StormClientImpl  implements StormClient {
             Thread.currentThread().setContextClassLoader(karafClassLoader);
         }
         if (errorMessage != null)
-            throw new TException(errorMessage);
+            throw new HyperIoTRuntimeException(errorMessage);
         return topologySummaries;
     }
 
@@ -177,9 +176,8 @@ public final class StormClientImpl  implements StormClient {
      *
      * @param topologyId Topology ID
      * @return StormTopology object
-     * @throws TException
      */
-    public StormTopology getTopology(String topologyId) throws TException {
+    public StormTopology getTopology(String topologyId){
         ClassLoader karafClassLoader = Thread.currentThread().getContextClassLoader();
         setClassLoader();
         String errorMessage = null;
@@ -193,7 +191,7 @@ public final class StormClientImpl  implements StormClient {
             Thread.currentThread().setContextClassLoader(karafClassLoader);
         }
         if (errorMessage != null)
-            throw new TException(errorMessage);
+            throw new HyperIoTRuntimeException(errorMessage);
         return stormTopology;
     }
 
@@ -202,10 +200,13 @@ public final class StormClientImpl  implements StormClient {
      *
      * @param topologyId Topology ID
      * @return The JSON serialized topology configuration
-     * @throws TException
      */
-    public String getTopologyConfig(String topologyId) throws TException {
-        return getClient().getTopologyConf(topologyId);
+    public String getTopologyConfig(String topologyId) {
+        try {
+            return getClient().getTopologyConf(topologyId);
+        } catch (TException e){
+            throw new HyperIoTRuntimeException(e.getMessage());
+        }
     }
 
     /**
@@ -213,39 +214,48 @@ public final class StormClientImpl  implements StormClient {
      *
      * @param topologyId Topology ID
      * @return TopologyInfo object
-     * @throws TException
+     *
      */
-    public TopologyInfo getTopologyInfo(String topologyId) throws TException {
-        return getClient().getTopologyInfo(topologyId);
+    public TopologyInfo getTopologyInfo(String topologyId) {
+        try {
+            return getClient().getTopologyInfo(topologyId);
+        } catch (TException e){
+            throw new HyperIoTRuntimeException(e.getMessage());
+        }
     }
 
     /**
      * Activates the topology with the given name.
      *
      * @param topologyName Topology name
-     * @throws TException
      */
-    public void activate(String topologyName) throws TException {
-        getClient().activate(topologyName);
+    public void activate(String topologyName) {
+        try {
+            getClient().activate(topologyName);
+        } catch (TException e) {
+            throw new HyperIoTRuntimeException(e.getMessage());
+        }
     }
 
     /**
      * Deactivates the topology with the given name.
      *
      * @param topologyName Topology name
-     * @throws TException
      */
-    public void deactivate(String topologyName) throws TException {
-        getClient().deactivate(topologyName);
+    public void deactivate(String topologyName) {
+        try {
+            getClient().deactivate(topologyName);
+        } catch (TException e){
+            throw new HyperIoTRuntimeException(e.getMessage());
+        }
     }
 
     /**
      * Kills the topology with the given name.
      *
      * @param topologyName Topology name
-     * @throws TException
      */
-    public void killTopology(String topologyName) throws TException {
+    public void killTopology(String topologyName)  {
         ClassLoader karafClassLoader = Thread.currentThread().getContextClassLoader();
         setClassLoader();
         String errorMessage = null;
@@ -260,7 +270,7 @@ public final class StormClientImpl  implements StormClient {
             Thread.currentThread().setContextClassLoader(karafClassLoader);
         }
         if (errorMessage != null)
-            throw new TException(errorMessage);
+            throw new HyperIoTRuntimeException(errorMessage);
     }
 
     public int getTopologyConfigHashCode(TopologySummary summary) {
@@ -294,7 +304,7 @@ public final class StormClientImpl  implements StormClient {
      * @throws AlreadyAliveException
      */
     public synchronized String submitTopology(String topologyProperties, String topologyYaml, int topologyConfigHashCode)
-            throws IOException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException, NoSuchMethodException, ClassNotFoundException, TException {
+            throws IOException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException, NoSuchMethodException, ClassNotFoundException {
         // store topology property and yaml files in a temporary folder
         String randomUUIDString = UUID.randomUUID().toString();
         Path topologyPropsPath = writeTempFile(randomUUIDString, ".properties", topologyProperties.getBytes());
@@ -334,7 +344,10 @@ public final class StormClientImpl  implements StormClient {
         try {
             StormTopology topology = this.stormTopologyBuilder.configureTopology(conf);
             StormSubmitter.submitTopology(topologyName, conf, topology, submitOptions, null);
-        } finally {
+        } catch (TException e){
+            throw new HyperIoTRuntimeException(topologyName);
+        }
+        finally {
             Thread.currentThread().setContextClassLoader(karafClassLoader);
         }
         return topologyName;

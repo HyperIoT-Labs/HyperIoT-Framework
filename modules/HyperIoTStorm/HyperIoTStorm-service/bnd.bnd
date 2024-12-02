@@ -1,5 +1,7 @@
 Export-Package: \
-    it.acsoftware.hyperiot.storm.service
+    it.acsoftware.hyperiot.storm.service,\
+    org.apache.storm.thrift;version=2.7.1,\
+    org.apache.storm.thrift.*;version=2.7.1
 Import-Package: \
         javax.script,\
         javax.management,\
@@ -20,25 +22,24 @@ Import-Package: \
         org.apache.kafka.*,\
         org.slf4j.*
 DynamicImport-Package: \
-        org.apache.storm;version=2.7.0,\
-        org.apache.storm.topology;version=2.7.0,\
-        org.apache.storm.flux;version=2.7.0,\
-        org.apache.storm.thrift;version=2.7.0,\
-        org.apache.storm.generated;version=2.7.0,\
-        org.apache.storm.utils;version=2.7.0,\
-        org.apache.storm.flux.parser;version=2.7.0,\
-        org.apache.storm.flux.model;version=2.7.0,\
-        org.apache.storm.hdfs.*;version=2.7.0,\
-        org.apache.storm.hdfs.bolt;version=2.7.0,\
-        org.apache.storm.hdfs.bolt.sync;version=2.7.0,\
-        org.apache.storm.hdfs.bolt.rotation;version=2.7.0,\
-        org.apache.storm.hdfs.bolt.format;version=2.7.0,\
-        org.apache.storm.hbase.*;version=2.7.0,\
-        org.apache.storm.kafka.spout;version=2.7.0,\
-        org.apache.storm.kafka.bolt;version=2.7.0,\
-        org.apache.storm.kafka.trident;version=2.7.0,\
-        org.apache.storm.kafka.bolt.selector;version=2.7.0,\
-        org.apache.storm.kafka.bolt.mapper;version=2.7.0,\
+        org.apache.storm;version=2.7.1,\
+        org.apache.storm.topology;version=2.7.1,\
+        org.apache.storm.flux;version=2.7.1,\
+        org.apache.storm.generated;version=2.7.1,\
+        org.apache.storm.utils;version=2.7.1,\
+        org.apache.storm.flux.parser;version=2.7.1,\
+        org.apache.storm.flux.model;version=2.7.1,\
+        org.apache.storm.hdfs.*;version=2.7.1,\
+        org.apache.storm.hdfs.bolt;version=2.7.1,\
+        org.apache.storm.hdfs.bolt.sync;version=2.7.1,\
+        org.apache.storm.hdfs.bolt.rotation;version=2.7.1,\
+        org.apache.storm.hdfs.bolt.format;version=2.7.1,\
+        org.apache.storm.hbase.*;version=2.7.1,\
+        org.apache.storm.kafka.spout;version=2.7.1,\
+        org.apache.storm.kafka.bolt;version=2.7.1,\
+        org.apache.storm.kafka.trident;version=2.7.1,\
+        org.apache.storm.kafka.bolt.selector;version=2.7.1,\
+        org.apache.storm.kafka.bolt.mapper;version=2.7.1,\
         org.apache.storm.hbase.bolt;version=2.5.0,\
         org.apache.storm.hbase.bolt.mapper;version=2.5.0,\
         org.apache.storm.hbase.common;version=2.5.0,\
