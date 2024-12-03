@@ -11,33 +11,35 @@
     <feature>jpa</feature>
     <feature version="[5,6)">hibernate</feature>
     <feature version="[6.2,7)">hibernate-validator</feature>
-    <feature>pax-web-jetty-websockets</feature>
-    <feature>pax-web-whiteboard</feature>
-    <feature>pax-web-karaf</feature>
     <feature>pax-jdbc</feature>
     <feature>pax-jdbc-config</feature>
     <feature>pax-jdbc-pool-dbcp2</feature>
     <feature>scr</feature>
-    <feature version="[3.4,4)">cxf-rs-security-jose</feature>
-    <feature>cxf-dosgi-provider-rs</feature>
-    <feature version="[3.4,4)">cxf-rs-description-swagger2</feature>
     <bundle start-level="79">mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service-hooks/${project.version}</bundle>
   </feature>
   <feature name="hyperiot-base" version="${project.version}" description="All Hyperiot HyperIoTBase Modules">
     <feature>hyperiot-base-basic</feature>
+    <feature>pax-web-jetty-websockets</feature>
+    <feature>pax-web-whiteboard</feature>
+    <feature>pax-web-karaf</feature>
+    <bundle>mvn:org.passay/passay/1.4.0</bundle>
+    <bundle>mvn:org.webjars/swagger-ui/${project.swaggerUIVersion}</bundle>
+    <feature>cxf-dosgi-provider-rs</feature>
+    <feature version="[3.4,4)">cxf-rs-description-swagger2</feature>
     <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service-rest-provider/${project.version}</bundle>
     <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service-rest/${project.version}</bundle>
   </feature>
   <feature name="hyperiot-base-test" version="${project.version}" description="All Hyperiot HyperIoTBase Modules">
-    <feature>hyperiot-base-basic</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service-rest-provider/${project.version}</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-service-rest/${project.version}</bundle>
+    <feature>hyperiot-base</feature>
     <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-test-containers/${project.version}</bundle>
     <bundle>mvn:it.acsoftware.hyperiot.base/HyperIoTBase-test-utils/${project.version}</bundle>
   </feature>
   <feature name="hyperiot-base-basic" version="${project.version}" description="Hyperiot HyperIoTBase Modules with NO rest services">
     <feature>hyperiot-base-karaf-features</feature>
-    <bundle>mvn:org.passay/passay/1.4.0</bundle>
+    <feature version="[3.4,4)">cxf-rs-security-jose</feature>
+    <bundle>mvn:org.apache.commons/commons-lang3/3.17.0</bundle>
+    <bundle>mvn:org.apache.servicemix.specs/org.apache.servicemix.specs.jaxrs-api-2.1/2.9.1</bundle>
+    <bundle>mvn:org.codehaus.woodstox/stax2-api/4.2.2</bundle>
     <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/${project.jacksonVersion}</bundle>
     <bundle>mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/${project.jacksonVersion}</bundle>
     <bundle>mvn:com.fasterxml.jackson.core/jackson-annotations/${project.jacksonVersion}</bundle>
@@ -47,7 +49,6 @@
     <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-xml/${project.jacksonVersion}</bundle>
     <bundle>mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-properties/${project.jacksonVersion}</bundle>
     <bundle>mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/${project.jacksonVersion}</bundle>
-    <bundle>mvn:org.webjars/swagger-ui/${project.swaggerUIVersion}</bundle>
     <bundle>mvn:javax.validation/validation-api/${project.javaxValidationVersion}</bundle>
     <bundle>mvn:org.bouncycastle/bcprov-jdk15on/${project.bouncyCastleVersion}</bundle>
     <bundle>mvn:org.bouncycastle/bcpkix-jdk15on/${project.bouncyCastleVersion}</bundle>
