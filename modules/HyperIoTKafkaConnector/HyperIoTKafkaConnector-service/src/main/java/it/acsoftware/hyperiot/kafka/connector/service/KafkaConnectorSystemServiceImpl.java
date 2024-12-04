@@ -810,7 +810,7 @@ public final class KafkaConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
         ReceiverOptions<byte[], byte[]> receiverOptions =
                 this.createBasicReceiverOptions(kafkaGroupId, pollTime, keyDeserializerClass, valueDeserializerClass, assignListener, revokeListener);
         if (receiverOptions != null) {
-            receiverOptions.subscription(topicPattern);
+            receiverOptions = receiverOptions.subscription(topicPattern);
         }
         return receiverOptions;
     }
@@ -820,14 +820,14 @@ public final class KafkaConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
                 this.createBasicReceiverOptions(kafkaGroupId, pollTime, keyDeserializerClass, valueDeserializerClass, assignListener, revokeListener);
         if (receiverOptions != null) {
             if (partitions == null || partitions.isEmpty()) {
-                receiverOptions
+                receiverOptions = receiverOptions
                         .subscription(Collections.synchronizedCollection(topics));
             } else if (partitions != null && topics.size() == partitions.size()) {
                 List<TopicPartition> topicsAndPartiions = new ArrayList<>();
                 for (int i = 0; i < topics.size(); i++) {
                     topicsAndPartiions.add(new TopicPartition(topics.get(i), partitions.get(i)));
                 }
-                receiverOptions.assignment(topicsAndPartiions);
+                receiverOptions = receiverOptions.assignment(topicsAndPartiions);
             }
         }
         return receiverOptions;
@@ -840,11 +840,11 @@ public final class KafkaConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
             receiverOptions.consumerProperties().put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, valueDeserializerClass);
             receiverOptions.consumerProperties().put(ConsumerConfig.GROUP_ID_CONFIG, kafkaGroupId);
             if (assignListener != null)
-                receiverOptions.addAssignListener(assignListener);
+                receiverOptions = receiverOptions.addAssignListener(assignListener);
             if (revokeListener != null)
-                receiverOptions.addRevokeListener(revokeListener);
+                receiverOptions = receiverOptions.addRevokeListener(revokeListener);
             if (pollTime >= 0)
-                receiverOptions.pollTimeout(Duration.ofMillis(pollTime));
+                receiverOptions = receiverOptions.pollTimeout(Duration.ofMillis(pollTime));
             return receiverOptions;
         }
         return null;
