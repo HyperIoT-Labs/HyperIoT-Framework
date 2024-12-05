@@ -835,7 +835,8 @@ public final class KafkaConnectorSystemServiceImpl extends HyperIoTBaseSystemSer
 
     private ReceiverOptions<byte[], byte[]> createBasicReceiverOptions(String kafkaGroupId, long pollTime, Class keyDeserializerClass, Class valueDeserializerClass, KafkaPartitionAssignListener assignListener, KafkaPartitionRevokeListener revokeListener) {
         if (consumerProperties != null && consumerProperties.size() > 0) {
-            Properties props = new Properties(consumerProperties);
+            Properties props = new Properties();
+            props.putAll(consumerProperties);
             props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, keyDeserializerClass);
             props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, valueDeserializerClass);
             props.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaGroupId);
