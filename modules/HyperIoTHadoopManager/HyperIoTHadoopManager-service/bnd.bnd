@@ -22,7 +22,9 @@ Import-Package: \
     org.hibernate.validator;version='${range;[=,+)}'
 
 Export-Package: \
-        org.apache.hadoop.hdfs
+        org.apache.hadoop.hdfs,\
+        org.apache.hadoop.hdfs.*,\
+        org.apache.hadoop.fs
 
 -fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=warning,\
                 "The default package '.' is not permitted by the Import-Package syntax."; restrict:=error; is:=warning

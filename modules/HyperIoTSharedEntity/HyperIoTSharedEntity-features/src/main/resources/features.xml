@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTSharedEntity-features">
-  <feature name="hyperiot-sharedentity" version="2.3.0" description="All  HyperIoT HyperIoTSharedEntity modules">
+  <feature name="hyperiot-sharedentity" version="2.4.0" description="All  HyperIoT HyperIoTSharedEntity modules">
     <feature>hyperiot-base</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-service/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-repository/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-service-rest/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-service/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-repository/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-service-rest/2.4.0</bundle>
   </feature>
-  <feature name="hyperiot-sharedentity-basic" version="2.3.0" description="All  HyperIoT HyperIoTSharedEntity modules with NO rest services">
+  <feature name="hyperiot-sharedentity-basic" version="2.4.0" description="All  HyperIoT HyperIoTSharedEntity modules with NO rest services">
     <feature>hyperiot-base-basic</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-service/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-repository/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-service/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.shared.entity/HyperIoTSharedEntity-repository/2.4.0</bundle>
   </feature>
 </features>

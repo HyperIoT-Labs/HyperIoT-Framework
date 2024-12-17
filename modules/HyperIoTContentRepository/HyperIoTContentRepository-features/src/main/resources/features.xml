@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.2.0" name="HyperIoTContentRepository-features">
-  <feature name="hyperiot-contentrepository" version="2.3.0" description="All  HyperIoT HyperIoTContentRepository modules">
+  <feature name="hyperiot-contentrepository" version="2.4.0" description="All  HyperIoT HyperIoTContentRepository modules">
     <feature>hyperiot-base</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-service/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-util/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-service-rest/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-service/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-util/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-service-rest/2.4.0</bundle>
   </feature>
-  <feature name="hyperiot-contentrepository-basic" version="2.3.0" description="All  HyperIoT HyperIoTContentRepository modules with NO rest services">
+  <feature name="hyperiot-contentrepository-basic" version="2.4.0" description="All  HyperIoT HyperIoTContentRepository modules with NO rest services">
     <feature>hyperiot-base-basic</feature>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-api/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-service/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-model/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-actions/2.3.0</bundle>
-    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-util/2.3.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-api/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-service/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-model/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-actions/2.4.0</bundle>
+    <bundle>mvn:it.acsoftware.hyperiot.contentrepository/HyperIoTContentRepository-util/2.4.0</bundle>
   </feature>
 </features>

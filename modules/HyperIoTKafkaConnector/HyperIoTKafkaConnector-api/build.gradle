@@ -4,8 +4,8 @@ dependencies {
     //HyperIoTBase Dependencies
     implementation group: "it.acsoftware.hyperiot.base", name: "HyperIoTBase-api", version: project.hyperIoTVersion
     //Reactive Programming
-    implementation group: 'io.projectreactor', name: 'reactor-core', version: '3.2.6.RELEASE'
-    implementation group: 'io.projectreactor.kafka', name: 'reactor-kafka', version: '1.1.0.RELEASE'
+    implementation group: 'io.projectreactor', name: 'reactor-core', version: project.projectReactorCoreVersion
+    implementation group: 'io.projectreactor.kafka', name: 'reactor-kafka', version: project.projectReactorKafkaVersion
 
     implementation project(":modules:HyperIoTKafkaConnector:HyperIoTKafkaConnector-model")
 

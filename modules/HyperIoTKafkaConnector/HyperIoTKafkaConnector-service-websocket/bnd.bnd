@@ -34,5 +34,6 @@ Import-Package: \
 Export-Package: \
      it.acsoftware.hyperiot.kafka.connector.service.websocket,\
      it.acsoftware.hyperiot.kafka.connector.service.websocket.channel
+DynamicImport-Package: *
 
 

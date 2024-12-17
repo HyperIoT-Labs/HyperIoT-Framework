@@ -1,0 +1,64 @@
+configurations {
+    includeInJar {
+        canBeResolved(true)
+        canBeConsumed(true)
+    }
+}
+
+dependencies {
+
+    includeInJar("org.apache.storm:storm-client:"+project.stormVersion){
+        transitive false
+    }
+
+    includeInJar ("org.apache.storm:storm-core:"+project.stormVersion){
+        transitive false
+    }
+
+    includeInJar ("org.apache.storm:storm-kafka-client:"+project.stormVersion){
+        transitive = false
+    }
+
+    includeInJar ("org.apache.storm:storm-hdfs:"+project.stormVersion){
+        transitive = false
+    }
+
+    includeInJar ("org.apache.storm:storm-hbase:"+project.stormHBaseVersion){
+        transitive = false
+    }
+
+    includeInJar ("org.apache.storm:flux-core:"+project.stormVersion){
+        transitive = false
+    }
+
+    includeInJar ("org.apache.storm:flux-wrappers:"+project.stormVersion){
+        transitive = false
+    }
+
+    includeInJar (group: 'commons-lang', name: 'commons-lang', version: '2.6'){
+        transitive = false
+    }
+}
+
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    zip64 true
+    from {
+        configurations.includeInJar.findAll { !it.name.endsWith('pom') }
+                .collect {
+                    it.isDirectory() ? it : zipTree(it).matching {
+                        exclude '**/META-INF/**'
+                    }
+                }
+            }
+}
+
+
+publishing {
+    publications {
+        hyperiot(MavenPublication) {
+            from components.java
+        }
+    }
+}

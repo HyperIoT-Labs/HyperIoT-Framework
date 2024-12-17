@@ -7,8 +7,8 @@ dependencies {
     implementation group: "org.apache.aries.jpa", name: "org.apache.aries.jpa.api", version: project.apacheAriesJpaVersion
     implementation group: "org.apache.cxf", name: "cxf-rt-rs-security-jose-jaxrs", version: project.cxfVersion
     //Reactive Programming
-    implementation group: 'io.projectreactor', name: 'reactor-core', version: '3.2.6.RELEASE'
-    implementation group: 'io.projectreactor.kafka', name: 'reactor-kafka', version: '1.1.0.RELEASE'
+    implementation group: 'io.projectreactor', name: 'reactor-core', version: project.projectReactorCoreVersion
+    implementation group: 'io.projectreactor.kafka', name: 'reactor-kafka', version: project.projectReactorKafkaVersion
     //Validation
     implementation group: "javax.validation", name: "validation-api", version: project.javaxValidationVersion
     implementation group: "org.hibernate", name: "hibernate-validator", version: project.hibernateValidatorVersion

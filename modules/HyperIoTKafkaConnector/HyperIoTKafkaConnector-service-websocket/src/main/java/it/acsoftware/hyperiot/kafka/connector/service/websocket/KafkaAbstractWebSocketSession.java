@@ -80,9 +80,11 @@ public abstract class KafkaAbstractWebSocketSession extends HyperIoTWebSocketAbs
             String username = this.getContext().getLoggedUsername() + "-" + UUID.randomUUID().toString();
             //each user is different group, so different user can consume from same project differently
             messageFlux = this.getKafkaReactor(username + "-kafka-group");
+
             messageFlux.doOnError((e) -> {
                 onError(e);
             });
+
             fluxSubscription = messageFlux.subscribe((m) -> {
                 try {
                     //sending byte buffer

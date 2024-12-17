@@ -1,4 +1,6 @@
 dependencies {
+    //SLF4J
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: project.slf4jVersion
     //OSGi Basic Imports
     implementation group: "org.osgi", name: "osgi.core", version: project.osgiVersion
     implementation group: "org.osgi", name: "osgi.cmpn", version: project.osgiCompendiumVersion
@@ -25,8 +27,8 @@ dependencies {
     implementation group: 'org.eclipse.jetty.websocket', name: 'websocket-servlet', version: project.jettyWSVersion
 
     //Kafka Reactor
-    implementation group: 'io.projectreactor', name: 'reactor-core', version: '3.2.6.RELEASE'
-    implementation group: 'io.projectreactor.kafka', name: 'reactor-kafka', version: '1.1.0.RELEASE'
+    implementation group: 'io.projectreactor', name: 'reactor-core', version: project.projectReactorCoreVersion
+    implementation group: 'io.projectreactor.kafka', name: 'reactor-kafka', version: project.projectReactorKafkaVersion
 
     implementation project(":modules:HyperIoTKafkaConnector:HyperIoTKafkaConnector-model")
     implementation project(":modules:HyperIoTKafkaConnector:HyperIoTKafkaConnector-api")

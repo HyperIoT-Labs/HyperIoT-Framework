@@ -14,6 +14,7 @@ Import-Package: \
     it.acsoftware.hyperiot.base.util;version='${range;[===,+)}',\
     it.acsoftware.hyperiot.osgi.util.filter;version='${range;[===,+)}',\
     com.fasterxml.jackson*;version='${range;[===,==+)}',\
+    io.micrometer.*,\
     org.apache.kafka*
 Export-Package: \
     it.acsoftware.hyperiot.kafka.connector.model,\

@@ -36,10 +36,7 @@ import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.persistence.criteria.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -206,12 +203,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
                 "Repository Find entity {} with filter: {}", new Object[]{this.type.getSimpleName(), filter});
         return this.getJpa().txExpr(TransactionType.Supports, entityManager -> {
             log.debug("Transaction found, invoke find");
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<T> query = criteriaBuilder.createQuery(this.type);
-            Root<T> entityDef = query.from(this.type);
-            Predicate condition = (filter != null) ? filter.buildPredicate(criteriaBuilder, entityDef) : null;
-            CriteriaQuery<T> criteriaQuery = (condition != null) ? query.select(entityDef).where(condition) : query.select(entityDef);
-            Query q = entityManager.createQuery(criteriaQuery);
+            Query q = createQuery(filter,null,entityManager);
             try {
                 T entity = (T) q.getSingleResult();
                 log.debug("Found entity: {}", entity);
@@ -234,11 +226,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
         log.debug("Repository Find All entities {}", this.type.getSimpleName());
         return (Collection<T>) this.getJpa().txExpr(TransactionType.Supports, entityManager -> {
             log.debug("Transaction found, invoke findAll");
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<T> query = criteriaBuilder.createQuery(this.type);
-            Root<T> entityDef = query.from(this.type);
-            Predicate condition = (filter != null) ? filter.buildPredicate(criteriaBuilder, entityDef) : null;
-            Query q = (condition != null) ? entityManager.createQuery(query.select(entityDef).where(condition)) : entityManager.createQuery(query.select(entityDef));
+            Query q = createQuery(filter,null,entityManager);
             try {
                 Collection<T> results = (Collection<T>) q.getResultList();
                 log.debug("Query results: {}", results);
@@ -259,16 +247,8 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
         log.debug("Repository Find All entities {}", this.type.getSimpleName());
         return (Collection<T>) this.getJpa().txExpr(TransactionType.Supports, entityManager -> {
             log.debug("Transaction found, invoke findAll");
-            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<T> query = criteriaBuilder.createQuery(this.type);
-            Root<T> entityDef = query.from(this.type);
-            Predicate condition = (filter != null) ? filter.buildPredicate(criteriaBuilder, entityDef) : null;
-            query = (condition != null) ? query.select(entityDef).where(condition) : query.select(entityDef);
-            ////Add Order parameter if present
-            query = (queryOrder != null && queryOrder.getParametersList() != null && ! queryOrder.getParametersList().isEmpty()) ?
-                    query.orderBy(getOrders(criteriaBuilder,entityDef,queryOrder)) : query;
-            Query q = entityManager.createQuery(query);
             try {
+                Query q = createQuery(filter,queryOrder,entityManager);
                 Collection<T> results = (Collection<T>) q.getResultList();
                 log.debug("Query results: {}", results);
                 return results;
@@ -277,6 +257,37 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
                 throw e;
             }
         });
+    }
+
+    protected Query createQuery(HyperIoTQuery filter, HyperIoTQueryOrder queryOrder,EntityManager entityManager){
+        return createQuery(filter,queryOrder,entityManager,null);
+    }
+
+    protected Query createQuery(HyperIoTQuery filter, HyperIoTQueryOrder queryOrder,EntityManager entityManager,Map<String,Object> hints){
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> query = criteriaBuilder.createQuery(this.type);
+        Root<T> entityDef = query.from(this.type);
+        Predicate condition = (filter != null) ? filter.buildPredicate(criteriaBuilder, entityDef) : null;
+        query = (condition != null) ? query.select(entityDef).where(condition) : query.select(entityDef);
+        ////Add Order parameter if present
+        query = (queryOrder != null && queryOrder.getParametersList() != null && ! queryOrder.getParametersList().isEmpty()) ?
+                query.orderBy(getOrders(criteriaBuilder,entityDef,queryOrder)) : query;
+        Query q = entityManager.createQuery(query);
+        if(hints != null && !hints.keySet().isEmpty()){
+            hints.keySet().forEach(hintKey -> q.setHint(hintKey,hints.get(hintKey)));
+        }
+        return q;
+    }
+
+    protected Query createCountQuery(HyperIoTQuery filter,EntityManager entityManager){
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        //constructing query and count query
+        CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
+        Root<T> entityDefCount = countQuery.from(this.type);
+        Predicate conditionCount = (filter != null) ? filter.buildPredicate(criteriaBuilder, entityDefCount) : null;
+        countQuery = (conditionCount != null) ? countQuery.select(criteriaBuilder.count(entityDefCount)).where(conditionCount) : countQuery.select(criteriaBuilder.count(entityDefCount));
+        //Executing count query
+        return entityManager.createQuery(countQuery);
     }
 
     private List<Order> getOrders(CriteriaBuilder criteriaBuilder, Root<T> entityDef, HyperIoTQueryOrder queryOrder) {
@@ -301,23 +312,14 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
         return (HyperIoTPaginatedResult<T>) this.getJpa().txExpr(TransactionType.Supports,
                 entityManager -> {
                     log.debug("Transaction found, invoke findAll");
-                    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-                    //constructing query and count query
-                    CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-                    CriteriaQuery<T> query = criteriaBuilder.createQuery(this.type);
-                    Root<T> entityDef = query.from(this.type);
-                    Root<T> entityDefCount = countQuery.from(this.type);
-                    Predicate condition = (filter != null) ? filter.buildPredicate(criteriaBuilder, entityDef) : null;
-                    Predicate conditionCount = (filter != null) ? filter.buildPredicate(criteriaBuilder, entityDefCount) : null;
-                    countQuery = (condition != null) ? countQuery.select(criteriaBuilder.count(entityDefCount)).where(conditionCount) : countQuery.select(criteriaBuilder.count(entityDefCount));
-                    query = (condition != null) ? query.select(entityDef).where(condition) : query.select(entityDef);
+
                     //Executing count query
-                    Query countQueryFinal = entityManager.createQuery(countQuery);
+                    Query countQueryFinal = createCountQuery(filter,entityManager);
                     Long countResults = (Long) countQueryFinal.getSingleResult();
                     int lastPageNumber = (int) (Math.ceil(countResults / (double) delta));
                     int nextPage = (page <= lastPageNumber - 1) ? page + 1 : 1;
                     //Executing paginated query
-                    Query q = entityManager.createQuery(query);
+                    Query q = createQuery(filter,null,entityManager);
                     int firstResult = (page - 1) * delta;
                     q.setFirstResult(firstResult);
                     q.setMaxResults(delta);
@@ -344,26 +346,14 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
         return (HyperIoTPaginatedResult<T>) this.getJpa().txExpr(TransactionType.Supports,
                 entityManager -> {
                     log.debug("Transaction found, invoke findAll");
-                    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-                    //constructing query and count query
-                    CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-                    CriteriaQuery<T> query = criteriaBuilder.createQuery(this.type);
-                    Root<T> entityDef = query.from(this.type);
-                    Root<T> entityDefCount = countQuery.from(this.type);
-                    Predicate condition = (filter != null) ? filter.buildPredicate(criteriaBuilder, entityDef) : null;
-                    Predicate conditionCount = (filter != null) ? filter.buildPredicate(criteriaBuilder, entityDefCount) : null;
-                    countQuery = (condition != null) ? countQuery.select(criteriaBuilder.count(entityDefCount)).where(conditionCount) : countQuery.select(criteriaBuilder.count(entityDefCount));
-                    query = (condition != null) ? query.select(entityDef).where(condition) : query.select(entityDef);
-                    //Add Order parameter if present
-                    query = (queryOrder != null && queryOrder.getParametersList() != null && ! queryOrder.getParametersList().isEmpty()) ?
-                        query.orderBy(getOrders(criteriaBuilder,entityDef,queryOrder)) : query;
+
                     //Executing count query
-                    Query countQueryFinal = entityManager.createQuery(countQuery);
+                    Query countQueryFinal = createCountQuery(filter,entityManager);
                     Long countResults = (Long) countQueryFinal.getSingleResult();
                     int lastPageNumber = (int) (Math.ceil(countResults / (double) delta));
                     int nextPage = (page <= lastPageNumber - 1) ? page + 1 : 1;
                     //Executing paginated query
-                    Query q = entityManager.createQuery(query);
+                    Query q = createQuery(filter,queryOrder,entityManager);
                     int firstResult = (page - 1) * delta;
                     q.setFirstResult(firstResult);
                     q.setMaxResults(delta);
@@ -712,14 +702,7 @@ public abstract class HyperIoTBaseRepositoryImpl<T extends HyperIoTBaseEntity>
         return this.getJpa().txExpr(TransactionType.Supports,
                 entityManager -> {
                     log.debug("Transaction found, invoke countAll");
-                    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-                    //constructing query and count query
-                    CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-                    Root<T> entityDefCount = countQuery.from(this.type);
-                    Predicate conditionCount = (filter != null) ? filter.buildPredicate(criteriaBuilder, entityDefCount) : null;
-                    countQuery = (conditionCount != null) ? countQuery.select(criteriaBuilder.count(entityDefCount)).where(conditionCount) : countQuery.select(criteriaBuilder.count(entityDefCount));
-                    //Executing count query
-                    Query countQueryFinal = entityManager.createQuery(countQuery);
+                    Query countQueryFinal = createCountQuery(filter,entityManager);
                     return (Long) countQueryFinal.getSingleResult();
                 });
     }
